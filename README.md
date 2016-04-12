@@ -1,13 +1,9 @@
 # Realtor
 
 # Form attributes - 
-
 work location, 
-
 income level, 
-
 kids/married, 
-
 age, 
 house size/# of BR ,
 type - range, condo, ect.,
