@@ -35,6 +35,9 @@ Use social media to enhance location suggestions
 Add actual home listings 
 
 
+# REMINDER - 
+PLEASE WORK ON YOUR OWN BRANCH 
+We will meet every day, sometimes every other, to go over issues and delegate work using an Agile development process
 
 
 
