@@ -1,9 +1,13 @@
 # Realtor
 
 # Form attributes - 
+
 work location, 
+
 income level, 
+
 kids/married, 
+
 age, 
 house size/# of BR ,
 type - range, condo, ect.,
@@ -15,7 +19,7 @@ night life (maybe just add it as a feature),
 crime rate, 
 noise level, 
 tax level,
-Price range (possibly just add it to results)
+price range (possibly just add it to results)
 
 # Possible data sources - 
 Infomation needed - demographics, maps, commutes and calculations, price adn type of property
