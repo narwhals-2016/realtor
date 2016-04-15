@@ -12,7 +12,6 @@ class UserProfile(models.Model):
             "email": user.email,
             "username": user.username,
         }
-
     '''
     we can add aditional attributes but Included in the django user model are these attributes:
     Username, Password, Email address, firstname, lastname
@@ -20,7 +19,7 @@ class UserProfile(models.Model):
 
 class Ages(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
-    borough_id = models.CharField()
+    borough_id = models.ForeignKey(Borough)
     age_0_19 = models.IntegerField(default=0)
     age_20_24 = models.IntegerField(default=0)
     age_25_34 = models.IntegerField(default=0)
@@ -42,7 +41,7 @@ class Ages(models.Model):
 
 class School_education(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
-    borough_id = models.CharField()
+    borough_id = models.ForeignKey(Borough)
     school_enrollment_pre_highschool = models.IntegerField(default=0)
     school_enrollment_highschool = models.IntegerField(default=0)
     school_enrollment_college = models.IntegerField(default=0)
@@ -64,7 +63,7 @@ class School_education(models.Model):
 
 class Demographic(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
-    borough_id = models.CharField()
+    borough_id = models.ForeignKey(Borough)
     married = models.IntegerField(default=0)
     divorced = models.IntegerField(default=0)
     one_yr_turnover = models.IntegerField(default=0)
@@ -90,7 +89,7 @@ class Demographic(models.Model):
 
 class Economic(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
-    borough_id = models.CharField()
+    borough_id = models.ForeignKey(Borough)
     laborforce = models.IntegerField(default=0)
     unemployed = models.IntegerField(default=0)
     below_poverty_level = models.IntegerField(default=0)
@@ -120,7 +119,7 @@ class Economic(models.Model):
 
 class Building(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
-    borough_id = models.CharField()
+    borough_id = models.ForeignKey(Borough)
     number_of_units_2_less = models.IntegerField(default=0)
     number_of_units_3_10 = models.IntegerField(default=0)
     number_of_units_10_plus = models.IntegerField(default=0)
@@ -144,7 +143,7 @@ class Building(models.Model):
 
 class Unit(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
-    borough_id = models.CharField()
+    borough_id = models.ForeignKey(Borough)
     units_occupied = models.IntegerField(default=0)
     units_vacant = models.IntegerField(default=0)
     rooms_per_unit_under_3 = models.IntegerField(default=0)
@@ -180,7 +179,7 @@ class Unit(models.Model):
 
 class Value(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
-    borough_id = models.CharField()
+    borough_id = models.ForeignKey(Borough)
     value_of_unit_500_less = models.IntegerField(default=0)
     value_of_unit_500_1M = models.IntegerField(default=0)
     value_of_unit_1M_plus = models.IntegerField(default=0)
@@ -206,7 +205,7 @@ class Value(models.Model):
 
 class Commute(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
-    borough_id = models.CharField()
+    borough_id = models.ForeignKey(Borough)
     communte_score = models.IntegerField(default=0)
 
     # this create a dictionary from an object to use with ajax
@@ -220,7 +219,7 @@ class Commute(models.Model):
 
 class Features(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
-    borough_id = models.CharField()
+    borough_id = models.ForeignKey(Borough)
     night_life_score = models.IntegerField(default=0)
     number_of_parks = models.IntegerField(default=0)
     shopping_score = models.IntegerField(default=0)
@@ -238,7 +237,7 @@ class Features(models.Model):
 
 class Grade(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
-    borough_id = models.CharField()
+    borough_id = models.ForeignKey(Borough)
     crime_score = models.IntegerField(default=0)
     school_score = models.IntegerField(default=0)
     noise_score = models.IntegerField(default=0)
@@ -256,7 +255,7 @@ class Grade(models.Model):
 
 # all other tables point here with FKs
 class Neighborhoods(models.Model):
-    # neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
+    # id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
     name = models.CharField()
     borough = models.CharField()
 
@@ -266,5 +265,16 @@ class Neighborhoods(models.Model):
             "name": self.name,
             "borough": self.borough_id,
         }
-        
+
+
+# all other tables point here with FKs
+class Borough(models.Model):
+    # id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
+    name = models.CharField()
+
+    # this create a dictionary from an object to use with ajax
+    def to_json(self):
+        return {
+            "name": self.name,
+        }
 
