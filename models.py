@@ -20,11 +20,11 @@ class UserProfile(models.Model):
 class Ages(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
     borough_id = models.ForeignKey(Borough)
-    age_0_19 = models.IntegerField(default=0)
-    age_20_24 = models.IntegerField(default=0)
-    age_25_34 = models.IntegerField(default=0)
-    age_35_64 = models.IntegerField(default=0)
-    age_65_over = models.IntegerField(default=0)
+    age_0_19 = models.DecimalField(max_digits=None, decimal_places=5)
+    age_20_24 = models.DecimalField(max_digits=None, decimal_places=5)
+    age_25_34 = models.DecimalField(max_digits=None, decimal_places=5)
+    age_35_64 = models.DecimalField(max_digits=None, decimal_places=5)
+    age_65_over = models.DecimalField(max_digits=None, decimal_places=5)
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -42,11 +42,11 @@ class Ages(models.Model):
 class School_education(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
     borough_id = models.ForeignKey(Borough)
-    school_enrollment_pre_highschool = models.IntegerField(default=0)
-    school_enrollment_highschool = models.IntegerField(default=0)
-    school_enrollment_college = models.IntegerField(default=0)
-    education_highschool_over = models.IntegerField(default=0)
-    education_college_over = models.IntegerField(default=0)
+    school_enrollment_pre_highschool = models.DecimalField(max_digits=None, decimal_places=5)
+    school_enrollment_highschool = models.DecimalField(max_digits=None, decimal_places=5)
+    school_enrollment_college = models.DecimalField(max_digits=None, decimal_places=5)
+    education_highschool_over = models.DecimalField(max_digits=None, decimal_places=5)
+    education_college_over = models.DecimalField(max_digits=None, decimal_places=5)
    
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -64,13 +64,13 @@ class School_education(models.Model):
 class Demographic(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
     borough_id = models.ForeignKey(Borough)
-    married = models.IntegerField(default=0)
-    divorced = models.IntegerField(default=0)
-    one_yr_turnover = models.IntegerField(default=0)
-    birth_native = models.IntegerField(default=0)
-    birth_foreign = models.IntegerField(default=0)
-    gender_m = models.IntegerField(default=0)
-    gender_f = models.IntegerField(default=0)
+    married = models.DecimalField(max_digits=None, decimal_places=5)
+    divorced = models.DecimalField(max_digits=None, decimal_places=5)
+    one_yr_turnover = models.DecimalField(max_digits=None, decimal_places=5)
+    birth_native = models.DecimalField(max_digits=None, decimal_places=5)
+    birth_foreign = models.DecimalField(max_digits=None, decimal_places=5)
+    gender_m = models.DecimalField(max_digits=None, decimal_places=5)
+    gender_f = models.DecimalField(max_digits=None, decimal_places=5)
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -90,15 +90,15 @@ class Demographic(models.Model):
 class Economic(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
     borough_id = models.ForeignKey(Borough)
-    laborforce = models.IntegerField(default=0)
-    unemployed = models.IntegerField(default=0)
-    below_poverty_level = models.IntegerField(default=0)
-    income_0_50 = models.IntegerField(default=0)
-    income_50_100 = models.IntegerField(default=0)
-    income_100_200 = models.IntegerField(default=0)
-    income_200_plus = models.IntegerField(default=0)
-    median_income = models.IntegerField(default=0)
-    mean_income = models.IntegerField(default=0)
+    laborforce = models.DecimalField(max_digits=None, decimal_places=5)
+    unemployed = models.DecimalField(max_digits=None, decimal_places=5)
+    below_poverty_level = models.DecimalField(max_digits=None, decimal_places=5)
+    income_0_50 = models.DecimalField(max_digits=None, decimal_places=5)
+    income_50_100 = models.DecimalField(max_digits=None, decimal_places=5)
+    income_100_200 = models.DecimalField(max_digits=None, decimal_places=5)
+    income_200_plus = models.DecimalField(max_digits=None, decimal_places=5)
+    median_income = models.DecimalField(max_digits=None, decimal_places=5)
+    mean_income = models.DecimalField(max_digits=None, decimal_places=5)
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -120,12 +120,12 @@ class Economic(models.Model):
 class Building(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
     borough_id = models.ForeignKey(Borough)
-    number_of_units_2_less = models.IntegerField(default=0)
-    number_of_units_3_10 = models.IntegerField(default=0)
-    number_of_units_10_plus = models.IntegerField(default=0)
-    constucted_before_1970 = models.IntegerField(default=0)
-    constucted_1970_2000 = models.IntegerField(default=0)
-    constucted_after_2000 = models.IntegerField(default=0)
+    number_of_units_2_less = models.DecimalField(max_digits=None, decimal_places=5)
+    number_of_units_3_10 = models.DecimalField(max_digits=None, decimal_places=5)
+    number_of_units_10_plus = models.DecimalField(max_digits=None, decimal_places=5)
+    constucted_before_1970 = models.DecimalField(max_digits=None, decimal_places=5)
+    constucted_1970_2000 = models.DecimalField(max_digits=None, decimal_places=5)
+    constucted_after_2000 = models.DecimalField(max_digits=None, decimal_places=5)
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -144,18 +144,18 @@ class Building(models.Model):
 class Unit(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
     borough_id = models.ForeignKey(Borough)
-    units_occupied = models.IntegerField(default=0)
-    units_vacant = models.IntegerField(default=0)
-    rooms_per_unit_under_3 = models.IntegerField(default=0)
-    rooms_per_unit_over_4 = models.IntegerField(default=0)
-    resident_type_owner = models.IntegerField(default=0)
-    resident_type_renter = models.IntegerField(default=0)
-    length_residence_before_2000 = models.IntegerField(default=0)
-    length_residence_2000_2009 = models.IntegerField(default=0)
-    length_residence_after_2010 = models.IntegerField(default=0)
-    vehicles_0 = models.IntegerField(default=0)
-    vehicles_1 = models.IntegerField(default=0)
-    vehicles_2_plus = models.IntegerField(default=0)
+    units_occupied = models.DecimalField(max_digits=None, decimal_places=5)
+    units_vacant = models.DecimalField(max_digits=None, decimal_places=5)
+    rooms_per_unit_under_3 = models.DecimalField(max_digits=None, decimal_places=5)
+    rooms_per_unit_over_4 = models.DecimalField(max_digits=None, decimal_places=5)
+    resident_type_owner = models.DecimalField(max_digits=None, decimal_places=5)
+    resident_type_renter = models.DecimalField(max_digits=None, decimal_places=5)
+    length_residence_before_2000 = models.DecimalField(max_digits=None, decimal_places=5)
+    length_residence_2000_2009 = models.DecimalField(max_digits=None, decimal_places=5)
+    length_residence_after_2010 = models.DecimalField(max_digits=None, decimal_places=5)
+    vehicles_0 = models.DecimalField(max_digits=None, decimal_places=5)
+    vehicles_1 = models.DecimalField(max_digits=None, decimal_places=5)
+    vehicles_2_plus = models.DecimalField(max_digits=None, decimal_places=5)
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -180,13 +180,13 @@ class Unit(models.Model):
 class Value(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
     borough_id = models.ForeignKey(Borough)
-    value_of_unit_500_less = models.IntegerField(default=0)
-    value_of_unit_500_1M = models.IntegerField(default=0)
-    value_of_unit_1M_plus = models.IntegerField(default=0)
-    value_of_unit_median = models.IntegerField(default=0)
-    gross_rent_1000_less = models.IntegerField(default=0)
-    gross_rent_1000_1500 = models.IntegerField(default=0)
-    gross_rent_1500_plus = models.IntegerField(default=0)
+    value_of_unit_500_less = models.DecimalField(max_digits=None, decimal_places=5)
+    value_of_unit_500_1M = models.DecimalField(max_digits=None, decimal_places=5)
+    value_of_unit_1M_plus = models.DecimalField(max_digits=None, decimal_places=5)
+    value_of_unit_median = models.DecimalField(max_digits=None, decimal_places=5)
+    gross_rent_1000_less = models.DecimalField(max_digits=None, decimal_places=5)
+    gross_rent_1000_1500 = models.DecimalField(max_digits=None, decimal_places=5)
+    gross_rent_1500_plus = models.DecimalField(max_digits=None, decimal_places=5)
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -206,7 +206,7 @@ class Value(models.Model):
 class Commute(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
     borough_id = models.ForeignKey(Borough)
-    communte_score = models.IntegerField(default=0)
+    communte_score = models.DecimalField(max_digits=None, decimal_places=5)
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -220,9 +220,9 @@ class Commute(models.Model):
 class Features(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
     borough_id = models.ForeignKey(Borough)
-    night_life_score = models.IntegerField(default=0)
-    number_of_parks = models.IntegerField(default=0)
-    shopping_score = models.IntegerField(default=0)
+    night_life_score = models.DecimalField(max_digits=None, decimal_places=5)
+    number_of_parks = models.DecimalField(max_digits=None, decimal_places=5)
+    shopping_score = models.DecimalField(max_digits=None, decimal_places=5)
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -238,9 +238,9 @@ class Features(models.Model):
 class Grade(models.Model):
     neighborhood_id = models.ForeignKey(Neighborhoods) # FK to the neighborhoods table
     borough_id = models.ForeignKey(Borough)
-    crime_score = models.IntegerField(default=0)
-    school_score = models.IntegerField(default=0)
-    noise_score = models.IntegerField(default=0)
+    crime_score = models.DecimalField(max_digits=None, decimal_places=5)
+    school_score = models.DecimalField(max_digits=None, decimal_places=5)
+    noise_score = models.DecimalField(max_digits=None, decimal_places=5)
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
