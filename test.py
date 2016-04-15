@@ -1,5 +1,5 @@
 import pandas as pd
-<<<<<<< HEAD
+
 import decimal
 D = decimal.Decimal
 housing_csv = pd.read_csv(
@@ -9,7 +9,7 @@ housing_csv = pd.read_csv(
 )
 
 print(housing_csv)
-=======
+
 
 housing_csv = pd.read_csv('housing-middle-village.csv', skiprows=[1,2,3], converters={'Unnamed: 1': lambda x: x.replace(',','')})
 
