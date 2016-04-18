@@ -5,12 +5,12 @@ var neighborhood = $("svg.V_DCP_NEIGHBORHOOD").children;
 var event = new Event('click');
 
 // This is the tab we want to collect Information From
-var currentWidgetId = 'acsContainer_tablist_dcp_pa_AcsDemo_0';
+var currentWidgetId = 'acsContainer_tablist_dcp_pa_AcsSocial_0';
 
 // This is the tab we will switch to so we can clear the cached data.
 // If the browser is on the tab we want it will not request new data 
 // even if we change the current Neighborhood. 
-var toggleWidgetId = 'acsContainer_tablist_dcp_pa_AcsSocial_0';
+var toggleWidgetId = 'acsContainer_tablist_dcp_pa_AcsEconomic_0';
 
 
 

@@ -1,23 +1,28 @@
 import os
 import pandas as pd
-file_list = os.listdir('economic_csv_files/')
+import Neighborhood, Borough, Economic from models
+file_list = os.listdir('datasets/econ/')
 
 def economic(filename):
-	economic_csv = pd.read_csv(filename, skiprows=[2,3], converters={'Unnamed: 1': lambda x: x.replace(',','')})
-	indexed = economic_csv.set_index('2009-2013 ACS Economic Profile')
+	economic_file = pd.read_excel(filename, skiprows=[2,3], converters={'Unnamed: 1': lambda x: x.replace(',','')})
+	indexed = economic_file.set_index('2009-2013 ACS Economic Profile')
 
 	# neighborhood given in first row of indexes, must be parsed out
 	neighborhood_string = indexed.index[0]
 	neighborhood = neighborhood_string[23:]
 
-	# ECONOMIC TABLE
+	# seed neighborhood table first
+	neighborhood_obj = Neighborhood.objects.create(name=neighborhood)
+
+	# ECONOMIC TABLE: locate values, sum where needed, and turn strings into numbers
+	all_people = int(indexed.loc['All people'][0])
 	population_16_plus = int(indexed.loc['Population 16 years and over'][0])
 	labor_force = int(indexed.loc['In labor force'].iloc[0,0])
 	employed = int(indexed.loc['Employed'].iloc[0,0])
 	unemployed = int(indexed.loc['Unemployed'].iloc[0,0])
 	people_below_poverty = int(indexed.loc['Below poverty'].iloc[1,0])
-	all_people = int(indexed.loc['All people'][0])
 
+	total_households = int(indexed.loc['Total households'][0])
 	HH_income_under_50 = sum([
 		int(indexed.loc['Less than $10,000'].iloc[0,0]),
 		int(indexed.loc['$10,000 to $14,999'].iloc[0,0]),
@@ -41,12 +46,8 @@ def economic(filename):
 	HH_income_mean = int(indexed.loc['Mean household income (dollars)'][0])
 	HH_income_median = int(indexed.loc['Median household income (dollars)'][0])
 
-	total_households = int(indexed.loc['Total households'][0])
-
-	
-
-	
 	economic_values = [
+		round(labor_force/population_16_plus,2),
 		round(unemployed/labor_force,2),
 		round(people_below_poverty/all_people,2),
 		round(HH_income_under_50/total_households,2),
@@ -58,6 +59,7 @@ def economic(filename):
 	]
 
 	economic_keys =[
+		"labor_force_rate",
 		"unemployment_rate",
 		"below_poverty_rate",
 		"HH_income_under_50_rate",
@@ -68,12 +70,25 @@ def economic(filename):
 		"HH_income_mean"
 	]
 
-	economic_dictionary = dict(zip(economic_keys, economic_values))
-	print(economic_dictionary)
+	econ_dict = dict(zip(economic_keys, economic_values))
+
+	# make economic table object, now that we have neighborhood object and values have been converted to rates where necessary
+	economic_obj = Economic.objects.create(
+		neighborhood=neighborhood_obj,
+		laborforce=econ_dict["labor_force_rate"],
+        unemployed=econ_dict["unemployment_rate"],
+        below_poverty_level=econ_dict["below_poverty_rate"],
+        income_0_50=econ_dict["HH_income_under_50_rate"],
+        income_50_100=econ_dict["HH_income_50_100_rate"], 
+        income_100_200=econ_dict["HH_income_100_200_rate"],
+        income_200_plus=econ_dict["HH_income_200_plus_rate"],
+        median_income=econ_dict["HH_income_median"],
+        mean_income=econ_dict["HH_income_mean"],
+	)	
 
 
 for filename in file_list:
-	economic(filename)
+	economic('datasets/econ/' + filename)
 
 	"""
 	set row 1 to index for new data frame. Note that word that will change should be Social 
