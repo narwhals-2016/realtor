@@ -1,10 +1,10 @@
 import os
 import pandas as pd
-file_list = os.listdir('demo_csv_files/')
+file_list = os.listdir('demo_excel_files/')
 
 def demo(filename):
-	demo_csv = pd.read_csv(filename, skiprows=[2,3], converters={'Unnamed: 1': lambda x: x.replace(',','')})
-	indexed = demo_csv.set_index('2009-2013 ACS Demographic Profile')
+	demo_excel = pd.read_excel(filename, skiprows=[2,3], converters={'Unnamed: 1': lambda x: x.replace(',','')})
+	indexed = demo_excel.set_index('2009-2013 ACS Demographic Profile')
 
 	# neighborhood given in first row of indexes, must be parsed out
 	neighborhood_string = indexed.index[0]
@@ -85,7 +85,7 @@ def demo(filename):
 
 
 for filename in file_list:
-	demo('demo_csv_files/' + filename)
+	demo('demo_excel_files/' + filename)
 
 	"""
 	set row 1 to index for new data frame. Note that word that will change should be Social 
