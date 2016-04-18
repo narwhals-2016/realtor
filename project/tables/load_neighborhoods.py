@@ -19,8 +19,8 @@ def	load_neighborhood(dataframe):
 	# neighborhood given in first row of indexes, must be parsed out
 	neighborhood_string = dataframe.index[0]
 	neighborhood = neighborhood_string[23:]
-	# option if neighborhood already in table:
 	print('in get_neighborhood', neighborhood)
+	# options if neighborhood already in table:
 	nb_filter = Neighborhood.objects.filter(name=neighborhood)
 	if len(nb_filter) > 1:
 		print('nb listed more than once')
