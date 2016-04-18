@@ -59,6 +59,26 @@ class Economic(models.Model):
             "mean_income": self.mean_income,
         }
 
+
+# all other tables point here with FKs
+class SchoolEducation(models.Model):
+    neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
+    school_enrollment_pre_highschool = models.DecimalField(max_digits=10, decimal_places=2)
+    school_enrollment_highschool = models.DecimalField(max_digits=10, decimal_places=2)
+    school_enrollment_college = models.DecimalField(max_digits=10, decimal_places=2)
+    education_highschool_over = models.DecimalField(max_digits=10, decimal_places=2)
+    education_college_over = models.DecimalField(max_digits=10, decimal_places=2)
+   
+    def to_json(self):
+        return {
+            "neighborhood": self.neighborhood.name,
+            "school_enrollment_pre_highschool": self.school_enrollment_pre_highschool,
+            "school_enrollment_highschool": self.school_enrollment_highschool,
+            "school_enrollment_college": self.school_enrollment_college,
+            "education_highschool_over": self.education_highschool_over,
+            "education_college_over": self.education_college_over, 
+        }
+
 class Building(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
     number_of_units_2_less = models.DecimalField(max_digits=10, decimal_places=2)
@@ -67,11 +87,9 @@ class Building(models.Model):
     constucted_before_1970 = models.DecimalField(max_digits=10, decimal_places=2)
     constucted_1970_2000 = models.DecimalField(max_digits=10, decimal_places=2)
     constucted_after_2000 = models.DecimalField(max_digits=10, decimal_places=2)
-
     # this create a dictionary from an object to use with ajax
     def to_json(self):
         return {
-            "neighborhood": self.neighborhood,
             "number_of_units_2_less": self.number_of_units_2_less,
             "number_of_units_3_10": self.number_of_units_3_10,
             "number_of_units_10_plus": self.number_of_units_10_plus,
@@ -79,6 +97,28 @@ class Building(models.Model):
             "constucted_1970_2000": self.constucted_1970_2000, 
             "constucted_after_2000": self.constucted_after_2000,
         }
+
+class Demographic(models.Model):
+    neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
+    married = models.DecimalField(max_digits=10, decimal_places=2)
+    divorced = models.DecimalField(max_digits=10, decimal_places=2)
+    one_yr_turnover = models.DecimalField(max_digits=10, decimal_places=2)
+    birth_native = models.DecimalField(max_digits=10, decimal_places=2)
+    birth_foreign = models.DecimalField(max_digits=10, decimal_places=2)
+    gender_m = models.DecimalField(max_digits=10, decimal_places=2)
+    gender_f = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def to_json(self):
+        return {
+            "neighborhood": self.neighborhood.name,
+            "married": self.married,
+            "divorced": self.divorced,
+            "one_yr_turnover": self.one_yr_turnover,
+            "birth_native": self.birth_native,
+            "birth_foreign": self.birth_foreign, 
+            "gender_m": self.gender_m,
+            "gender_f": self.gender_f,
+        } 
 
 class UnitValue(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
@@ -94,7 +134,7 @@ class UnitValue(models.Model):
     # this create a dictionary from an object to use with ajax
     def to_json(self):
         return {
-            "neighborhood": self.neighborhood,
+            "neighborhood": self.neighborhood.name,
             "value_of_unit_500_less": self.value_of_unit_500_less,
             "value_of_unit_500_1M": self.value_of_unit_500_1M,
             "value_of_unit_1M_plus": self.value_of_unit_1M_plus,
