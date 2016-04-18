@@ -13,7 +13,7 @@ destinations = can be multiple
 mode = driving, walking, bicycling, transit, 
 units=imperial
 traffic_model = best_guess, pessimistic
-transit_mode = bus, rail
+transit_mode = bus, rail **need to have mode=transit for this to work**
 KEY = AIzaSyCnE-5U0r-VELpWxXFXSfzwa6xWsC83hyM
 
 
@@ -26,9 +26,9 @@ Duration and Distance in Rows in Json objects
 
 
 
-Origins="upper+west+side+NY|west+villiage+NY"
+Origins="upper+west+side+NY|west+villiage+NY|Jersy+city+NJ"
 Destinations="956+east+8th+street+Brooklyn" 
-Mode="driving"
+Mode="transit"
 Units="imperial"
 Traffic_model="pessimistic"
 Transit_mode="rail"
