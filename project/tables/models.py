@@ -66,3 +66,46 @@ class Economic(models.Model):
         }
 
 # all other tables point here with FKs
+class SchoolEducation(models.Model):
+    neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
+    school_enrollment_pre_highschool = models.DecimalField(max_digits=10, decimal_places=2)
+    school_enrollment_highschool = models.DecimalField(max_digits=10, decimal_places=2)
+    school_enrollment_college = models.DecimalField(max_digits=10, decimal_places=2)
+    education_highschool_over = models.DecimalField(max_digits=10, decimal_places=2)
+    education_college_over = models.DecimalField(max_digits=10, decimal_places=2)
+   
+    # this create a dictionary from an object to use with ajax
+    def to_json(self):
+        return {
+            "neighborhood": self.neighborhood,
+            "borough": self.borough,
+            "school_enrollment_pre_highschool": self.school_enrollment_pre_highschool,
+            "school_enrollment_highschool": self.school_enrollment_highschool,
+            "school_enrollment_college": self.school_enrollment_college,
+            "education_highschool_over": self.education_highschool_over,
+            "education_college_over": self.education_college_over, 
+        }
+
+class Demographic(models.Model):
+    neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
+    married = models.DecimalField(max_digits=10, decimal_places=2)
+    divorced = models.DecimalField(max_digits=10, decimal_places=2)
+    one_yr_turnover = models.DecimalField(max_digits=10, decimal_places=2)
+    birth_native = models.DecimalField(max_digits=10, decimal_places=2)
+    birth_foreign = models.DecimalField(max_digits=10, decimal_places=2)
+    gender_m = models.DecimalField(max_digits=10, decimal_places=2)
+    gender_f = models.DecimalField(max_digits=10, decimal_places=2)
+
+    # this create a dictionary from an object to use with ajax
+    def to_json(self):
+        return {
+            "neighborhood": self.neighborhood,
+            "borough": self.borough,
+            "married": self.married,
+            "divorced": self.divorced,
+            "one_yr_turnover": self.one_yr_turnover,
+            "birth_native": self.birth_native,
+            "birth_foreign": self.birth_foreign, 
+            "gender_m": self.gender_m,
+            "gender_f": self.gender_f,
+        }
