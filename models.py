@@ -39,7 +39,7 @@ class Ages(models.Model):
         }
 
 
-class School_education(models.Model):
+class SchoolEducation(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
     borough = models.ForeignKey(Borough)
     school_enrollment_pre_highschool = models.DecimalField(max_digits=None, decimal_places=5)
@@ -119,7 +119,6 @@ class Economic(models.Model):
 
 class Building(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
-    borough = models.ForeignKey(Borough)
     number_of_units_2_less = models.DecimalField(max_digits=None, decimal_places=5)
     number_of_units_3_10 = models.DecimalField(max_digits=None, decimal_places=5)
     number_of_units_10_plus = models.DecimalField(max_digits=None, decimal_places=5)
@@ -131,7 +130,6 @@ class Building(models.Model):
     def to_json(self):
         return {
             "neighborhood": self.neighborhood,
-            "borough": self.borough,
             "number_of_units_2_less": self.number_of_units_2_less,
             "number_of_units_3_10": self.number_of_units_3_10,
             "number_of_units_10_plus": self.number_of_units_10_plus,
@@ -141,7 +139,7 @@ class Building(models.Model):
         }
 
 
-class Unit(models.Model):
+class UnitDescription(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
     borough = models.ForeignKey(Borough)
     units_occupied = models.DecimalField(max_digits=None, decimal_places=5)
@@ -177,7 +175,7 @@ class Unit(models.Model):
         }
 
 
-class Value(models.Model):
+class UnitValue(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
     borough = models.ForeignKey(Borough)
     value_of_unit_500_less = models.DecimalField(max_digits=None, decimal_places=5)
@@ -187,6 +185,7 @@ class Value(models.Model):
     gross_rent_1000_less = models.DecimalField(max_digits=None, decimal_places=5)
     gross_rent_1000_1500 = models.DecimalField(max_digits=None, decimal_places=5)
     gross_rent_1500_plus = models.DecimalField(max_digits=None, decimal_places=5)
+    gross_rent_median = models.DecimalField(max_digits=None, decimal_places=5)
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -200,6 +199,7 @@ class Value(models.Model):
             "gross_rent_1000_less": self.gross_rent_1000_less, 
             "gross_rent_1000_1500": self.gross_rent_1000_1500,
             "gross_rent_1500_plus": self.gross_rent_1500_plus,
+            "gross_rent_median": self.gross_rent_median,
         }
 
 
