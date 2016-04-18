@@ -34,8 +34,11 @@ def build_table_rows(dataframe, nb):
 	total_occupied_units = total_occupied_units_df.iloc[0,0]
 	vacant_units = dataframe.loc['Vacant housing units'][0]
 
-	make_building_row(dataframe, nb)
-	# make_unit_value_row(dataframe, nb)
+	# make_building_row(dataframe, nb)
+	if nb.name != "Rikers Island":
+		make_unit_value_row(dataframe, nb)
+	else:
+		print('rikers blank')
 	# make_unit_description_row(dataframe, nb, total_housing_units)
 	
 def make_building_row(dataframe, neighborhood):
@@ -131,6 +134,7 @@ def make_unit_value_row(dataframe, nb):
 
 	owned_five_hundred_thousand_to_one_million = dataframe.loc['$500,000 to $999,999'][0]
 	owned_one_million_or_more = dataframe.loc['$1,000,000 or more'][0]
+	median_dollars_df = dataframe.loc['Median (dollars)'] 
 	owned_median = median_dollars_df.iloc[0,0]
 	owner_occupied_units_df = dataframe.loc['Owner-occupied units'] 
 	total_owned_units = owner_occupied_units_df.iloc[0,0]

@@ -23,7 +23,7 @@ class Ages(models.Model):
     # this create a dictionary from an object to use with ajax
     def to_json(self):
         return {
-            "neighborhood": self.neighborhood,
+            "neighborhood": self.neighborhood.name,
             "age_0_19": self.age_0_19,
             "age_20_24": self.age_20_24,
             "age_25_34": self.age_25_34,
@@ -90,6 +90,7 @@ class Building(models.Model):
     # this create a dictionary from an object to use with ajax
     def to_json(self):
         return {
+            "neighborhood": self.neighborhood.name,
             "number_of_units_2_less": self.number_of_units_2_less,
             "number_of_units_3_10": self.number_of_units_3_10,
             "number_of_units_10_plus": self.number_of_units_10_plus,
