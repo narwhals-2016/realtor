@@ -145,4 +145,37 @@ class UnitValue(models.Model):
             "gross_rent_1500_plus": self.gross_rent_1500_plus,
             "gross_rent_median": self.gross_rent_median,
         }
-# all other tables point here with FKs
+
+class UnitDescription(models.Model):
+    neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
+    units_occupied = models.DecimalField(max_digits=10, decimal_places=2)
+    units_vacant = models.DecimalField(max_digits=10, decimal_places=2)
+    rooms_per_unit_under_3 = models.DecimalField(max_digits=10, decimal_places=2)
+    rooms_per_unit_over_4 = models.DecimalField(max_digits=10, decimal_places=2)
+    rooms_median = models.DecimalField(max_digits=10, decimal_places=2)
+    resident_type_owner = models.DecimalField(max_digits=10, decimal_places=2)
+    resident_type_renter = models.DecimalField(max_digits=10, decimal_places=2)
+    length_residence_before_2000 = models.DecimalField(max_digits=10, decimal_places=2)
+    length_residence_2000_2009 = models.DecimalField(max_digits=10, decimal_places=2)
+    length_residence_after_2010 = models.DecimalField(max_digits=10, decimal_places=2)
+    vehicles_0 = models.DecimalField(max_digits=10, decimal_places=2)
+    vehicles_1_plus = models.DecimalField(max_digits=10, decimal_places=2)
+
+    # this create a dictionary from an object to use with ajax
+    def to_json(self):
+        return {
+            "neighborhood": self.neighborhood.name,
+            "units_occupied": self.units_occupied,
+            "units_vacant": self.units_vacant,
+            "rooms_per_unit_under_3": self.rooms_per_unit_under_3,
+            "rooms_per_unit_over_4": self.rooms_per_unit_over_4,
+            "resident_type_owner": self.resident_type_owner, 
+            "resident_type_renter": self.resident_type_renter,
+            "length_residence_before_2000": self.length_residence_before_2000,
+            "length_residence_2000_2009": self.length_residence_2000_2009,
+            "length_residence_after_2010": self.length_residence_after_2010,
+            "vehicles_0": self.vehicles_0,
+            "vehicles_1": self.vehicles_1,
+            "vehicles_2_plus": self.vehicles_2_plus,
+        }
+

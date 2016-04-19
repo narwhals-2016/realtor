@@ -30,8 +30,8 @@ def	load_neighborhood(dataframe):
 		neigborhood_obj = Neighborhood.objects.create(name=neighborhood)
 		print('nb created: ', neigborhood_obj.name)
 
-# directory hard-coded
-def run():
-	file_list = os.listdir('tables/datasets/housing_temp/')
+
+def run(folder):
+	file_list = os.listdir('tables/datasets/' + folder)
 	for filename in file_list:
-		parse_file('tables/datasets/housing_temp/' + filename)
+		parse_file('tables/datasets/' + folder + '/' + filename)

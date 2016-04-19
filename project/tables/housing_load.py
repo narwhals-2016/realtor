@@ -1,19 +1,21 @@
 """
 Script to load census housing data into django models
-from tables.housing_load import run_buildings
-run_buildings()
+add one table at a time; current tables and their run function parameter strings: "building", "unit_value", "unit_description"
+>>> from tables.housing_load import run
+>>> run(folder, table)
+
 """
 
 import os
 import pandas as pd
-from tables.models import Neighborhood, Building, UnitValue 
+from tables.models import Neighborhood, Building, UnitValue, UnitDescription
 
 
 def parse_file(filename):
 	# use pandas to read excel file, and then create dataframe with first column as index
 	housing_file = pd.read_excel(filename, skiprows=[2,3])
 	indexed = housing_file.set_index('2009-2013 ACS Housing Profile')
-	return get_neighborhood(indexed)
+	return indexed
 
 def	get_neighborhood(dataframe):
 	# neighborhood given in first row of indexes, must be parsed out
@@ -22,27 +24,9 @@ def	get_neighborhood(dataframe):
 	# option if neighborhood already in table:
 	print('in get_neighborhood', neighborhood)
 	neigborhood_obj = Neighborhood.objects.get(name=neighborhood)
-	return build_table_rows(dataframe, neigborhood_obj)
-	
-def build_table_rows(dataframe, nb):
-	# get totals
-	# total below used for unit description and building table total
-	# note that both units per building and unit construction date are divided into to total housing units per neighborhood
-	total_housing_units_df = dataframe.loc['Total housing units'] 
-	total_housing_units = total_housing_units_df.iloc[0,0]
-	total_occupied_units_df = dataframe.loc['Occupied housing units'] 
-	total_occupied_units = total_occupied_units_df.iloc[0,0]
-	vacant_units = dataframe.loc['Vacant housing units'][0]
-
-	# make_building_row(dataframe, nb)
-	if nb.name != "Rikers Island":
-		make_unit_value_row(dataframe, nb)
-	else:
-		print('rikers blank')
-	# make_unit_description_row(dataframe, nb, total_housing_units)
+	return neigborhood_obj
 	
 def make_building_row(dataframe, neighborhood):
-	print('in make_building_row', neighborhood.name)
 	# make building object in table
 	total_housing_units_df = dataframe.loc['Total housing units'] 
 	total_housing_units = total_housing_units_df.iloc[0,0]
@@ -82,18 +66,14 @@ def make_building_row(dataframe, neighborhood):
 	])
 
 	# turn values into percentages, which will be passed into dictionary for seeding
-	# need condition for if denominator total is zero. Implies 
-	if total_housing_units != 0:
-		building_values = [
-			round(units_2_or_less/total_housing_units, 2),
-			round(units_3_9/total_housing_units, 2),
-			round(units_10_plus/total_housing_units, 2),
-			round(constructed_before_1970/total_housing_units, 2),
-			round(constructed_1970_to_2000/total_housing_units, 2),
-			round(constructed_after_2000/total_housing_units, 2),
-		]
-	else:
-		building_values = [0,0,0,0,0,0]
+	building_values = [
+		round(units_2_or_less/total_housing_units, 2),
+		round(units_3_9/total_housing_units, 2),
+		round(units_10_plus/total_housing_units, 2),
+		round(constructed_before_1970/total_housing_units, 2),
+		round(constructed_1970_to_2000/total_housing_units, 2),
+		round(constructed_after_2000/total_housing_units, 2),
+	]
 
 	building_keys = [
 		"units_2_or_less",
@@ -116,7 +96,6 @@ def make_building_row(dataframe, neighborhood):
 		constucted_1970_2000=building_dict['constructed_1970_to_2000'],
 		constucted_after_2000=building_dict['constructed_after_2000'], 
 	)
-	print("made building row")
 
 def make_unit_value_row(dataframe, nb):	
 	# owned
@@ -139,15 +118,13 @@ def make_unit_value_row(dataframe, nb):
 	owner_occupied_units_df = dataframe.loc['Owner-occupied units'] 
 	total_owned_units = owner_occupied_units_df.iloc[0,0]
 
-	if total_owned_units != 0:
-		owned_values = [
-			round(owned_unit_500k_or_less/total_owned_units,2),
-			round(owned_five_hundred_thousand_to_one_million/total_owned_units,2),
-			round(owned_one_million_or_more/total_owned_units,2),
-			owned_median,	
-		]
-	else:
-		owned_values = [0,0,0,0]
+
+	owned_values = [
+		round(owned_unit_500k_or_less/total_owned_units,2),
+		round(owned_five_hundred_thousand_to_one_million/total_owned_units,2),
+		round(owned_one_million_or_more/total_owned_units,2),
+		owned_median,	
+	]
 
 	owned_keys = [
 		"owned_unit_500k_or_less",
@@ -175,15 +152,12 @@ def make_unit_value_row(dataframe, nb):
 	rent_median = median_dollars_df.iloc[1,0]
 	total_rental_units = dataframe.loc['Occupied units paying rent'][0]
 
-	if total_rental_units != 0:
-		rental_values = [
-			round(rent_1000_or_less/total_rental_units,2),
-			round(rent_1000_to_1499/total_rental_units,2),
-			round(rent_1500_or_more/total_rental_units,2),
-			rent_median,	  
-		]
-	else:
-		rental_values = [0,0,0,0]
+	rental_values = [
+		round(rent_1000_or_less/total_rental_units,2),
+		round(rent_1000_to_1499/total_rental_units,2),
+		round(rent_1500_or_more/total_rental_units,2),
+		rent_median,	  
+	]
 	
 	rental_keys = [
 		"rent_1000_or_less",
@@ -206,10 +180,85 @@ def make_unit_value_row(dataframe, nb):
 		gross_rent_median=rental_dict['rent_median'],
 	)
 
-def run_buildings(folder):
+def make_unit_description_row(dataframe, nb):
+	##############unit data table################
+	# total below used for unit data and building table total
+	total_units_df = dataframe.loc['Total housing units'] 
+	total_units = total_units_df.iloc[0,0]
+
+	total_occupied_units_df = dataframe.loc['Occupied housing units'] 
+	occupied_units = total_occupied_units_df.iloc[0,0]
+	vacant_units = dataframe.loc['Vacant housing units'][0]
+
+	rooms_3_or_less = sum([
+		dataframe.loc['1 room'][0],
+		dataframe.loc['2 room'][0],
+		dataframe.loc['3 room'][0],
+	])
+	rooms_4_or_more = sum([
+		dataframe.loc['4 room'][0],
+		dataframe.loc['5 room'][0],
+		dataframe.loc['6 room'][0],
+		dataframe.loc['7 room'][0],
+		dataframe.loc['8 room'][0],
+		dataframe.loc['9 rooms or more'][0],
+	])
+	rooms_median = dataframe.loc['Median rooms'][0]
+
+	resident_type_owner = dataframe.loc['Owner-occupied'][0]
+	resident_type_renter = dataframe.loc['Renter-occupied'][0]
+
+	moved_in_since_2010 = dataframe.loc['Moved in 2010 or later'][0]
+	moved_in_2000_2009 = dataframe.loc['Moved in 2000 to 2009'][0]
+	moved_in_before_2000 = sum([
+		dataframe.loc['Moved in 1990 to 1999'][0],
+		dataframe.loc['Moved in 1980 to 1989'][0],
+		dataframe.loc['Moved in 1970 to 1979'][0],
+		dataframe.loc['Moved in 1969 or earlier'][0],
+	])
+
+	vehicles_zero = dataframe.loc['No vehicles available'][0]
+	vehicles_at_least_one = sum([
+		dataframe.loc['1 vehicle available'][0],
+		dataframe.loc['2 vehicles available'][0],
+		dataframe.loc['3 or more vehicles available'][0],
+	])
+
+	unit_description_obj = UnitDescription.objects.create(
+		neighborhood =nb,
+		units_occupied = round(occupied_units/total_units,2),
+		units_vacant = round(vacant_units/total_units,2),
+		rooms_per_unit_under_3 = round(rooms_3_or_less/total_units,2),
+		rooms_per_unit_over_4 = round(rooms_4_or_more/total_units,2),
+		resident_type_owner = round(resident_type_owner/occupied_units,2),
+		resident_type_renter = round(resident_type_renter/occupied_units,2),
+		length_residence_before_2000 = round(moved_in_before_2000/occupied_units,2),
+		length_residence_2000_2009 = round(moved_in_2000_2009/occupied_units,2),
+		length_residence_after_2010 = round(moved_in_since_2010/occupied_units,2),
+		vehicles_0 = round(vehicles_zero/occupied_units,2),
+		vehicles_1_plus = round(vehicles_at_least_one/occupied_units,2),
+		rooms_median = rooms_median,
+	)
+
+def run(folder, table):
 	file_list = os.listdir('tables/datasets/' + folder)
 	for filename in file_list:
-		parse_file('tables/datasets/' + folder + '/' + filename)
+		# use pandas to get dataframe from xlsx file
+		dataframe = parse_file('tables/datasets/' + folder + '/' + filename)
+		# identify neighborhood
+		neighborhood = get_neighborhood(dataframe)
+		# which table tree
+		# if rikers don't add to table
+		if neighborhood.name == "Rikers Island":
+			print('Rikers Island blank and pass')
+		elif table == "building":
+			make_building_row(dataframe, neighborhood)
+		elif table == "unit_value":
+			make_unit_value_row(dataframe, neighborhood)
+		elif table == "unit_description":
+			make_unit_description_row(dataframe, neighborhood)
+	print('DONE')
+
 
 
 
