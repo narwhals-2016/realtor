@@ -1,12 +1,13 @@
 """
 Script to load census housing data into django models
-from tables.housing_load import run_buildings
-run_buildings()
+from tables.housing_load import run
+run(folder)
+file is currently scripted so that you hard code which table you want to build, and better to do it one at a time
 """
 
 import os
 import pandas as pd
-from tables.models import Neighborhood, Building, UnitValue 
+from tables.models import Neighborhood, Building, UnitValue, UnitDescription
 
 
 def parse_file(filename):
@@ -28,18 +29,18 @@ def build_table_rows(dataframe, nb):
 	# get totals
 	# total below used for unit description and building table total
 	# note that both units per building and unit construction date are divided into to total housing units per neighborhood
-	total_housing_units_df = dataframe.loc['Total housing units'] 
-	total_housing_units = total_housing_units_df.iloc[0,0]
-	total_occupied_units_df = dataframe.loc['Occupied housing units'] 
-	total_occupied_units = total_occupied_units_df.iloc[0,0]
-	vacant_units = dataframe.loc['Vacant housing units'][0]
+	# total_housing_units_df = dataframe.loc['Total housing units'] 
+	# total_housing_units = total_housing_units_df.iloc[0,0]
+	# total_occupied_units_df = dataframe.loc['Occupied housing units'] 
+	# total_occupied_units = total_occupied_units_df.iloc[0,0]
+	# vacant_units = dataframe.loc['Vacant housing units'][0]
 
-	# make_building_row(dataframe, nb)
 	if nb.name != "Rikers Island":
-		make_unit_value_row(dataframe, nb)
+		# make_building_row(dataframe, nb)
+		# make_unit_value_row(dataframe, nb)
+		make_unit_description_row(dataframe, nb)
 	else:
 		print('rikers blank')
-	# make_unit_description_row(dataframe, nb, total_housing_units)
 	
 def make_building_row(dataframe, neighborhood):
 	print('in make_building_row', neighborhood.name)
@@ -206,7 +207,67 @@ def make_unit_value_row(dataframe, nb):
 		gross_rent_median=rental_dict['rent_median'],
 	)
 
-def run_buildings(folder):
+def make_unit_description_row(dataframe, nb):
+	##############unit data table################
+	# total below used for unit data and building table total
+	total_units_df = dataframe.loc['Total housing units'] 
+	total_units = total_units_df.iloc[0,0]
+
+	total_occupied_units_df = dataframe.loc['Occupied housing units'] 
+	occupied_units = total_occupied_units_df.iloc[0,0]
+	vacant_units = dataframe.loc['Vacant housing units'][0]
+
+	rooms_3_or_less = sum([
+		dataframe.loc['1 room'][0],
+		dataframe.loc['2 room'][0],
+		dataframe.loc['3 room'][0],
+	])
+	rooms_4_or_more = sum([
+		dataframe.loc['4 room'][0],
+		dataframe.loc['5 room'][0],
+		dataframe.loc['6 room'][0],
+		dataframe.loc['7 room'][0],
+		dataframe.loc['8 room'][0],
+		dataframe.loc['9 rooms or more'][0],
+	])
+	rooms_median = dataframe.loc['Median rooms'][0]
+
+	resident_type_owner = dataframe.loc['Owner-occupied'][0]
+	resident_type_renter = dataframe.loc['Renter-occupied'][0]
+
+	moved_in_since_2010 = dataframe.loc['Moved in 2010 or later'][0]
+	moved_in_2000_2009 = dataframe.loc['Moved in 2000 to 2009'][0]
+	moved_in_before_2000 = sum([
+		dataframe.loc['Moved in 1990 to 1999'][0],
+		dataframe.loc['Moved in 1980 to 1989'][0],
+		dataframe.loc['Moved in 1970 to 1979'][0],
+		dataframe.loc['Moved in 1969 or earlier'][0],
+	])
+
+	vehicles_zero = dataframe.loc['No vehicles available'][0]
+	vehicles_at_least_one = sum([
+		dataframe.loc['1 vehicle available'][0],
+		dataframe.loc['2 vehicles available'][0],
+		dataframe.loc['3 or more vehicles available'][0],
+	])
+
+	unit_description_obj = UnitDescription.objects.create(
+		neighborhood =nb,
+		units_occupied = round(occupied_units/total_units,2),
+		units_vacant = round(vacant_units/total_units,2),
+		rooms_per_unit_under_3 = round(rooms_3_or_less/total_units,2),
+		rooms_per_unit_over_4 = round(rooms_4_or_more/total_units,2),
+		resident_type_owner = round(resident_type_owner/occupied_units,2),
+		resident_type_renter = round(resident_type_renter/occupied_units,2),
+		length_residence_before_2000 = round(moved_in_before_2000/occupied_units,2),
+		length_residence_2000_2009 = round(moved_in_2000_2009/occupied_units,2),
+		length_residence_after_2010 = round(moved_in_since_2010/occupied_units,2),
+		vehicles_0 = round(vehicles_zero/occupied_units,2),
+		vehicles_1_plus = round(vehicles_at_least_one/occupied_units,2),
+		rooms_median = rooms_median,
+	)
+
+def run(folder):
 	file_list = os.listdir('tables/datasets/' + folder)
 	for filename in file_list:
 		parse_file('tables/datasets/' + folder + '/' + filename)
