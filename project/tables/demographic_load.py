@@ -1,10 +1,14 @@
 """
 script to load directory of demographic census files into django tables.
+add one table at a time; current tables and their run function parameter strings: "ages", "demo_gender", "all"
+demo_gender adds gender data to already existing Demographic rows, which are loaded via social files in social_csv.py
+>>> from tables.demographic_load import run
+>>> run(folder, table)
 """
 
 import os
 import pandas as pd
-from tables.models import Neighborhood, Ages
+from tables.models import Neighborhood, Ages, Demographic
 
 def parse_file(filename):
 	# use pandas to read excel file, and then create dataframe with first column as index
@@ -57,11 +61,11 @@ def make_ages_row(indexed, neighborhood):
 	total_population = pop_df.iloc[0,0]
 
 	age_values = [
-		round(under_nineteen/total_population,2), 
-		round(twenty_to_twentyfour/total_population,2), 
-		round(twentyfive_to_thirtyfour/total_population,2), 
-		round(thirtyfive_to_sixtyfour/total_population,2), 
-		round(over_sixtyfive/total_population,2),
+		round((under_nineteen/total_population)*100,2), 
+		round((twenty_to_twentyfour/total_population)*100,2), 
+		round((twentyfive_to_thirtyfour/total_population)*100,2), 
+		round((thirtyfive_to_sixtyfour/total_population)*100,2), 
+		round((over_sixtyfive/total_population)*100,2),
 		age_median,  
 	]
 
@@ -88,7 +92,13 @@ def make_ages_row(indexed, neighborhood):
 	
 # GENDER
 # not complete
-def add_to_social(indexed):
+def add_gender_to_demographic_row(indexed, neighborhood):
+	print('nb_obj: ', neighborhood.name)
+	
+	pop_df = indexed.loc['Total population']
+	# total pop value is in top left cell
+	total_population = pop_df.iloc[0,0]
+
 	male_df = indexed.loc['Male']
 	male = male_df.iloc[0,0]
 
@@ -96,18 +106,21 @@ def add_to_social(indexed):
 	female = female_df.iloc[0,0]
 
 	gender_values = [
-		round(male/total_population,2),
-		round(female/total_population,2), 
+		round((male/total_population)*100,2),
+		round((female/total_population)*100,2), 
 	]
-	gender_values = [0,0]
 
 	gender_keys =[
 		"male",
 		"female",
 	]
-
-	gender_dictionary = dict(zip(gender_keys, gender_values))
-
+	
+	gender_dict = dict(zip(gender_keys, gender_values))
+	demographic_row = Demographic.objects.get(neighborhood=neighborhood)
+	demographic_row.gender_m = gender_dict['male']
+	demographic_row.gender_f = gender_dict['female']
+	demographic_row.save()
+	print("SAVED")
 
 def run(folder, table):
 	file_list = os.listdir('tables/datasets/' + folder)
@@ -122,4 +135,9 @@ def run(folder, table):
 			print('Rikers Island blank and pass')
 		elif table == "ages":
 			make_ages_row(dataframe, neighborhood)
+		elif table == "demo_gender":
+			add_gender_to_demographic_row(dataframe, neighborhood)
+		elif table == "all":
+			make_ages_row(dataframe, neighborhood)
+			add_gender_to_demographic_row(dataframe, neighborhood)
 	print('DONE')
