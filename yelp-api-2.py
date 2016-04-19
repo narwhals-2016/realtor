@@ -14,7 +14,12 @@ auth = Oauth1Authenticator(
 client = Client(auth)
 """
 # read API keys
+params = {
+
+	'term': 'food',
+}
 with io.open('yelp_config_secret.json') as cred:
     creds = json.load(cred)
     auth = Oauth1Authenticator(**creds)
     client = Client(auth)
+    client.search(location = 'Soho, New York', **params)
