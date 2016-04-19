@@ -59,13 +59,13 @@ def make_economic_row(indexed, neighborhood):
 	HH_income_median = indexed.loc['Median household income (dollars)'][0]
 
 	economic_values = [
-		round(labor_force/population_16_plus,2),
-		round(unemployed/labor_force,2),
-		round(people_below_poverty/all_people,2),
-		round(HH_income_under_50/total_households,2),
-		round(HH_income_50_100/total_households,2),
-		round(HH_income_100_200/total_households,2),
-		round(HH_income_200_plus/total_households,2),
+		round((labor_force/population_16_plus)*100,2),
+		round((unemployed/labor_force)*100,2),
+		round((people_below_poverty/all_people)*100,2),
+		round((HH_income_under_50/total_households)*100,2),
+		round((HH_income_50_100/total_households)*100,2),
+		round((HH_income_100_200/total_households)*100,2),
+		round((HH_income_200_plus/total_households)*100,2),
 		HH_income_median,
 		HH_income_mean
 	]
