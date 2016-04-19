@@ -1,25 +1,30 @@
 """
-script to load directory of census files into django tables.
+script to load directory of demographic census files into django tables.
 """
 
 import os
 import pandas as pd
 from tables.models import Neighborhood, Ages
 
-def demo(filename):
-	demo_excel = pd.read_excel(filename, skiprows=[2,3])
-	# converters parameter not needed for read_excel with xlsx files; column already interpreted as integers
-	# converters={'Unnamed: 1': lambda x: x.replace(',','')}
-	indexed = demo_excel.set_index('2009-2013 ACS Demographic Profile')
+def parse_file(filename):
+	# use pandas to read excel file, and then create dataframe with first column as index
+	housing_file = pd.read_excel(filename, skiprows=[2,3])
+	indexed = housing_file.set_index('2009-2013 ACS Demographic Profile')
+	return indexed
 
+def	get_neighborhood(dataframe):
 	# neighborhood given in first row of indexes, must be parsed out
-	neighborhood_string = indexed.index[0]
+	neighborhood_string = dataframe.index[0]
 	neighborhood = neighborhood_string[23:]
-
 	# option if neighborhood already in table:
-	print('string: ', neighborhood)
-	neighborhood_obj = Neighborhood.objects.get(name=neighborhood) 
-	print('nb_obj: ', neighborhood_obj)
+	print('in get_neighborhood', neighborhood)
+	neigborhood_obj = Neighborhood.objects.get(name=neighborhood)
+	return neigborhood_obj
+	
+
+
+def make_ages_row(indexed, neighborhood):
+	print('nb_obj: ', neighborhood.name)
 	# AGE 
 	under_nineteen = sum([
 		indexed.loc['Under 5 years'][0],
@@ -46,23 +51,19 @@ def demo(filename):
 
 	age_median = indexed.loc['Median age (years)'][0]
 
-
-	# returns dataframe
+	# returns a dataframe
 	pop_df = indexed.loc['Total population']
 	# total pop value is in top left cell
 	total_population = pop_df.iloc[0,0]
 
-	if total_population != 0:
-		age_values = [
-			round(under_nineteen/total_population,2), 
-			round(twenty_to_twentyfour/total_population,2), 
-			round(twentyfive_to_thirtyfour/total_population,2), 
-			round(thirtyfive_to_sixtyfour/total_population,2), 
-			round(over_sixtyfive/total_population,2),
-			age_median,  
-		]
-	else:
-		age_values = [0,0,0,0,0,0]
+	age_values = [
+		round(under_nineteen/total_population,2), 
+		round(twenty_to_twentyfour/total_population,2), 
+		round(twentyfive_to_thirtyfour/total_population,2), 
+		round(thirtyfive_to_sixtyfour/total_population,2), 
+		round(over_sixtyfive/total_population,2),
+		age_median,  
+	]
 
 	age_keys = [
 		"under_nineteen", 
@@ -76,7 +77,7 @@ def demo(filename):
 	age_dict = dict(zip(age_keys, age_values))
 
 	age_obj = Ages.objects.create(
-		neighborhood=neighborhood_obj,
+		neighborhood=neighborhood,
 		age_0_19=age_dict["under_nineteen"],
         age_20_24=age_dict["twenty_to_twentyfour"],
         age_25_34=age_dict["twentyfive_to_thirtyfour"],
@@ -84,21 +85,21 @@ def demo(filename):
         age_65_over=age_dict["over_sixtyfive"],
         age_median=age_dict["age_median"], 
 	)
-	print('made age_obj')	
-	# GENDER
+	
+# GENDER
+# not complete
+def add_to_social(indexed):
 	male_df = indexed.loc['Male']
 	male = male_df.iloc[0,0]
 
 	female_df = indexed.loc['Female']
 	female = female_df.iloc[0,0]
 
-	if total_population != 0:
-		gender_values = [
-			round(male/total_population,2),
-			round(female/total_population,2), 
-		]
-	else:
-		gender_values = [0,0]
+	gender_values = [
+		round(male/total_population,2),
+		round(female/total_population,2), 
+	]
+	gender_values = [0,0]
 
 	gender_keys =[
 		"male",
@@ -108,7 +109,17 @@ def demo(filename):
 	gender_dictionary = dict(zip(gender_keys, gender_values))
 
 
-def run_demo(folder):
+def run(folder, table):
 	file_list = os.listdir('tables/datasets/' + folder)
 	for filename in file_list:
-		demo('tables/datasets/' + folder + '/' + filename)
+		# use pandas to get dataframe from xlsx file
+		dataframe = parse_file('tables/datasets/' + folder + '/' + filename)
+		# identify neighborhood
+		neighborhood = get_neighborhood(dataframe)
+		# which table tree
+		# if rikers don't add to table
+		if neighborhood.name == "Rikers Island":
+			print('Rikers Island blank and pass')
+		elif table == "ages":
+			make_ages_row(dataframe, neighborhood)
+	print('DONE')
