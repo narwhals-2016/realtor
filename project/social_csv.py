@@ -1,14 +1,14 @@
-import csv
+# import csv
 import xlrd
 import os
-from pprint import pprint
+# from pprint import pprint
 import pandas as pd
 import numpy as np
 import datetime
 import numpy as np
 import pandas.io.data as web
-import matplotlib.pyplot as plt
-import tkinter
+# import matplotlib.pyplot as plt
+# import tkinter
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from tables.models import SchoolEducation, Demographic, Neighborhood
 
@@ -164,12 +164,14 @@ def CalculateValues(r, dataa, c):
     insert_into_db(r)
 
 
-def extract_transform_social_data(fname):
+def extract_transform_social_data(folder, fname):
 
     dataa = {}
     r = {}
 
-    dataa = pd.read_excel('/home/sulekha/realtor//datasets/social_temp/'+fname, sheetname=0)
+    file_path = 'tables/datasets/' + folder + '/' + fname
+    dataa = pd.read_excel(file_path, sheetname=0)
+
     c = dataa['2009-2013 ACS Social Profile'].values
     r['neighborhood'] = c[0][23:]
     if (r['neighborhood'] != "Rikers Island"):
@@ -177,10 +179,10 @@ def extract_transform_social_data(fname):
     else:
         print('****Rikers ****')
     
-def run():
+def run(folder):
 
-    list_of_files = os.listdir('tables/datasets/social_temp/')
+
+    list_of_files = os.listdir('tables/datasets/' + folder)
     for f in list_of_files:
-        extract_transform_social_data(f)
+        extract_transform_social_data(folder, f)
 
-run()
