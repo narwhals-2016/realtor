@@ -1,7 +1,6 @@
 """
 arrays pulled from infoshare.org -> Area Comparison page, via infoshare.js script
 """
-
 bronx_array = [
 "10451 - Melrose", 
 "10452 - Highbridge", 
@@ -35,6 +34,12 @@ manhattan_array = ["10001 - Fur-Flower District", "10002 - Chinatown/Lower East 
 queens_array = ["11001 - Floral Park", "11004 - Glen Oaks", "11005 - North Shore Towers", "11040 - New Hyde Park", "11101 - Long Island City/Hunters Point", "11102 - Old Astoria", "11103 - Astoria", "11104 - Sunnyside", "11105 - Steinway", "11106 - Ravenswood", "11354 - Flushing", "11355 - Flushing/Murray Hill", "11356 - College Point", "11357 - Whitestone", "11358 - Auburndale", "11360 - Bay Terrace", "11361 - Bayside", "11362 - Little Neck", "11363 - Douglaston", "11364 - Oakland Gardens/Bayside Hill", "11365 - Fresh Meadows", "11366 - Utopia/Fresh Meadows", "11367 - Kew Garden Hills", "11368 - Corona", "11369 - East Elmhurst", "11370 - Jackson Heights-Rikers Island(Queens only)", "11372 - Jackson Heights", "11373 - Elmhurst", "11374 - Rego Park", "11375 - Forest Hills", "11377 - Woodside", "11378 - Maspeth", "11379 - Middle Village", "11385 - Ridgewood/Glendale", "11411 - Cambria Heights", "11412 - St. Albans", "11413 - Springfield Gardens/Laurelton", "11414 - Howard Beach", "11415 - Kew Gardens", "11416 - Ozone Park/Woodhaven", "11417 - Ozone Park", "11418 - Richmond Hill", "11419 - South Richmond Hill", "11420 - South Ozone Park", "11421 - Woodhaven", "11422 - Rosedale", "11423 - Hollis/Holliswood", "11426 - Bellerose", "11427 - Queens Village/Creedmoor", "11428 - Queens Village", "11429 - Queens Village (South)", "11430 - JFK Airport", "11432 - Jamaica/Hillcrest", "11433 - South Jamaica", "11434 - Rochdale/Baisley Park", "11435 - Jamaica Hills/South Jamaica", "11436 - South Ozone Park", "11691 - Far Rockaway", "11692 - Arverne", "11693 - Hammels/Broad Channel", "11694 - Seaside/Belle Harbour/Neponsit", "11695 - Fort Tilden", "11697 - Rockaway Point/Roxbury"]
 staten_island_array = ["10301 - New Brighton/Grymes Hill", "10302 - Port Richmond", "10303 - Mariners Harbour/Point Ivory", "10304 - Stapleton/Fox Hills", "10305 - Rosebank", "10306 - New Dorp/Richmondtown", "10307 - Tottenville", "10308 - Great Kills", "10309 - Princes Bay/Woodrow", "10310 - West New Brighton", "10312 - Eltingville/Annadale", "10314 - Castleton Corners/New Springvill"]
 
+"""
+neighborhoods from jack's google-distance-api file, assuming it's list of our census nbs
+"""
+neighborhoods = ["Gravesend","Stapleton-Rosebank","Grasmere-Arrochar-Ft. Wadsworth","Grymes Hill-Clifton-Fox Hills","Old Town-Dongan Hills-South Beach","New Brighton-Silver Lake","New Dorp-Midland Beach","West New Brighton-New Brighton-St. George","Oakwood-Oakwood Beach","Westerleigh","Port Richmond","Borough Park","Great Kills","Todt Hill-Emerson Hill-Heartland Village-Ligh","Mariner's Harbor-Arlington-Port Ivory-Granite","Arden Heights","New Springville-Bloomfield-Travis","Rossville-Woodrow","Annadale-Huguenot-Prince's Bay-Eltingville","Charleston-Richmond Valley-Tottenville","Rosedale","Far Rockaway-Bayswater","Bensonhurst West","Springfield Gardens North","Springfield Gardens South-Brookville","Hammels-Arverne-Edgemere","Lindenwood-Howard Beach","Starrett City","East New York (Pennsylvania Ave)","East New York","Canarsie","Brownsville","Rugby-Remsen Village","Seagate-Coney Island","Breezy Point-Belle Harbor-Rockaway Park-Broad","Georgetown-Marine Park-Bergen Beach-Mill Basi","Flatlands","East Flatbush-Farragut","Madison brookl","Erasmus","Sheepshead Bay-Gerritsen Beach-Manhattan Beac","Crown Heights South","Prospect Lefferts Gardens-Wingate","Brighton Beach","Sunset Park East","Midwood","Homecrest","Flatbush","Ocean Parkway South","West Brighton","Kensington-Ocean Parkway","Windsor Terrace","Glen Oaks-Floral Park-New Hyde Park","Bellerose","Cambria Heights","Bath Beach","Douglas Manor-Douglaston-Little Neck","Queens Village","Laurelton","Oakland Gardens","Hollis","St. Albans","Jamaica Estates-Holliswood","Bayside-Bayside Hills","Fresh Meadows-Utopia","Auburndale","Dyker Heights","Ft. Totten-Bay Terrace-Clearview","Baisley Park","South Jamaica","Pomonok-Flushing Heights-Hillcrest","Jamaica","East Flushing","Briarwood-Jamaica Hills","Murray Hill","Kew Gardens Hills","Queensboro Hill queens","Sunset Park West","Flushing","South Ozone Park","Whitestone","Kew Gardens","Richmond Hill","Stuyvesant Town-Cooper Village","East Village","Greenpoint","Maspeth","Rego Park","Bay Ridge","SoHo-TriBeCa-Civic Center-Little Italy","Chinatown","Bensonhurst East","Forest Hills","Bushwick North","Fort Greene","Bedford brooklyn","Woodhaven","DUMBO-Vinegar Hill-Downtown Brooklyn-Boerum H","Bushwick South","Clinton Hill","Stuyvesant Heights nyc","Cypress Hills-City Line","Prospect Heights","Lower East Side","Ocean Hill","Ozone Park","Carroll Gardens-Columbia Street-Red Hook","Crown Heights North","Morningside Heights","Central Harlem South","Mott Haven-Port Morris","East Harlem North","Rikers Island","East Harlem South","North Side-South Side","Upper West Side","Yorkville nyc","Lincoln Square","Steinway","College Point","Old Astoria","Upper East Side-Carnegie Hill","East Elmhurst","hell's kitchen","Astoria","East Williamsburg","Lenox Hill-Roosevelt Island","Queensbridge-Ravenswood-Long Island City","Jackson Heights","North Corona","Midtown-Midtown South","Turtle Bay-East Midtown","Woodside","Hudson Yards-Chelsea-Flat Iron-Union Square","Corona","Murray Hill-Kips Bay","Williamsburg","Elmhurst-Maspeth","Gramercy","Elmhurst","West Village","Hunters Point-Sunnyside-West Maspeth","Pelham Bay-Country Club-City Island","Schuylerville-Throgs Neck-Edgewater Park","Co-Op City","Eastchester-Edenwald-Baychester","Westchester-Unionport","Battery Park City-Lower Manhattan","Allerton-Pelham Gardens","Parkchester","Pelham Parkway","Williamsbridge-Olinville","Bronxdale","Van Nest-Morris Park-Westchester Square","Woodlawn-Wakefield","West Farms-Bronx River","Soundview-Castle Hill-Clason Point-Harding Pa","Soundview-Bruckner","Glendale","Norwood","Belmont bronx","East Tremont","Crotona Park East","Bedford Park-Fordham North","Hunts Point","Longwood","Fordham South","Van Cortlandt Village","Claremont-Bathgate","Ridgewood","Kingsbridge Heights","Morrisania-Melrose","Mount Hope","North Riverdale-Fieldston-Riverdale","Spuyten Duyvil-Kingsbridge","Melrose South-Mott Haven North","East Concourse-Concourse Village","University Heights-Morris Heights","Marble Hill-Inwood","West Concourse","Brooklyn Heights-Cobble Hill","Highbridge","Washington Heights North","Washington Heights South","Central Harlem North-Polo Grounds","Hamilton Heights","Manhattanville","Middle Village"]
+
+
 def make_dict(arr):
 	my_dict = {}
 	zip_code = 0
@@ -57,3 +62,37 @@ city_dict = {
 	**queens_dict,
 	**staten_island_dict,
 }
+
+"""
+40 exact matches
+"""
+def check_matches(nb_list, city_dict):
+	match_count = 0
+	missing_count = 0
+	match_dict = {}
+	missing_dict = {}
+	for nb in nb_list:
+		if city_dict.get(nb):
+			match_dict[nb] = city_dict[nb]
+			match_count += 1
+		else:
+			missing_dict[nb] = 'missing'
+			missing_count += 1
+	return {
+		'match_count': match_count,
+		'missing_count': missing_count,
+		'match_dict': match_dict,
+		'missing_dict': missing_dict,
+	}
+"""
+27 additional matches--but in some cases the same neighborhood is in multiple boroughs, may cause confusion
+"""
+def make_fuzzy(dictionary):
+	fuzzy = {}
+	for key in dictionary:
+		if '/' in key:
+			nb_list = key.split('/')			
+			for nb in nb_list:
+				fuzzy[nb] = dictionary[key]
+			# [fuzzy[nb] = dictionary[key] for nb in nb_list]
+	return fuzzy
