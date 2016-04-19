@@ -40,7 +40,7 @@ def insert_row_in_education_table(r):
                    education_highschool_over = r['HS_graduate_or_higher_percentage'],
                    education_college_over = r['Bachelor_degree_or_higher_percentage'])
     except:
-        print('item not found+++++',r['neighborhood'])
+        print('education item not found+++++',r['neighborhood'])
 
 
 def insert_row_in_demographic(r):
@@ -56,7 +56,7 @@ def insert_row_in_demographic(r):
                    gender_m = 58.00,
                    gender_f = 42.00)
     except:
-        print('item not found+++++',r['neighborhood'])
+        print('demographic item not found+++++',r['neighborhood'])
 
 
 def insert_into_db(r):
@@ -76,6 +76,7 @@ def CalculateValues(r, dataa, c):
     "Average household size",
     "Males 15 years and over",
     "Now married, except separated",
+    "Divorced",
     "Females 15 years and over",
     "Now married, except separated",
     "Population 3 years and over enrolled in school",
@@ -124,7 +125,12 @@ def CalculateValues(r, dataa, c):
     r['Married_percentage'] = get_marital_state_percentage(md[0][0], md[0][1],
                                                           d['Males 15 years and over'][0],
                                                           d['Females 15 years and over'][0])
-    r['Divorced_percentage'] = 100 - int(r['Married_percentage'])
+   
+    dv = d["Divorced"]
+    divorced = np.array(dv)
+    r['Divorced_percentage'] = get_marital_state_percentage(divorced[0][0], divorced[0][1],
+                                                          d['Males 15 years and over'][0],
+                                                          d['Females 15 years and over'][0]) 
 
 
     r['school_enrollment_pre_highschool'] = get_school_percentage(d['Nursery school, preschool'][0],
@@ -144,8 +150,11 @@ def CalculateValues(r, dataa, c):
 
     r['Bachelor_degree_or_higher_percentage'] = get_percentage(d["Bachelor's degree or higher"][0], 
                                                 d['Population 25 years and over'][0])
-    r['Same_house_percentage']= get_percentage(d["Same house"][0],
+
+    r['Stayed_in_same_house_percentage']= get_percentage(d["Same house"][0],
                                  d['Population 1 year and over'][0])
+
+    r['Left_the_house_in_1yr_percentage']= 100 - int(r['Stayed_in_same_house_percentage'])
 
     t = d["Total population"]
     td = np.array(t)
@@ -160,7 +169,7 @@ def extract_transform_social_data(fname):
     dataa = {}
     r = {}
 
-    dataa = pd.read_excel('/home/sulekha/realtor//datasets/social/'+fname, sheetname=0)
+    dataa = pd.read_excel('/home/sulekha/realtor//datasets/social_temp/'+fname, sheetname=0)
     c = dataa['2009-2013 ACS Social Profile'].values
     r['neighborhood'] = c[0][23:]
     if (r['neighborhood'] != "Rikers Island"):
@@ -170,7 +179,7 @@ def extract_transform_social_data(fname):
     
 def run():
 
-    list_of_files = os.listdir('tables/datasets/social/')
+    list_of_files = os.listdir('tables/datasets/social_temp/')
     for f in list_of_files:
         extract_transform_social_data(f)
 
