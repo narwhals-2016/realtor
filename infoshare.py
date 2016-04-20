@@ -529,4 +529,31 @@ all_matches = {
 	'Woodlawn-Wakefield': '10466',
 	'Woodside': '11377',
 	'Yorkville nyc': '10128'
-	}
+}
+
+# add nbs not in list in order to manually insert zip
+def insert_nbs(nb_list, zip_dict):
+	missing_count = 0
+	not_missing_count = 0
+	for nb in nb_list:
+		if nb not in zip_dict:
+			missing_count += 1
+			zip_dict[nb] = 'MISSING'
+			print('MISSING: ', nb)
+		not_missing_count += 1
+	return (missing_count, not_missing_count, zip_dict)
+
+# breaks up nb1-nb2 in neighborhoods, add to new dictionary
+def nb_in_zip(nb_list, dictionary):
+	new_dict = {}
+	for nb in nb_list:
+		if '-' in nb:
+			nbs = nb.split('-')
+			for item in nbs:
+				if item in dictionary:
+					new_dict[nb] = dictionary[item]
+					break
+		elif nb in dictionary:
+			new_dict[nb] = dictionary[nb]
+
+	return new_dict
