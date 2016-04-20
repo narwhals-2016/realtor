@@ -50,7 +50,7 @@ def insert_row_in_demographic(r):
         Demographic.objects.create(neighborhood=item,
                    married = r['Married_percentage'],
                    divorced= r['Divorced_percentage'],
-                   one_yr_turnover = r['Stayed_in_same_house_percentage'],
+                   one_yr_turnover = r['Left_the_house_in_1yr_percentage'],
                    birth_native = r['Native_population_percentage'],
                    birth_foreign = r['Foreign_born_percentage'],
                    gender_m = 58.00,
