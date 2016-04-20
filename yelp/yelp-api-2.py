@@ -32,9 +32,11 @@ def get(location, term):
 	    businesses = [business for business in response.businesses]
 	    average_rating = sum([business.rating for business in businesses])/len(businesses)
 	    return {
+	    	'response': response,
 	    	'total': total_results,
 	    	'businesses': businesses,
-	    	'average_rating': average_rating
+	    	'selected_businesses_count': len(businesses),
+	    	'average_rating': average_rating,
 	    }
 
 def nb_check(result):
@@ -46,3 +48,11 @@ def nb_check(result):
 	# for nb in nb_list:
 	# 	response = get(location=nb,term=term)
 	# 	results[nb] = response
+
+"""
+4/20/16 Goal: feed every nb and zip into api for 'food' and 'restaurant', and get total responses.
+get average rating too for the selected 20.
+save businesses for bonus goal
+bonus goal: see if anything worthwhile can be done with businesses, like categories, neighborhoods, or zip codes
+
+"""
