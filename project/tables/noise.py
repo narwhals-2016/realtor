@@ -19,23 +19,38 @@ zip_codes = ["10128","11236","10038","11235","11219","11362","10003","11375","11
 
 # basically go through the list of 750 zip codes, check each one to see if it is in the bronx dict, if it is then print out the name of the neighborhood
 # worried this might be too expensive and take too long, but we only will need to run it once to seed the db
+
+count = 0
+errors = 0
 for i in zip_codes:
-	# if the zip code is in of the dicts / lists
-	if i in list(bronx_dict.values()): 
-		# then print the value of the key the value is assigned to
-		print (list(brooklyn_dict.keys())[list(brooklyn_dict.values()).index(i)])
-	elif i in list(brooklyn_dict.values()):
-		print (list(brooklyn_dict.keys())[list(brooklyn_dict.values()).index(i)])
-	elif i in list(manhattan_dict.values()):
-		print (list(manhattan_dict.keys())[list(manhattan_dict.values()).index(i)])
-	elif i in list(queens_dict.values()):
-		print (list(queens_dict.keys())[list(queens_dict.values()).index(i)])
-	elif i in list(staten_island_dict.values()):
-		print (list(staten_island_dict.keys())[list(staten_island_dict.values()).index(i)])
-	else:
-		print ("** NOT HERE **")
+	try :
+		# if the zip code is in of the dicts / lists
+		if i in list(bronx_dict.values()): 
+			# then print the value of the key the value is assigned to
+			print (list(brooklyn_dict.keys())[list(brooklyn_dict.values()).index(i)])
+			print(count)
+		elif i in list(brooklyn_dict.values()):
+			print (list(brooklyn_dict.keys())[list(brooklyn_dict.values()).index(i)])
+			print(count)
+		elif i in list(manhattan_dict.values()):
+			print (list(manhattan_dict.keys())[list(manhattan_dict.values()).index(i)])
+			print(count)
+		elif i in list(queens_dict.values()):
+			print (list(queens_dict.keys())[list(queens_dict.values()).index(i)])
+			print(count)
+		elif i in list(staten_island_dict.values()):
+			print (list(staten_island_dict.keys())[list(staten_island_dict.values()).index(i)])
+			print(count)
+		else:
+			print ("** NOT HERE **")
+			errors += 1
+	except:
+		print ("** ERROR **")
+		errors += 1
 
+	count +=1
 
+print ("errors: ", errors)
 
 
 
