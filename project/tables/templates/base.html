@@ -20,18 +20,21 @@
 	<!-- <link href="static/nouislider.min.css" rel="stylesheet">
 	<script src="static/nouislider.min.js"></script>
  -->
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 
-	<script src="{% static 'django_ajax.js'%}"></script>
-	<script src="{% static 'main.js'%}"></script>
+	<script src="{% static 'js/django_ajax.js'%}"></script>
+	<script src="{% static 'js/main.js'%}"></script>
 
 </head>
 <body>
-	<h1>Welcome</h1>
+
+	<div id="answer_div">
 
         {% block content %}
         <!-- all content from other HTML pages go here -->
         {% endblock content %}
 
+	</div>
+	
 </body>
 </html>
