@@ -179,3 +179,37 @@ class UnitDescription(models.Model):
             "vehicles_2_plus": self.vehicles_2_plus,
         }
 
+class Score(models.Model):
+    neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
+    night_life_score = models.DecimalField(max_digits=None, decimal_places=5)
+    communte_score = models.DecimalField(max_digits=None, decimal_places=5)
+    crime_score = models.DecimalField(max_digits=None, decimal_places=5)
+    noise_score = models.DecimalField(max_digits=None, decimal_places=5)
+
+    # this create a dictionary from an object to use with ajax
+    def to_json(self):
+        return {
+            "neighborhood": self.neighborhood,
+            "night_life_score": self.night_life_score,
+            "communte_score": self.communte_score,
+            "crime_score": self.crime_score,
+            "noise_score": self.noise_score,
+        }
+
+class School(models.Model):
+    neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
+    k_school_score = models.DecimalField(max_digits=None, decimal_places=5)
+    elem_school_score = models.DecimalField(max_digits=None, decimal_places=5)
+    hs_school_score = models.DecimalField(max_digits=None, decimal_places=5)
+
+    # this create a dictionary from an object to use with ajax
+    def to_json(self):
+        return {
+            "neighborhood": self.neighborhood,
+            "k_school_score": self.k_school_score,
+            "elem_school_score": self.elem_school_score,
+            "hs_school_score": self.hs_school_score,
+        }
+
+
+        
