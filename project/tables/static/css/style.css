@@ -2,9 +2,40 @@ h1 {
 	color: purple;
 }
 
+/*.default_color_text{color: #546e7a !important}*/
+
 .parallax-container {
-	height: 50vh;
+	height: 60vh;
 	margin-left: -3em; 
 	margin-right: -3em;
-	background-color: purple;
+}
+
+.parallax {
+	height: 60vh;
+	margin-left: -3em; 
+	margin-right: -3em;
+}
+
+#form_button:hover {
+	color: black;
+}
+
+#logo-container {
+	font-size: 2em;
+}
+
+.parallax img {
+  -webkit-filter: blur(2.5px);
+  -moz-filter: blur(2.5px);
+  -o-filter: blur(2.5px);
+  -ms-filter: blur(2.5px);
+  filter: blur(2.5px);
+}
+
+#background_color {
+	background-color: #546e7a;
+}
+
+#blue-green {
+	color:#26a69a;
 }
