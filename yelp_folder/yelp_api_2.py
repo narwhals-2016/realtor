@@ -1,5 +1,6 @@
 import json
 from math import log
+from pprint import pprint
 
 from yelp.client import Client
 from yelp.oauth1_authenticator import Oauth1Authenticator
@@ -44,7 +45,7 @@ def get(location, term):
 # def nb_check(result):
 	# return [business.location.neighborhoods for business in result['businesses']]
 
-
+# this works where dictionary values are zip code strings
 def run(nb_dict, term):
 	responses = {}
 	for nb in nb_dict:
@@ -56,6 +57,27 @@ def run(nb_dict, term):
 			response['average_rating']
 		)
 	return responses
+
+# do yelp call for array of zip codes; business totals are added for each nb,
+# while rating is averaged
+def run_list(nb_dict, term):
+	responses = {}
+	for nb in nb_dict:
+		zip_code_container = []
+		for zip_code in nb_dict[nb]:
+			response = get(location=nb + "," + zip_code, term=term)
+			zip_code_container.append((
+				response['total'], 
+				response['selected_businesses_count'], 
+				response['average_rating']
+			))
+		responses[nb] = (
+			sum([tup[0] for tup in zip_code_container]),
+			sum([tup[1] for tup in zip_code_container]),
+			sum([tup[2] for tup in zip_code_container])/len(zip_code_container),
+		)
+	return responses
+
 
 def get_scores(my_dict):
 	results = {}
