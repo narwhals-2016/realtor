@@ -17,4 +17,10 @@ from .models import Neighborhood, Ages, Economic, SchoolEducation, Building, Dem
 class Index(View):
     def get(self, request):
 
+        return render(request, "index.html")
+
+
+class Form(View):
+    def get(self, request):
+
         return render(request, "form.html")

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div id="answer_div">
+		<h2 id="welcome"> Welcome to Realtor!</h2>
+
+		<a href="/form" id="form_button">Go To Form</a>
+    </div>
+</div>
+
+{% include "form.html"%}
+
+{% endblock content %}
