@@ -1,132 +1,327 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Relator</title>
-
-	<!-- Compiled and minified CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-
-	<!-- jQuery -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-
-	<!-- Compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
-
-	<!-- neo-slider -->
-	<!-- <link href="static/nouislider.min.css" rel="stylesheet">
-	<script src="static/nouislider.min.js"></script>
- -->
-
-</head>
-
-<body>
-	<h1>Welcome</h1>
-
-  <div class="row">
-    <form class="col s12">
-
-    	<div class="col s4">
-	      	<p>Age:</p>
-	      	<p>
-			  <input type="checkbox" id="0_19" />
-			  <label for="0_19">0-19</label>
-			</p>
-	      	<p>
-			  <input type="checkbox" id="20_24" />
-			  <label for="20_24">20-24</label>
-			</p>
-	      	<p>
-			  <input type="checkbox" id="25_34" />
-			  <label for="25_34">25-34</label>
-			</p>
-	      	<p>
-			  <input type="checkbox" id="35_64" />
-			  <label for="35_64">35-64</label>
-			</p>
-	      	<p>
-			  <input type="checkbox" id="65+" />
-			  <label for="65+">65+</label>
-			</p><br>
-    	</div>
-
-		<div class="col s4">
-			<p>Gender</p>
-			<p>
-			<input type="checkbox" name="group" id="male" />
-			<label for="male">Male</label>
-			</p>
-			<p>
-			<input type="checkbox" name="group" id="female" />
-			<label for="female">Female</label>
-			</p><br>
-
-			<p>Marital Status</p>			
-			<p>
-		      <input class="with-gap" name="group1" type="radio" id="single"  />
-		      <label for="single">Single</label>
-		    </p>
-		    <p>
-		      <input class="with-gap" name="group1" type="radio" id="married"  />
-		      <label for="married">Married</label>
-		    </p>
-		    <p>
-		      <input class="with-gap" name="group1" type="radio" id="married_kids"  />
-		      <label for="married_kids">Married with Children</label>
-		    </p><br>
-		</div>
-
-		<div class="col s4">
-			<!-- want this to be conditional, if the switch is off you show education levels, if it is on you show options for current education -->
-		    <p>Currently in School</p>
-			  <div class="switch">
-			    <label>
-			      Off
-			      <input type="checkbox">
-			      <span class="lever"></span>
-			      On
-			    </label>
-			  </div><br>
-
-			<p>Current Education Level</p>
-			<p>
-		      <input class="with-gap" name="group1" type="radio" id="elementary"  />
-		      <label for="elementary">Elementary School Student</label>
-		    </p>
-			<p>
-		      <input class="with-gap" name="group1" type="radio" id="hs"  />
-		      <label for="hs">High School Student</label>
-		    </p>
-		    <p>
-		      <input class="with-gap" name="group1" type="radio" id="college"  />
-		      <label for="college">College Student</label>
-		    </p><br>
-
-		   <p>Education Level (highest level completed)</p>
-			<p>
-		      <input class="with-gap" name="group1" type="radio" id="hs+"  />
-		      <label for="hs+">High School and over</label>
-		    </p>
-		    <p>
-		      <input class="with-gap" name="group1" type="radio" id="college+"  />
-		      <label for="college+">College and over</label>
-		    </p><br>
-		</div>
-
-		<div class="col s10">
-			<p>Income Level (in thousands)</p>
-		    <p class="range-field">
-		      <input type="range" id="income" min="20" max="250" />
-		    </p><br>
-		</div>	
+{%verbatim%}
+	<script id="form_template" type="x-tmpl-mustache">
 
 
+<div class= "">
+	<div class="parallax-container">
+		<div class="parallax"><img src="static/Bridge.jpg"></div>
+	</div>
 
+	<div class="section white">
+		<h3>Personal Information</h3>
+		  <div class="row">
+		    <form class="col s12">
+
+		    	<div class="col s4">
+			      	<p>Age:</p>
+			      	<p>
+					  <input type="checkbox" id="0_19" />
+					  <label for="0_19">0-19</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" id="20_24" />
+					  <label for="20_24">20-24</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" id="25_34" />
+					  <label for="25_34">25-34</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" id="35_64" />
+					  <label for="35_64">35-54</label>
+					</p>
+					<p>
+					  <input type="checkbox" id="35_64" />
+					  <label for="35_64">55-64</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" id="65+" />
+					  <label for="65+">65+</label>
+					</p><br>
+		    	</div>
+
+				<div class="col s4">
+					<p>Gender</p>
+					<p>
+					<input type="checkbox" id="male" />
+					<label for="male">Male</label>
+					</p>
+					<p>
+					<input type="checkbox" id="female" />
+					<label for="female">Female</label>
+					</p><br>
+
+					<p>Children</p>			
+					<p>
+				      <input class="with-gap" name="group" type="radio" id="children_none"  />
+				      <label for="children_none">None</label>
+				    </p>
+				    <p>
+				      <input class="with-gap" name="group" type="radio" id="children_1+"  />
+				      <label for="children_1+">1 or More</label>
+				    </p>
+				    <p>
+				      <input class="with-gap" name="group" type="radio" id="children_3+"  />
+				      <label for="children_3+">3 or More</label>
+				    </p><br>
+				</div>
+
+				<div class="col s4">
+					<!-- want this to be conditional, if the switch is off you show education levels, if it is on you show options for current education -->
+				    <p>Currently in School</p>
+					  <div class="switch">
+					    <label>
+					      No
+					      <input name="CHECKBOX"  type="checkbox">
+					      <span class="lever" id="in_school_toggle"></span>
+					      Yes
+					    </label>
+					  </div><br>
+
+					<div id="current_edu_level" style="display:none">
+						<p>Current Education Level</p>
+						<p>
+					      <input class="with-gap" name="group1" type="radio" id="elementary"  />
+					      <label for="elementary">Elementary School Student</label>
+					    </p>
+						<p>
+					      <input class="with-gap" name="group1" type="radio" id="hs"  />
+					      <label for="hs">High School Student</label>
+					    </p>
+					    <p>
+					      <input class="with-gap" name="group1" type="radio" id="college"  />
+					      <label for="college">College Student</label>
+					    </p>
+					</div>
+
+					<div id="highest_edu_level">
+					   <p>Highest Education Level Achieved</p>
+						<p>
+					      <input class="with-gap" name="group2" type="radio" id="hs+"  />
+					      <label for="hs+">High School and over</label>
+					    </p>
+					    <p>
+					      <input class="with-gap" name="group2" type="radio" id="college+"  />
+					      <label for="college+">College and over</label>
+					    </p><br>
+					</div>
+
+					<p>Marital Status</p>
+					  <div class="switch">
+					    <label>
+					      Single
+					      <input type="checkbox">
+					      <span class="lever"></span>
+					      Married
+					    </label>
+					  </div><br>
+				</div>
+
+				<div class="col s11">
+					<p>Income Level (in thousands)</p>
+				    <p class="range-field">
+				      <input type="range" id="income" min="20" max="250" />
+				    </p><br>
+				</div>	
+			</div>
+
+	<div class="parallax-container">
+		<div class="parallax"><img src="static/Bridge.jpg"></div>
+	</div>
+
+	<div class="section white">
+		<h3>Home Preferences</h3>
+		  <div class="row">
+		    <form class="col s12">
+
+		    	<div class="col s4">
+			      	<p>Type:</p>
+			      	<p>
+					  <input type="checkbox" id="0_2" />
+					  <label for="0_2">Single Unit</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" id="3_10" />
+					  <label for="3_10">Small Building</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" id="10+" />
+					  <label for="10+">Larger Building</label>
+					</p><br>
+
+					<p>Type of Ownership</p>
+					<p>
+				      <input class="with-gap" name="group3" type="radio" id="purchase"  />
+				      <label for="purchase">Purchase</label>
+				    </p>
+					<p>
+				      <input class="with-gap" name="group3" type="radio" id="rent"  />
+				      <label for="rent">Rent</label>
+				    </p><br>
+		    	</div>
+
+				<div class="col s4">
+					<p>Number of Rooms</p>
+					<p>
+					<input type="checkbox" name="group4" id="3-" />
+					<label for="3-">3 or Less</label>
+					</p>
+					<p>
+					<input type="checkbox" name="group4" id="4+" />
+					<label for="4+">4 or More</label>
+					</p><br><br><br>
+
+					<p>Price Range</p>
+					<!-- also want this to be able to change scales depending on buy or rent choice -->
+				    <p class="range-field">
+				      <input type="range" id="income" min="900" max="2000" />
+				    </p><br>
+				</div>
+
+				<div class="col s4">
+			      	<p>Building Age:</p>
+			      	<p>
+					  <input type="checkbox" id="1970" />
+					  <label for="1970">Before 1970</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" id="2000" />
+					  <label for="2000">Before 2000</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" id="2000+" />
+					  <label for="2000+">After 2000</label>
+					</p><br>
+
+					<!-- want this to be conditional, if the switch is off you show education levels, if it is on you show options for current education -->
+				    <p>Vehicles</p>
+					  <div class="switch">
+					    <label>
+					      1 or Less
+					      <input type="checkbox">
+					      <span class="lever"></span>
+					      2 or More
+					    </label>
+					  </div><br>
+				</div>
+			</div>
+
+	<div class="parallax-container">
+		<div class="parallax"><img src="static/Bridge.jpg"></div>
+	</div>
+
+	<div class="section white">
+		<h3>Neighborhood Qualities</h3>
+		  <div class="row">
+		    <form class="col s12">
+
+		    	<div class="col s4">
+			      	<p>Commute:</p>
+			      	<p>
+			          <input placeholder="Work Address" id="work_address" type="text" class="validate">
+					</p>
+					<p>
+				      <input class="with-gap" name="group5" type="radio" id="walk"  />
+				      <label for="walk">Walk/Bike</label>
+				    </p>
+					<p>
+				      <input class="with-gap" name="group5" type="radio" id="transit"  />
+				      <label for="transit">Public Transit</label>
+				    </p>
+				    <p>
+				      <input class="with-gap" name="group5" type="radio" id="drive"  />
+				      <label for="drive">Drive</label>
+				    </p><br>
+
+					<p>Commute Time (Minutes)</p>
+				    <p class="range-field">
+				      <input type="range" id="income" min="10" max="120" />
+				    </p><br>
+		    	</div>
+
+				<div class="col s4">
+					<p>School Level:</p>
+			      	<p>
+					  <input type="checkbox" id="school_k-" />
+					  <label for="school_k-">Early Childhood</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" id="school_1-8" />
+					  <label for="school_1-8">Grades 1-8</label>
+					</p>
+					<p>
+					  <input type="checkbox" id="school_hs" />
+					  <label for="school_hs">High School</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" id="school_none" />
+					  <label for="school_none">None</label>
+					</p><br>
+
+
+			      	<p>Schools Quality:</p>
+			      	<p>
+				      <input class="with-gap" name="group6" type="radio" id="school_not_high"  />
+					  <label for="school_not_high">Not Important</label>
+				    </p>
+					<p>
+				      <input class="with-gap" name="group6" type="radio" id="school_high"  />
+					  <label for="school_high">Important</label>
+				    </p>
+				    <p>
+				      <input class="with-gap" name="group6" type="radio" id="school_very_hihg"  />
+					  <label for="school_very_hihg">Extremely Important</label>
+				    </p><br>
+				</div>
+
+				<div class="col s4">
+					<p>Night Life:</p>
+			      	<p>
+				      <input class="with-gap" name="group7" type="radio" id="night_life_not_high"  />
+					  <label for="night_life_not_high">Not Important</label>
+				    </p>
+					<p>
+				      <input class="with-gap" name="group7" type="radio" id="night_life_high"  />
+					  <label for="night_life_high">Important</label>
+				    </p>
+				    <p>
+				      <input class="with-gap" name="group7" type="radio" id="night_life_very_hihg"  />
+					  <label for="night_life_very_hihg">Extremely Important</label>
+				    </p><br>
+
+				    <p>Noise Level</p>
+					  <div class="switch">
+					    <label>
+					      Less Important
+					      <input type="checkbox">
+					      <span class="lever"></span>
+					      More Important
+					    </label>
+					  </div><br>
+
+					<p>Crime Level</p>
+					  <div class="switch">
+					    <label>
+					      Less Important
+					      <input type="checkbox">
+					      <span class="lever"></span>
+					      More Important
+					    </label>
+					  </div><br>
+				</div>
+			  <button class="btn waves-effect waves-light blue-green" type="submit" name="action">Submit
+			    <i class="material-icons right">send</i>
+			  </button>
+			</div>
+
+	<div class="parallax-container">
+		<div class="parallax"><img src="static/Bridge.jpg"></div>
+	</div>
+
+    </div>
     </form>
   </div>
-       
 
-</body>
-</html>
-
+	</script>
+{%endverbatim%}
 
