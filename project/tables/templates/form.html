@@ -28,7 +28,11 @@
 					</p>
 			      	<p>
 					  <input type="checkbox" id="35_64" />
-					  <label for="35_64">35-64</label>
+					  <label for="35_64">35-54</label>
+					</p>
+					<p>
+					  <input type="checkbox" id="35_64" />
+					  <label for="35_64">55-64</label>
 					</p>
 			      	<p>
 					  <input type="checkbox" id="65+" />
@@ -39,26 +43,26 @@
 				<div class="col s4">
 					<p>Gender</p>
 					<p>
-					<input type="checkbox" name="group" id="male" />
+					<input type="checkbox" id="male" />
 					<label for="male">Male</label>
 					</p>
 					<p>
-					<input type="checkbox" name="group" id="female" />
+					<input type="checkbox" id="female" />
 					<label for="female">Female</label>
 					</p><br>
 
-					<p>Marital Status</p>			
+					<p>Children</p>			
 					<p>
-				      <input class="with-gap" name="group" type="radio" id="single"  />
-				      <label for="single">Single</label>
+				      <input class="with-gap" name="group" type="radio" id="children_none"  />
+				      <label for="children_none">None</label>
 				    </p>
 				    <p>
-				      <input class="with-gap" name="group" type="radio" id="married"  />
-				      <label for="married">Married</label>
+				      <input class="with-gap" name="group" type="radio" id="children_1+"  />
+				      <label for="children_1+">1 or More</label>
 				    </p>
 				    <p>
-				      <input class="with-gap" name="group" type="radio" id="married_kids"  />
-				      <label for="married_kids">Married with Children</label>
+				      <input class="with-gap" name="group" type="radio" id="children_3+"  />
+				      <label for="children_3+">3 or More</label>
 				    </p><br>
 				</div>
 
@@ -68,38 +72,52 @@
 					  <div class="switch">
 					    <label>
 					      No
-					      <input type="checkbox">
-					      <span class="lever"></span>
+					      <input name="CHECKBOX"  type="checkbox">
+					      <span class="lever" id="in_school_toggle"></span>
 					      Yes
 					    </label>
 					  </div><br>
 
-					<p>Current Education Level</p>
-					<p>
-				      <input class="with-gap" name="group1" type="radio" id="elementary"  />
-				      <label for="elementary">Elementary School Student</label>
-				    </p>
-					<p>
-				      <input class="with-gap" name="group1" type="radio" id="hs"  />
-				      <label for="hs">High School Student</label>
-				    </p>
-				    <p>
-				      <input class="with-gap" name="group1" type="radio" id="college"  />
-				      <label for="college">College Student</label>
-				    </p><br>
+					<div id="current_edu_level" style="display:none">
+						<p>Current Education Level</p>
+						<p>
+					      <input class="with-gap" name="group1" type="radio" id="elementary"  />
+					      <label for="elementary">Elementary School Student</label>
+					    </p>
+						<p>
+					      <input class="with-gap" name="group1" type="radio" id="hs"  />
+					      <label for="hs">High School Student</label>
+					    </p>
+					    <p>
+					      <input class="with-gap" name="group1" type="radio" id="college"  />
+					      <label for="college">College Student</label>
+					    </p>
+					</div>
 
-				   <p>Education Level (highest level completed)</p>
-					<p>
-				      <input class="with-gap" name="group2" type="radio" id="hs+"  />
-				      <label for="hs+">High School and over</label>
-				    </p>
-				    <p>
-				      <input class="with-gap" name="group2" type="radio" id="college+"  />
-				      <label for="college+">College and over</label>
-				    </p><br>
+					<div id="highest_edu_level">
+					   <p>Highest Education Level Achieved</p>
+						<p>
+					      <input class="with-gap" name="group2" type="radio" id="hs+"  />
+					      <label for="hs+">High School and over</label>
+					    </p>
+					    <p>
+					      <input class="with-gap" name="group2" type="radio" id="college+"  />
+					      <label for="college+">College and over</label>
+					    </p><br>
+					</div>
+
+					<p>Marital Status</p>
+					  <div class="switch">
+					    <label>
+					      Single
+					      <input type="checkbox">
+					      <span class="lever"></span>
+					      Married
+					    </label>
+					  </div><br>
 				</div>
 
-				<div class="col s9">
+				<div class="col s11">
 					<p>Income Level (in thousands)</p>
 				    <p class="range-field">
 				      <input type="range" id="income" min="20" max="250" />
@@ -291,6 +309,9 @@
 					    </label>
 					  </div><br>
 				</div>
+			  <button class="btn waves-effect waves-light blue-green" type="submit" name="action">Submit
+			    <i class="material-icons right">send</i>
+			  </button>
 			</div>
 
 	<div class="parallax-container">

@@ -35,4 +35,19 @@ $(document).ready(function(){
   //   });
 
 
+    $("#answer_div").on('click', 'input[name="CHECKBOX"]',function(event){
+        var $is_checked = $(this).is(':checked')
+
+        if ($is_checked === true) {
+          // display current_edu_level
+          $("#highest_edu_level").css("display", "none");
+          $("#current_edu_level").css("display", "block");
+        } else {
+          // display highest_edu_level
+          $("#highest_edu_level").css("display", "block");
+          $("#current_edu_level").css("display", "none");
+        };
+    });
+
+
 });
