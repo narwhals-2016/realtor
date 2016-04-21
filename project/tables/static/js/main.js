@@ -2,7 +2,9 @@
 $(document).ready(function(){
 	console.log("Hi there!")
 
+    $('.button-collapse').sideNav();
     $('.parallax').parallax();
+
 
 ///// Register /////
     $('#form_button').on('click', function(event){
