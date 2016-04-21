@@ -309,7 +309,7 @@ def extract_Pre_K_school_directory(fname):
     c = dataa['LocName'].values[1:]
     dataa.columns = index.index
     
-    PreK_school_list = dataa["LocName"].values
+    PreK_school_list = list(dataa["LocName"].values)
     PreK_school_type = dataa["PreK_Type"].values
     Borough_list = dataa["Borough"].values
     address_list = dataa["address"].values
@@ -319,26 +319,22 @@ def extract_Pre_K_school_directory(fname):
 
     
     initialize_dict()
-    # print('LIST**',zip_list)
-    #print('zip: ',zip_list)
-    # z_list = ['11692','10472']
-    #print('whole dataset:', dataa[dataa["11692"]])
-    for zipcode in zip_list:
-
+   
+    for preK in PreK_school_list:
+        temp=[]
+        ix = PreK_school_list.index(preK) 
+        zipcode = zip_list[ix]
         for nb, vals in best_matches.items():
             if str(zipcode) in vals:
-                #print(zipcode,'****', nb, 'list  :',vals)
-                ix = zip_list.index(int(zipcode))
-                #print('index of the zipcode: ',ix,  seats_list[ix])
-
                 temp = ["Kindergarten :", "School :"+PreK_school_list[ix],
                         "Type of school :"+PreK_school_type[ix],
                         "Number of students: "+str(seats_list[ix])]
-
                 r[nb].append(temp)
 
-    # print('r   :',len(r['Upper West Side']))
+
+    # print('r   :',len(r['Brighton Beach']))
     #assign_PKschool_scores(dataa, zip_list)
+    
 
 def get_zip_codes_from_all_schools_directory(fname1,lst):
  
