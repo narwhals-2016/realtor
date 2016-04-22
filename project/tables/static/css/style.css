@@ -6,6 +6,18 @@
 	margin-right: -3em;
 }
 
+.tall {
+	height: 90vh !important;
+}
+
+.blur {
+	-webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+}
+
 .parallax {
 	height: 60vh;
 	margin-left: -3em; 

@@ -28,18 +28,34 @@
 </head>
 <body>
 
+<!-- Modal Structure -->
+<!-- <div id="login_modal" class="modal">
+	<form action="" id='register_form' method="POST">
+	    <div class="modal-content">
+	            {% csrf_token %}
+	            {{ login_form.as_p }}
+	    </div>
+
+	    <div class="modal-footer">
+	        <input class="btn waves-effect waves-light" id="register_button" type="submit" name="action" value= "Submit Registration" <i class="material-icons right"></i>
+	    </div>
+	</form>
+</div>
+ -->
+
 <nav class="white" role="navigation">
-	<div class="nav-wrapper container">
+	<div id="nav" class="nav-wrapper container">
 		<a id="logo-container" class="black-text text-lighten-1" href="/" class="brand-logo">Realtor</a>
 			<ul class="right hide-on-med-and-down">
-				<li><a class="black-text text-lighten-1 form_button" href="/form">Search</a></li>
-				<li><a class="black-text text-lighten-1" href="#">About</a></li>
-				<li><a class="black-text text-lighten-1" href="#">Register</a></li>
-				<li><a class="black-text text-lighten-1" href="#">Login</a></li>
+				<li><a id="search" class="black-text text-lighten-1 form_button" href="/form">Search</a></li>
+				<li><a id="register" class="black-text text-lighten-1" href="#">Register</a></li>
+				<li><a id="login" class="black-text text-lighten-1" href="#login_modal">Login</a></li>
 			</ul>
 
 			<ul id="nav-mobile" class="side-nav">
-				<li><a class="black-text text-lighten-1" href="#">Navbar Link</a></li>
+				<li><a id="search" class="black-text text-lighten-1 form_button" href="/form">Search</a></li>
+				<li><a id="register" class="black-text text-lighten-1" href="#">Register</a></li>
+				<li><a id="login" class="black-text text-lighten-1" href="#">Login</a></li>
 			</ul>
 
 		<a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>

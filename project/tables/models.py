@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Neighborhood(models.Model):
@@ -9,6 +10,20 @@ class Neighborhood(models.Model):
     def to_json(self):
         return {
             "name": self.name,
+        }
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    # search = models.CharField(max_length=3000, default=None, Null=True)
+    '''
+    we can add aditional attributes but Included in the django user model are these attributes:
+    Username, Password, Email address, firstname, lastname
+    '''
+
+    def to_json(self):
+        return {
+            "email": user.email,
+            "username": user.username,
         }
 
 class Ages(models.Model):
