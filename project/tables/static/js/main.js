@@ -5,9 +5,8 @@ $(document).ready(function(){
     $('.button-collapse').sideNav();
     $('.parallax').parallax();
 
-
 ///// Register /////
-    $('#form_button').on('click', function(event){
+    $('.form_button').on('click', function(event){
     	event.preventDefault();
         var template = $('#form_template').html();
         var renderM = Mustache.render(template);
