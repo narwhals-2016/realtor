@@ -13,27 +13,27 @@ $(document).ready(function(){
         $('#answer_div').html(renderM);
     });
 
-    $('#answer_div').on('submit', '#register_form',function(event){
-    event.preventDefault();
+    // $('#answer_div').on('submit', '#register_form',function(event){
+    // event.preventDefault();
 
-    var query_string = $(this).serialize() // returns all the data in your form
+    // var query_string = $(this).serialize() // returns all the data in your form
 
-    $.ajax({
-        method: "POST",
-        url: "register",
-        data: query_string,
-    }).done(function(data, status){
+    // $.ajax({
+    //     method: "POST",
+    //     url: "register",
+    //     data: query_string,
+    // }).done(function(data, status){
 
-    if (data.success){
-      ////// if they registered then display the Login ////////
-                var template = $('#login-template').html();
-            var renderM = Mustache.render(template);
-            $('#answer_div').html(renderM);
-            $('#answer_div').append("<br><br>");
-            $('#answer_div').append(data.Message);
-            }
-        });
-    });
+    // if (data.success){
+    //   ////// if they registered then display the Login ////////
+    //             var template = $('#login-template').html();
+    //         var renderM = Mustache.render(template);
+    //         $('#answer_div').html(renderM);
+    //         $('#answer_div').append("<br><br>");
+    //         $('#answer_div').append(data.Message);
+    //         }
+    //     });
+    // });
 
 
 // ///// Login /////
@@ -44,42 +44,42 @@ $(document).ready(function(){
         $('#answer_div').html(renderM);
     });
 
-    $('#answer_div').on('submit', '#login_form',function(event){
-    event.preventDefault();
-
-    var query_string = $(this).serialize() // returns all the data in your form
-
-    $.ajax({
-        method: "POST",
-        url: "login",
-        data: query_string,
-    }).done(function(data, status){
-
-        $('#answer_div').html(data.Message);
-        $('#answer_div').append("<br><br>");
-        $('#nav').append(data.username);
-
-        });
-    });
-
-///// Logout /////
-    $('#nav').on('click', "#logout", function(event){
-    event.preventDefault();
+    // $('#answer_div').on('submit', '#login_form',function(event){
+    // event.preventDefault();
 
     // var query_string = $(this).serialize() // returns all the data in your form
 
-    $.ajax({
-        method: "POST",
-        url: "logout",
-        // data: query_string,
-    }).done(function(data, status){
+    // $.ajax({
+    //     method: "POST",
+    //     url: "login",
+    //     data: query_string,
+    // }).done(function(data, status){
 
-    $('#answer_div').html(" <h2> Goodbye, See you soon!</h2>");
-    $('#answer_div').append(data.Message);
-  location.reload();
+    //     $('#answer_div').html(data.Message);
+    //     $('#answer_div').append("<br><br>");
+    //     $('#nav').append(data.username);
 
-    });
-});
+    //     });
+    // });
+
+///// Logout /////
+//     $('#nav').on('click', "#logout", function(event){
+//     event.preventDefault();
+
+//     // var query_string = $(this).serialize() // returns all the data in your form
+
+//     $.ajax({
+//         method: "POST",
+//         url: "logout",
+//         // data: query_string,
+//     }).done(function(data, status){
+
+//     $('#answer_div').html(" <h2> Goodbye, See you soon!</h2>");
+//     $('#answer_div').append(data.Message);
+//   location.reload();
+
+//     });
+// });
 
 
 
