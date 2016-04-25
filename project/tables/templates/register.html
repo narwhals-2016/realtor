@@ -1,0 +1,30 @@
+    <script id="register-template" type="x-tmpl-mustache/template">
+
+
+	<div class="parallax-container" id="background_pic">
+
+		<div class="section no-pad-bot">
+			<div class="container">
+				<br><br>
+				<h1 class="header center white-text">Register</h1>
+					<div class="row center">
+						<h5 class="header col s12 white-text">Become Part of The Growing Family</h5>
+					</div>
+				<br><br>
+			</div>
+		</div>
+	</div>
+
+	  <div class="container">
+        <form action="" id='register_form' method="POST">
+
+            {% csrf_token %}
+            {{ user_form.as_p }}
+
+            <input class="btn waves-effect waves-light" id="register_button" type="submit" name="action" value= "Submit Registration" <i class="material-icons right"></i>
+            <br><br><br>
+        </div>
+
+        </form>
+
+    </script>
