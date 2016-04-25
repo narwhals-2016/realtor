@@ -17,7 +17,6 @@ name = lambda *dirs: os.path.join(*dirs)
 current = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = name(current, '..')
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
