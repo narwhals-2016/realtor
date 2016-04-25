@@ -164,12 +164,13 @@ def CalculateValues(r, dataa, c):
     insert_into_db(r)
 
 
-def extract_transform_social_data(folder, fname):
+def extract_transform_social_data(folder_path, fname):
 
     dataa = {}
     r = {}
 
-    file_path = 'tables/datasets/' + folder + '/' + fname
+    file_path = folder_path + "/" + fname
+    print(file_path)
     dataa = pd.read_excel(file_path, sheetname=0)
 
     c = dataa['2009-2013 ACS Social Profile'].values
@@ -180,10 +181,10 @@ def extract_transform_social_data(folder, fname):
     else:
         print('****Rikers ****')
     
-def run(folder):
+def run(folder_path, folder):
 
 
-    list_of_files = os.listdir('tables/datasets/' + folder)
+    list_of_files = os.listdir(folder_path + folder)
     for f in list_of_files:
-        extract_transform_social_data(folder, f)
+        extract_transform_social_data(folder_path + folder, f)
 
