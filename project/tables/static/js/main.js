@@ -45,23 +45,24 @@ $(document).ready(function(){
         $('#answer_div').html(renderM);
     });
 
-    // $('#answer_div').on('submit', '#login_form',function(event){
-    // event.preventDefault();
+    $('#answer_div').on('submit', '#login_form',function(event){
+    event.preventDefault();
+    console.log("clicked")
 
-    // var query_string = $(this).serialize() // returns all the data in your form
+    var query_string = $(this).serialize() //returns all the data in your form
 
-    // $.ajax({
-    //     method: "POST",
-    //     url: "login",
-    //     data: query_string,
-    // }).done(function(data, status){
+    $.ajax({
+        method: "POST",
+        url: "login",
+        data: query_string,
+    }).done(function(data, status){
 
-    //     $('#answer_div').html(data.Message);
-    //     $('#answer_div').append("<br><br>");
-    //     $('#nav').append(data.username);
+        $('#answer_div').html(data.Message);
+        $('#answer_div').append("<br><br>");
+        // $('#nav').append(data.username);
 
-    //     });
-    // });
+        });
+    });
 
 ///// Logout /////
 //     $('#nav').on('click', "#logout", function(event){
