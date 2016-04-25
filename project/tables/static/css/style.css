@@ -1,13 +1,21 @@
-h1 {
-	color: purple;
-}
-
 /*.default_color_text{color: #546e7a !important}*/
 
 .parallax-container {
 	height: 60vh;
 	margin-left: -3em; 
 	margin-right: -3em;
+}
+
+.tall {
+	height: 90vh !important;
+}
+
+.blur {
+	-webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
 }
 
 .parallax {
@@ -34,8 +42,19 @@ h1 {
 
 #background_color {
 	background-color: #546e7a;
+	height: 40vh;
 }
+
+#background_pic {
+	background-image: url("/static/images/skyline.jpg");
+/*	-webkit-filter: blur(2.5px);
+	-moz-filter: blur(2.5px);
+	-o-filter: blur(2.5px);
+	-ms-filter: blur(2.5px);
+	filter: blur(2.5px);
+*/}
 
 #blue-green {
 	color:#26a69a;
 }
+
