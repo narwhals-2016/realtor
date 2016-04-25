@@ -1,4 +1,3 @@
-
 import requests
 import json
 
@@ -63,9 +62,17 @@ print (minutes)
 
 
 
-'''
-KEY = AIzaSyCnE-5U0r-VELpWxXFXSfzwa6xWsC83hyM
 
+
+
+
+
+
+
+
+## --------------------------------------------------------------------------------------------------------------- ##
+
+'''
 SAMPLE = 
 https://maps.googleapis.com/maps/api/distancematrixjson?origins=West+Villiage|New+York+City&destinations=Oakhurts+NJ&key=AIzaSyCnE-5U0r-VELpWxXFXSfzwa6xWsC83hyM
 
