@@ -48,8 +48,9 @@ $(document).ready(function(){
     $('#answer_div').on('submit', '#login_form',function(event){
     event.preventDefault();
     console.log("clicked")
-
+    console.log(this);
     var query_string = $(this).serialize() //returns all the data in your form
+    console.log(query_string)
 
     $.ajax({
         method: "POST",
