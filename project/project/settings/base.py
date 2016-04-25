@@ -13,9 +13,9 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-name = lambda *dirs: os.path.join(current, *dirs)
+name = lambda *dirs: os.path.join(*dirs)
 current = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = name(current, name('..','..'))
+BASE_DIR = name(current, '..')
 
 
 # Quick-start development settings - unsuitable for production
@@ -121,6 +121,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError as e:
     pass

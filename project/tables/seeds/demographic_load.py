@@ -122,11 +122,12 @@ def add_gender_to_demographic_row(indexed, neighborhood):
 	demographic_row.save()
 	print("SAVED")
 
-def run(folder, table):
-	file_list = os.listdir('tables/datasets/' + folder)
+def run(folder_path, folder, table):
+	# 'tables/datasets/' 
+	file_list = os.listdir(folder_path + folder)
 	for filename in file_list:
 		# use pandas to get dataframe from xlsx file
-		dataframe = parse_file('tables/datasets/' + folder + '/' + filename)
+		dataframe = parse_file(folder_path + folder + '/' + filename)
 		# identify neighborhood
 		neighborhood = get_neighborhood(dataframe)
 		# which table tree

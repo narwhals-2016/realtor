@@ -98,11 +98,11 @@ def make_economic_row(indexed, neighborhood):
         mean_income=econ_dict["HH_income_mean"],
 	)
 
-def run(folder):
-	file_list = os.listdir('tables/datasets/' + folder)
+def run(folder_path, folder):
+	file_list = os.listdir(folder_path + folder)
 	for filename in file_list:
 		# use pandas to get dataframe from xlsx file
-		dataframe = parse_file('tables/datasets/' + folder + '/' + filename)
+		dataframe = parse_file(folder_path + folder + '/' + filename)
 		# identify neighborhood
 		neighborhood = get_neighborhood(dataframe)
 		# if rikers don't add to table

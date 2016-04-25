@@ -79,3 +79,6 @@ def update_nb_nightlife_score(score_dict):
 			print("didn't find nb")
 
 	return True
+
+def run():
+	update_nb_nightlife_score(avg_yelp_plus_liquor)

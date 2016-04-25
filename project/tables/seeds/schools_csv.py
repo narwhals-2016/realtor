@@ -1,13 +1,13 @@
 import csv
 import os
+from decimal import Decimal
 from pprint import pprint
 import pandas as pd
-import numpy as np
 import numpy as np
 from tables.models import SchoolEducation, School, Neighborhood
 
 
-def extract_transform_school_data(fname, best_matches, r):
+def extract_transform_school_data(folder_path, fname, best_matches, r):
 
 
     list_of_cols = ["School Name","Enrollment",
@@ -19,7 +19,7 @@ def extract_transform_school_data(fname, best_matches, r):
 
 
 
-    school_type = fname.split('/')[3].split('_')[2]
+    school_type = fname.split('/')[-1].split('_')[2]
     if school_type == "HS":
         c = dataa['2014-15 School Quality Report for High Schools'].values[1:]
     elif school_type == "EMS":
@@ -29,7 +29,7 @@ def extract_transform_school_data(fname, best_matches, r):
     df_trans.columns = c
     df_trans.index = index.values 
 
-    all_schools_directory =  'tables/datasets/schools/15-16SchoolDirectory.xlsx' 
+    all_schools_directory =  folder_path + '15-16SchoolDirectory.xlsx' 
     # for every school get the typr, addr and zipcode from all schools directory(master directory)
     addr_zip_dictionary = get_zip_codes_from_all_schools_directory(all_schools_directory, c) 
                 
@@ -185,14 +185,20 @@ def insert_into_db(r):
         score_list = get_3_scores(school_scores, neighborhood)
         try:
             item =  Neighborhood.objects.get(name=neighborhood)
-            School.objects.create(neighborhood=item,
-                                  k_school_score = score_list[0],
-                                  elem_school_score = score_list[1],
-                                  hs_school_score = scoer_list[2])
-        except:
-            print(neighborhood, 'not found for School model')
+            School.objects.create(
+                neighborhood=item,
+                k_school_score = score_list[0],
+                elem_school_score = score_list[1],
+                hs_school_score = score_list[2]
+            )
+        except Exception as e:
+            print("*"*100)
+            print(neighborhood)
+            print(score_list)
+            print(school_scores)
+            print(type(e),e.args)
 
-def run():
+def run(folder_path):
     #---------------------------------Main pgm -----------------------------------------------
 # r-(resultant dictionary) master dictionary with neighborhoods as keys and school(s) information/scores as values
     r = {} 
@@ -392,13 +398,13 @@ def run():
 
     initialize_dict(best_matches, r)
 #----------------------------491 High Schools---------------------------------------------
-    HighSchool_file = 'tables/datasets/schools/2014_2015_HS_SQR_Results_2016_01_07.xlsx'
-    HSschool_list = extract_transform_school_data(HighSchool_file, best_matches, r)   # 491 high schools
+    HighSchool_file = folder_path + '2014_2015_HS_SQR_Results_2016_01_07.xlsx'
+    HSschool_list = extract_transform_school_data(folder_path, HighSchool_file, best_matches, r)   # 491 high schools
     # print('High school count: ',len(HSschool_list))  
 
 #----------------------------1254 elementary thru middle Schools---------------------------------------------
-    ELMSchool_file = 'tables/datasets/schools/2014_2015_EMS_SQR_Results_2016_01_07.xlsx'
-    ELMschool_list = extract_transform_school_data(ELMSchool_file, best_matches, r)   
+    ELMSchool_file = folder_path + '2014_2015_EMS_SQR_Results_2016_01_07.xlsx'
+    ELMschool_list = extract_transform_school_data(folder_path, ELMSchool_file, best_matches, r)   
     # print('Elementary-thru-Middleschools  ',len(ELMschool_list))
 #----------create Schools table
     insert_into_db(r)
