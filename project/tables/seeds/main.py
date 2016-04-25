@@ -31,7 +31,8 @@ def seed_db(data_path, *seed_tables):
 	if "schools" in seed_tables:
 		schools_csv.run(data_path + "schools/")
 	# nightlife not complete
-	# nightlife.run()
+	if "nightlife" in seed_tables:
+		nightlife.run()
 
 
 

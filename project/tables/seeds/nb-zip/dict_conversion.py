@@ -204,6 +204,18 @@ best_matches = {
 	'Woodhaven': '11421',
 	'Woodlawn-Wakefield': '10466',
 	'Woodside': '11377',
-	'Yorkville nyc': '10128',
-	"hell's kitchen": '10019',
+	'Yorkville': '10128',
+	"Clinton": '10019',
+}
+
+# maps alternate neighborhood names to names in Neighborhood table
+nb_names = {
+	'Bedford brooklyn': 'Bedford',
+	'Belmont bronx': 'Belmont',
+	"hell's kitchen nyc": "Clinton",
+	'Park Slope/Gowanus': 'Park Slope-Gowanus',
+	'Madison brookl': 'Madison',
+	'Queensboro Hill queens': 'Queensboro Hill',
+	'Stuyvesant Heights nyc': 'Stuyvesant Heights',
+	'Yorkville nyc': 'Yorkville',
 }
