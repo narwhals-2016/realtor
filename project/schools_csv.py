@@ -54,8 +54,7 @@ def extract_transform_school_data(fname, best_matches, r):
         except:
             f = 0                        
 
-        score =  calculate_score(enrol, rigor, student_achievemet)
-                        
+        score =  calculate_score(enrol, rigor, student_achievemet)                        
         for nb, vals in best_matches.items():
             if str(zipcode) in vals:
                 temp = [school,
@@ -64,18 +63,8 @@ def extract_transform_school_data(fname, best_matches, r):
                         addr_and_zip[1],
                         str(zipcode)]
                 r[nb].append(temp)
-
     return(c)
     
-
-def get_HS_rating(r,c,df_trans):
-    if c == 'New Visions Charter High School for Advanced Math':
-        print('in function***',c,'***',df_trans['Unnamed: 3'])
-    r['Number of students'] = df_trans[c]['Unnamed: 3']
-    r['Instruction Rigor rating'] = df_trans[c]['Unnamed: 4']
-    r['Student achievement rating'] = df_trans[c]['Unnamed: 10']
-    return
-
 #-----
 def calculate_score(n1, n2, n3):
     #  n1 = enrollment, n2 = Rigorous Instruction Rating,  n3 = Student Achievement Rating    
@@ -157,7 +146,7 @@ def get_zip_codes_from_all_schools_directory(fname1,lst):
         else:
             not_found_count += 1
             elm_addr_zip_dict[school] = ['Type not found','Addr not found', 'Zip not found']
-
+            print('school_uppercase: ',school_uppercase)
     return(elm_addr_zip_dict)
 
 
@@ -170,27 +159,55 @@ def get_3_scores(detail_list, neighborhood):
 
     if len(detail_list) > 0:
         for i in range(0, len(detail_list)):
-            if ((detail_list[i][1] == 'Pre-K Only') or (detail_list[i][1] == 'K-12 School')):
-                k_school_score = k_school_score + detail_list[i][2]
-            elif ((detail_list[i][1] == 'Elementary') or (detail_list[i][1] == 'Middle School')):
+            if (detail_list[i][1] in ('Pre-K Only', 'DOE', 'CHARTER','NYCEEC','K-12 School')):
+                k_school_score =+ 1
+            elif (detail_list[i][1]  in ('Elementary','Middle School')):
                 ms_school_score = ms_school_score + detail_list[i][2]
             elif (detail_list[i][1] in  ('K-12 School', 'Junior High School', 
                                          'Junior Senior School','Senior High')):
-                hs_school_score = hs_school_score = detail_list[i][2]  
+                hs_school_score = hs_school_score + detail_list[i][2]  
         lst = [k_school_score, ms_school_score, hs_school_score]       
     return(lst)
 
 def insert_into_db(r):
     for neighborhood, school_scores in r.items():
         score_list = get_3_scores(school_scores, neighborhood)
-        try:
-            item =  Neighborhood.objects.get(name=neighborhood)
-            School.objects.create(neighborhood=item,
-                                  k_school_score = score_list[0],
-                                  elem_school_score = score_list[1],
-                                  hs_school_score = scoer_list[2])
-        except:
-            print(neighborhood, 'not found for School model')
+       try:
+           item =  Neighborhood.objects.get(name=neighborhood)
+           School.objects.create(neighborhood=item,
+                                 k_school_score = score_list[0],
+                                 elem_school_score = score_list[1],
+                                 hs_school_score = scoer_list[2])
+       except:
+           print(neighborhood, 'not found for School model')
+
+def extract_Pre_K_school_directory(fname, best_matches, r):
+# fname is the file with preK schools(public,private etc)
+    list_of_cols = ["LocName","PreK_Type", 
+    "Borough","address", "zip",
+    "Seats","EXTENDED_DAY"]
+    dataa = pd.read_csv(fname)
+    index = dataa.iloc[0]
+    dataa.columns = index.index
+    
+    df_info = dataa[["LocName", "PreK_Type", 
+                    "Borough", "address",
+                    "zip", "Seats", "EXTENDED_DAY"]]
+    rows = df_info["LocName"].values
+    
+    df_info.index = rows
+    scls = df_info.index
+    for scl in range(0, len(scls)):
+        obj = df_info.loc[scls[scl]]
+        zipcode = obj["zip"].astype(int)
+        for nb, vals in best_matches.items():
+            if str(zipcode) in vals:
+                temp = [obj["PreK_Type"],
+                        obj["Seats"],
+                        obj["zip"]]
+                r[nb].append(temp)
+#    print('universal preK: ',r)
+
 
 def run():
     #---------------------------------Main pgm -----------------------------------------------
@@ -396,11 +413,15 @@ def run():
     HSschool_list = extract_transform_school_data(HighSchool_file, best_matches, r)   # 491 high schools
     # print('High school count: ',len(HSschool_list))  
 
-#----------------------------1254 elementary thru middle Schools---------------------------------------------
+# #----------------------------1254 elementary thru middle Schools-------------------------
     ELMSchool_file = 'tables/datasets/schools/2014_2015_EMS_SQR_Results_2016_01_07.xlsx'
     ELMschool_list = extract_transform_school_data(ELMSchool_file, best_matches, r)   
     # print('Elementary-thru-Middleschools  ',len(ELMschool_list))
-#----------create Schools table
+
+#----------------------------1885 preK Schools---------------------------------------------
+    Pre_Kschool_file =  'tables/datasets/schools/Universal_Pre-K__UPK__School_Locations.csv' 
+    extract_Pre_K_school_directory(Pre_Kschool_file, best_matches, r)
+#----------create Schools table-----------------------------------------------------------
     insert_into_db(r)
 
 
