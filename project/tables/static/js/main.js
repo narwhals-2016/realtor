@@ -11,6 +11,7 @@ $(document).ready(function(){
         var template = $('#register-template').html();
         var renderM = Mustache.render(template);
         $('#answer_div').html(renderM);
+        window.scrollTo(0, 0);
     });
 
     $('#answer_div').on('submit', '#register_form',function(event){
@@ -30,6 +31,7 @@ $(document).ready(function(){
             var template = $('#login-template').html();
             var renderM = Mustache.render(template);
             $('#answer_div').html(renderM);
+            window.scrollTo(0, 0);
             // $('#answer_div').append(data.Message);
             }
         });
@@ -42,6 +44,7 @@ $(document).ready(function(){
         var template = $('#login-template').html();
         var renderM = Mustache.render(template);
         $('#answer_div').html(renderM);
+        window.scrollTo(0, 0);
     });
 
     $('#answer_div').on('submit', '#login_form',function(event){
@@ -61,6 +64,7 @@ $(document).ready(function(){
         ////// if they login correctly ////////
           console.log("HERE")
           document.location.href="/";
+          window.scrollTo(0, 0);
 
           // var template = $('#user-template').html();
           // var renderM = Mustache.render(template);
@@ -87,6 +91,7 @@ $(document).ready(function(){
 
     // $('#answer_div').html(" <h2> Goodbye, See you soon!</h2>");
     document.location.href="/";
+    window.scrollTo(0, 0);
 
     });
 });
@@ -98,6 +103,7 @@ $(document).ready(function(){
         var template = $('#form_template').html();
         var renderM = Mustache.render(template);
         $('#answer_div').html(renderM);
+        window.scrollTo(0, 0);
     });
 
     $('#answer_div').on('submit', '#search_form',function(event){
@@ -113,12 +119,13 @@ $(document).ready(function(){
     }).done(function(data, status){
 
     if (data.success){
-        ////// if they login correctly ////////
+        ////// if submit form correctly ////////
           console.log("HERE")
 
           var template = $('#results-template').html();
           var renderM = Mustache.render(template);
           $('#answer_div').html(renderM);
+          window.scrollTo(0, 0);
           }
 
         });
@@ -140,5 +147,15 @@ $(document).ready(function(){
         };
     });
 
+
+
+///// Results /////
+    // $('#nav').on('click', "#results", function(event){
+    //   event.preventDefault();
+    //     var template = $('#results-template').html();
+    //     var renderM = Mustache.render(template);
+    //     $('#answer_div').html(renderM);
+    //     window.scrollTo(0, 0);
+    // });
 
 });
