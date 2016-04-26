@@ -18,7 +18,7 @@ nb_zip ={
 	'Great Kills': ['10308'], 'East Elmhurst': ['11369'], 'Melrose South-Mott Haven North': ['10451'], 
 	'Central Harlem South': ['10026'], 'Corona': ['11368'], 'West Village': ['10014', '10012'], 
 	'Douglas Manor-Douglaston-Little Neck': ['11362'], 'Dyker Heights': ['11228'], 'Astoria': ['11103'], 
-	'Belmont bronx': ['10458'], 'East Harlem North': ['10037'], 'Spuyten Duyvil-Kingsbridge': ['10463'], 
+	'Belmont': ['10458'], 'East Harlem North': ['10037'], 'Spuyten Duyvil-Kingsbridge': ['10463'], 
 	'Longwood': ['10455'], 'Bensonhurst West': ['11214'], 'North Side-South Side': ['MISSING'], 
 	'Sunset Park West': ['11220'], 
 	'Battery Park City-Lower Manhattan': ['10280', '10038', '10004', '10006', '10005'], 
