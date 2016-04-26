@@ -58,3 +58,14 @@
 	color:#26a69a;
 }
 
+footer.page-footer {
+	margin-top: 0px;
+}
+
+.section {
+	padding-bottom: 0em;
+}
+
+#username {
+	font-style: italic;
+}

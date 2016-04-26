@@ -1,6 +1,7 @@
 .DS_Store
 db.sqlite3
 yelp_config_secret.json
+local_settings.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
