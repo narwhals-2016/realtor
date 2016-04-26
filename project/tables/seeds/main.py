@@ -1,18 +1,15 @@
 from . import (
 	load_neighborhoods, housing_load, economic_load, 
-	demographic_load, schools_csv, social_csv,
-	nightlife, noise, google_distance_api
+	demographic_load, schools_csv, social_csv,crime,
+	nightlife
+
 )
 
 def seed_db(data_path, *seed_tables):
 	# creates neighborhoods
 	if "all" in seed_tables:
-		seed_tables = [
-			"neighborhoods","housing","economic",
-			"social", "demographic", "nightlife", 
-			"noise", "commute", "schools",
-		]
-		
+		seed_tables = ["neighborhoods","housing","crime","economic","social", "demographic", "schools"]
+
 	if "neighborhoods" in seed_tables:
 		load_neighborhoods.run(data_path, 'housing')
 		load_neighborhoods.run(data_path, 'housing_temp')
@@ -32,6 +29,7 @@ def seed_db(data_path, *seed_tables):
 	if "demographic" in seed_tables:
 		demographic_load.run(data_path, 'demographic', 'all')
 		demographic_load.run(data_path, 'demo_temp', 'all')
+		demographic_load.run(data_path, 'parkslope_demo', 'all')
 	# loads school data
 	if "schools" in seed_tables:
 		schools_csv.run(data_path + "schools/")
@@ -45,5 +43,7 @@ def seed_db(data_path, *seed_tables):
 	if "commute" in seed_tables:
 		google_distance_api.run()
 
+	if "crime" in seed_tables:
+		crime.run()
 
 
