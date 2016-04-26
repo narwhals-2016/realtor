@@ -9,7 +9,7 @@ def seed_db(data_path, *seed_tables):
 	if "all" in seed_tables:
 		seed_tables = [
 			"neighborhoods","housing","economic",
-			"social", "demographic", "schools", "nightlife"
+			"social", "demographic", "schools", "nightlife", "noise"
 		]
 	if "neighborhoods" in seed_tables:
 		load_neighborhoods.run(data_path, 'housing')

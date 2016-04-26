@@ -37,6 +37,7 @@ def get_noise_stats(best_matches,zip_codes):
 		except:
 			errors += 1
 
+	print ("noise data = ")
 	print (neighborhood_noise_complaints) # this is the final dict of neighborhoods to noise complaints
 
 	# print (sum(neighborhood_noise_complaints.values())) #6114
@@ -73,6 +74,7 @@ def update_noise_score(noise_complaints):
 			print("didn't find nb_obj: ", neighborhood)
 
 	return True
+	print ("Done")
 
 def run():
 	complaints = get_noise_stats(best_matches,zip_codes)
