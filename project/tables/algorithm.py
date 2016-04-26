@@ -2,7 +2,7 @@ from tables.models import Ages, Demographic, Economic, UnitDescription,
 
 
 def make_queries(querystring):
-	
+
 
 
 def sort_by_largest_to_smallest(table, field):
@@ -19,7 +19,7 @@ def age_match(age):
 		return sort_by_largest_to_smallest(table=Ages, field='age_20_24')
 	elif age == '25_34':
 		return sort_by_largest_to_smallest(table=Ages, field='age_25_34')
-	elif age == '35_64':
+	elif age == '35_54' or age == '55_64':
 		return sort_by_largest_to_smallest(table=Ages, field='age_35_64')
 	elif age == '65_plus':
 		return sort_by_largest_to_smallest(table=Ages, field='age_65_over')
