@@ -116,6 +116,7 @@ class Building(models.Model):
 
 class Demographic(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
+    children_under_18 = models.DecimalField(max_digits=10, decimal_places=2)
     married = models.DecimalField(max_digits=10, decimal_places=2)
     divorced = models.DecimalField(max_digits=10, decimal_places=2)
     one_yr_turnover = models.DecimalField(max_digits=10, decimal_places=2)
@@ -220,7 +221,7 @@ class School(models.Model):
     # this create a dictionary from an object to use with ajax
     def to_json(self):
         return {
-            "neighborhood": self.neighborhood,
+            "neighborhood": self.neighborhood.name,
             "k_school_score": self.k_school_score,
             "elem_school_score": self.elem_school_score,
             "hs_school_score": self.hs_school_score,
