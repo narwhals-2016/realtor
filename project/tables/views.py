@@ -87,16 +87,11 @@ class Logout(View):
 
 class Search(View):
     def post(self,request):
-    	pass
+    	return JsonResponse({"success": True})
 
 class Results(View):
     def post(self,request):
     	pass
-	    # # this line gets all the posts that we have in the db and orders them by most recent
-     #    dates = Dates.objects.filter(show=True).order_by('-count')[:15]
-     #    # put all the dates into a context dict
-     #    context ["dates"] = dates
-
 
 
 
