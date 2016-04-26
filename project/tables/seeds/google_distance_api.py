@@ -1,11 +1,13 @@
 import requests
 import json
+from tables.models import Neighborhood, Score
 
-neighborhoods = ["Gravesend","Stapleton-Rosebank","Grasmere-Arrochar-Ft. Wadsworth","Grymes Hill-Clifton-Fox Hills","Old Town-Dongan Hills-South Beach","New Brighton-Silver Lake","New Dorp-Midland Beach","West New Brighton-New Brighton-St. George","Oakwood-Oakwood Beach","Westerleigh","Port Richmond","Borough Park","Great Kills","Todt Hill-Emerson Hill-Heartland Village-Ligh","Mariner's Harbor-Arlington-Port Ivory-Granite","Arden Heights","New Springville-Bloomfield-Travis","Rossville-Woodrow","Annadale-Huguenot-Prince's Bay-Eltingville","Charleston-Richmond Valley-Tottenville","Rosedale","Far Rockaway-Bayswater","Bensonhurst West","Springfield Gardens North","Springfield Gardens South-Brookville","Hammels-Arverne-Edgemere","Lindenwood-Howard Beach","Starrett City","East New York (Pennsylvania Ave)","East New York","Canarsie","Brownsville","Rugby-Remsen Village","Seagate-Coney Island","Breezy Point-Belle Harbor-Rockaway Park-Broad","Georgetown-Marine Park-Bergen Beach-Mill Basi","Flatlands","East Flatbush-Farragut","Madison brookl","Erasmus","Sheepshead Bay-Gerritsen Beach-Manhattan Beac","Crown Heights South","Prospect Lefferts Gardens-Wingate","Brighton Beach","Sunset Park East","Midwood","Homecrest","Flatbush","Ocean Parkway South","West Brighton","Kensington-Ocean Parkway","Windsor Terrace","Glen Oaks-Floral Park-New Hyde Park","Bellerose","Cambria Heights","Bath Beach","Douglas Manor-Douglaston-Little Neck","Queens Village","Laurelton","Oakland Gardens","Hollis","St. Albans","Jamaica Estates-Holliswood","Bayside-Bayside Hills","Fresh Meadows-Utopia","Auburndale","Dyker Heights","Ft. Totten-Bay Terrace-Clearview","Baisley Park","South Jamaica","Pomonok-Flushing Heights-Hillcrest","Jamaica","East Flushing","Briarwood-Jamaica Hills","Murray Hill","Kew Gardens Hills","Queensboro Hill queens","Sunset Park West","Flushing","South Ozone Park","Whitestone","Kew Gardens","Richmond Hill","Stuyvesant Town-Cooper Village","East Village","Greenpoint","Maspeth","Rego Park","Bay Ridge","SoHo-TriBeCa-Civic Center-Little Italy","Chinatown","Bensonhurst East","Forest Hills","Bushwick North","Fort Greene","Bedford brooklyn","Woodhaven","DUMBO-Vinegar Hill-Downtown Brooklyn-Boerum H","Bushwick South","Clinton Hill","Stuyvesant Heights nyc","Cypress Hills-City Line","Prospect Heights","Lower East Side","Ocean Hill","Ozone Park","Carroll Gardens-Columbia Street-Red Hook","Crown Heights North","Morningside Heights","Central Harlem South","Mott Haven-Port Morris","East Harlem North","Rikers Island","East Harlem South","North Side-South Side","Upper West Side","Yorkville nyc","Lincoln Square","Steinway","College Point","Old Astoria","Upper East Side-Carnegie Hill","East Elmhurst","hell's kitchen","Astoria","East Williamsburg","Lenox Hill-Roosevelt Island","Queensbridge-Ravenswood-Long Island City","Jackson Heights","North Corona","Midtown-Midtown South","Turtle Bay-East Midtown","Woodside","Hudson Yards-Chelsea-Flat Iron-Union Square","Corona","Murray Hill-Kips Bay","Williamsburg","Elmhurst-Maspeth","Gramercy","Elmhurst","West Village","Hunters Point-Sunnyside-West Maspeth","Pelham Bay-Country Club-City Island","Schuylerville-Throgs Neck-Edgewater Park","Co-Op City","Eastchester-Edenwald-Baychester","Westchester-Unionport","Battery Park City-Lower Manhattan","Allerton-Pelham Gardens","Parkchester","Pelham Parkway","Williamsbridge-Olinville","Bronxdale","Van Nest-Morris Park-Westchester Square","Woodlawn-Wakefield","West Farms-Bronx River","Soundview-Castle Hill-Clason Point-Harding Pa","Soundview-Bruckner","Glendale","Norwood","Belmont bronx","East Tremont","Crotona Park East","Bedford Park-Fordham North","Hunts Point","Longwood","Fordham South","Van Cortlandt Village","Claremont-Bathgate","Ridgewood","Kingsbridge Heights","Morrisania-Melrose","Mount Hope","North Riverdale-Fieldston-Riverdale","Spuyten Duyvil-Kingsbridge","Melrose South-Mott Haven North","East Concourse-Concourse Village","University Heights-Morris Heights","Marble Hill-Inwood","West Concourse","Brooklyn Heights-Cobble Hill","Highbridge","Washington Heights North","Washington Heights South","Central Harlem North-Polo Grounds","Hamilton Heights","Manhattanville","Middle Village"]
+# if one key stops working, use the other 
+# KEY="AIzaSyA16dLy-Oi2VnSfWHgDugdS0bLc7afu8xI"
+KEY="AIzaSyCnE-5U0r-VELpWxXFXSfzwa6xWsC83hyM"
+
+best_matches ={'Breezy Point-Belle Harbor-Rockaway Park-Broad': ['11697'], 'East New York': ['11207'], 'Bushwick North': ['11237'], 'Elmhurst': ['11373'], 'South Ozone Park': ['11436'], 'Arden Heights': ['MISSING'], 'Central Harlem North-Polo Grounds': ['10039'], 'Westchester-Unionport': ['10461'], 'Rosedale': ['11422'], 'Schuylerville-Throgs Neck-Edgewater Park': ['10465'], 'New Brighton-Silver Lake': ['10301'], 'Crotona Park East': ['10460'], 'Prospect Heights': ['11238'], 'Morningside Heights': ['10027'], 'Bushwick South': ['11237'], 'Port Richmond': ['10302'],  "Mariner's Harbor-Arlington-Port Ivory-Granite": ['10303'], 'Kew Gardens': ['11415'], 'Great Kills': ['10308'], 'East Elmhurst': ['11369'], 'Melrose South-Mott Haven North': ['10451'], 'Central Harlem South': ['10026'], 'Corona': ['11368'], 'West Village': ['10014', '10012'], 'Douglas Manor-Douglaston-Little Neck': ['11362'], 'Dyker Heights': ['11228'], 'Astoria': ['11103'], 'Belmont': ['10458'], 'East Harlem North': ['10037'], 'Spuyten Duyvil-Kingsbridge': ['10463'], 'Longwood': ['10455'], 'Bensonhurst West': ['11214'], 'North Side-South Side': ['MISSING'], 'Sunset Park West': ['11220'], 'Battery Park City-Lower Manhattan': ['10280', '10038', '10004', '10006', '10005'],   "Annadale-Huguenot-Prince's Bay-Eltingville": ['10312'], 'Fort Greene': ['11205'], 'Jackson Heights': ['11372'], 'Sunset Park East': ['11220'], 'Auburndale': ['11358'], 'West Farms-Bronx River': ['10460'], 'Greenpoint': ['11222'], 'New Dorp-Midland Beach': ['10306'], 'Oakland Gardens': ['11364'], 'College Point': ['11356'], 'Hunters Point-Sunnyside-West Maspeth': ['11104'], 'Jamaica': ['11432'], 'Chinatown': ['10013'], 'Flatbush': ['11226'], 'Madison': ['11229'], 'Allerton-Pelham Gardens': ['10312'], 'Bay Ridge': ['11209'], 'Queensboro Hill': ['11355'], 'Ocean Hill': ['11233'], 'Clinton': ['10036', '10019', '10018'], 'Brighton Beach': ['11235'], 'Eastchester-Edenwald-Baychester': ['10475'], 'Williamsbridge-Olinville': ['10467', '11249'], 'Woodside': ['11377'], 'Bath Beach': ['11214'], 'Briarwood-Jamaica Hills': ['11435'], 'Kensington-Ocean Parkway': ['11218'], 'West Concourse': ['10451'], 'Van Cortlandt Village': ['10468'], 'Stapleton-Rosebank': ['10305'], 'North Riverdale-Fieldston-Riverdale': ['10471'], 'Ridgewood': ['11385'], 'Cypress Hills-City Line': ['11208'], 'Gramercy': ['10003'], 'Ft. Totten-Bay Terrace-Clearview': ['11360'], 'Pelham Parkway': ['10062'], 'Maspeth': ['11378'], 'Hamilton Heights': ['10031'], 'Homecrest': ['11223'], 'Mott Haven-Port Morris': ['10454'], 'Richmond Hill': ['11418'], 'Queens Village': ['11428'], 'Canarsie': ['11236'], 'Cambria Heights': ['11411'], 'Bensonhurst East': ['11204'], 'Rossville-Woodrow': ['10309'], 'East Harlem South': ['10029'], 'Far Rockaway-Bayswater': ['11691'], 'Charleston-Richmond Valley-Tottenville': ['10307'], 'Lenox Hill-Roosevelt Island': ['10065'], 'Fresh Meadows-Utopia': ['11365'], 'Forest Hills': ['11375'], 'Lower East Side': ['10002'], 'West Brighton': ['10310'], 'Lindenwood-Howard Beach': ['11414'], 'Carroll Gardens-Columbia Street-Red Hook': ['11231'], 'Ozone Park': ['11417'], 'Bronxdale': ['10462'], 'Crown Heights South': ['11225'], 'Co-Op City': ['10475'], 'Bedford': ['11216'], 'Glen Oaks-Floral Park-New Hyde Park': ['11040'], 'Baisley Park': ['11434'], 'Queensbridge-Ravenswood-Long Island City': ['11106', '11101'], 'Kew Gardens Hills': ['11415'], 'Seagate-Coney Island': ['11224'], 'Pomonok-Flushing Heights-Hillcrest': ['11354', '11206'], 'Bedford Park-Fordham North': ['10458'], 'Van Nest-Morris Park-Westchester Square': ['10462'], 'Flushing': ['11354'], 'Oakwood-Oakwood Beach': ['10306'], 'Soundview-Bruckner': ['10472'], 'Stuyvesant Heights': ['11233'], 'Washington Heights South': ['10033'], 'Glendale': ['11385'], 'University Heights-Morris Heights': ['10453'], 'Old Astoria': ['11102'], 'Todt Hill-Emerson Hill-Heartland Village-Ligh': ['10304'], 'St. Albans': ['11412'], 'Parkchester': ['10462'], 'Washington Heights North': ['10040', '10032', '10033'], 'Elmhurst-Maspeth': ['11373'], 'Hudson Yards-Chelsea-Flat Iron-Union Square': ['10011', '10001'], 'Marble Hill-Inwood': ['10034'], 'Woodhaven': ['11421'], 'Stuyvesant Town-Cooper Village': ['10009', '10010'], 'Springfield Gardens North': ['11413'], 'Rego Park': ['11374'], 'New Springville-Bloomfield-Travis': ['10314'], 'Hollis': ['11423'], 'Springfield Gardens South-Brookville': ['11413'], 'Brooklyn Heights-Cobble Hill': ['11201'], 'Turtle Bay-East Midtown': ['10022'], 'Manhattanville': ['10027'], 'Lincoln Square': ['10023'], 'Murray Hill': ['10016'], 'Flatlands': ['11234'], 'East Concourse-Concourse Village': ['10451'], 'DUMBO-Vinegar Hill-Downtown Brooklyn-Boerum H': ['11201', '11217'], 'Pelham Bay-Country Club-City Island': ['10464'], 'North Corona': ['11368'], 'Gravesend': ['11223'], 'Morrisania-Melrose': ['10456'], 'Old Town-Dongan Hills-South Beach': ['10305'], 'Bellerose': ['11426'], 'Mount Hope': ['10003'], 'East New York (Pennsylvania Ave)': ['11207'], 'South Jamaica': ['11433'], 'Brownsville': ['11212'], 'Grymes Hill-Clifton-Fox Hills': ['10301'], 'Windsor Terrace': ['11215'], 'Borough Park': ['11219'], 'Erasmus': ['11226'], 'Kingsbridge Heights': ['10463'], 'Highbridge': ['10452'], 'Midwood': ['11230'], 'Woodlawn-Wakefield': ['10466'], 'Whitestone': ['11357'], 'West New Brighton-New Brighton-St. George': ['10310'], 'Middle Village': ['11379'], 'East Flushing': ['11354'], 'Hunts Point': ['10474'], 'Crown Heights North': ['11225'], 'Hammels-Arverne-Edgemere': ['11692'], 'SoHo-TriBeCa-Civic Center-Little Italy': ['10013', '10007'], 'Midtown-Midtown South': ['10019'], 'Sheepshead Bay-Gerritsen Beach-Manhattan Beac': ['11235'], 'Soundview-Castle Hill-Clason Point-Harding Pa': ['10472'], 'East Tremont': ['10457'], 'Laurelton': ['11413'], 'Murray Hill-Kips Bay': ['10016'], 'Rikers Island': ['MISSING'], 'Starrett City': ['11239'], 'Bayside-Bayside Hills': ['11361'], 'Ocean Parkway South': ['11230'], 'Norwood': ['10467'], 'Claremont-Bathgate': ['10457'], 'Rugby-Remsen Village': ['11203'], 'Prospect Lefferts Gardens-Wingate': ['11225'], 'Jamaica Estates-Holliswood': ['11423'], 'Fordham South': ['10458'], 'East Williamsburg': ['11211'], 'Clinton Hill': ['11205'], 'Yorkville': ['10128'], 'Upper West Side': ['10024', '10025'], 'Steinway': ['11105'], 'East Village': ['10009'], 'Georgetown-Marine Park-Bergen Beach-Mill Basi': ['11234'], 'East Flatbush-Farragut': ['11203'], 'Grasmere-Arrochar-Ft. Wadsworth': ['10304'], 'Westerleigh': ['10314'], 'Williamsburg': ['11211'], 'Upper East Side-Carnegie Hill': ['10128', '10028', '10075', '10021']}
 destinations = ["time+square+NYC|","union+square+NY|", "chamber+street+NY|", "59th+st+NY"]
-# KEY="AIzaSyCnE-5U0r-VELpWxXFXSfzwa6xWsC83hyM"
-KEY="AIzaSyA16dLy-Oi2VnSfWHgDugdS0bLc7afu8xI"
-minutes = []
 
 params = {
    'destinations':destinations[0]+destinations[1]+destinations[2]+destinations[3],
@@ -17,47 +19,127 @@ params = {
 
 class GoogleAPI:
 
-   def __init__(self, access_token):
-      self.access_token = access_token
+    def __init__(self, access_token):
+     self.access_token = access_token
 
-   def get(self,path,**kwargs):
-      # this builds the begining of the URL 
-      URL = "https://maps.googleapis.com/maps/api/" + path
-      # this adds all the attributes to the end of the URL
-      params = kwargs.get("params")
-      # this adds the acces token to be passed to the api
-      params.update({"key":self.access_token})
-      return requests.get(URL,params=params) 
+    def get(self,path,**kwargs):
+     # this builds the begining of the URL 
+     URL = "https://maps.googleapis.com/maps/api/" + path
+     # this adds all the attributes to the end of the URL
+     params = kwargs.get("params")
+     # this adds the acces token to be passed to the api
+     params.update({"key":self.access_token})
+     return requests.get(URL,params=params) 
 
 # create an instance of the api
 api = GoogleAPI(KEY)
 
-# calls the api with the params for every origin 
-for i in range(0,188): 
-   params['origins']=neighborhoods[i]+"+NY"
-   info = api.get('distancematrix/json', params=params)
-   response_info = info.json()
 
-   try:
-      time_sq_score = response_info["rows"][0]["elements"][0]["duration"]["value"]
-      union_sq_score = response_info["rows"][0]["elements"][1]["duration"]["value"]
-      chamber_st_score = response_info["rows"][0]["elements"][2]["duration"]["value"]
-      fifty_ninth_st_score = response_info["rows"][0]["elements"][3]["duration"]["value"]
+def get_commute_stats(params, destinations,best_matches, api):
+    missing=0
+    missing_array =[]
+    # this creates a dict with a list of all the neighborhoods
+    neighborhood_commute_dict = dict.fromkeys(best_matches)
 
-      # this is the avg time it takes to get from the origin to the 4 major destinations, rounded to 4 places
-      total_score_seconds = ((time_sq_score+union_sq_score+chamber_st_score+fifty_ninth_st_score)/4)
-      total_score_min = round((total_score_seconds/60),3)
+    # calls the api with the params for every origin 
+    for i in neighborhood_commute_dict: 
+        origin = str(i)+"+NY"
+        print (origin)
+        params['origins']=origin 
 
-   except: 
-      total_score_min = 0 #this happens for 3 places, couldnt find them using conventional searches
+        info = api.get('distancematrix/json', params=params)
+        response_info = info.json()
+        # print (response_info)
 
-   minutes.append(total_score_min)
-   print(total_score_min)
+        try:
+            time_sq_score = response_info["rows"][0]["elements"][0]["duration"]["value"]
+            union_sq_score = response_info["rows"][0]["elements"][1]["duration"]["value"]
+            chamber_st_score = response_info["rows"][0]["elements"][2]["duration"]["value"]
+            fifty_ninth_st_score = response_info["rows"][0]["elements"][3]["duration"]["value"]
 
-print (minutes)
+            # this is the avg time it takes to get from the origin to the 4 major destinations, rounded to 4 places
+            total_score_seconds = ((time_sq_score+union_sq_score+chamber_st_score+fifty_ninth_st_score)/4)
+            total_score_min = round((total_score_seconds/60),3)
+
+        except: 
+            total_score_min = 0 #this happens for 3 places, couldnt find them using conventional searches
+            missing += 1
+            missing_array.append(origin)
+            print ("MISSING")
+
+        neighborhood_commute_dict[i] = total_score_min
+        print(total_score_min)
+
+    # hard code the errors 
+    neighborhood_commute_dict["Bedford"] = 48.00
+    neighborhood_commute_dict["Norwood"] = 0
+    neighborhood_commute_dict["Mount Hope"] = 40.00
+    neighborhood_commute_dict["Madison"] = 50.00
+    neighborhood_commute_dict["Rugby-Remsen Villiage"] = 0
+    neighborhood_commute_dict["Yorkville"] = 22.00
+    neighborhood_commute_dict["Clinton"] = 18.00
+    neighborhood_commute_dict["Stuyvesant Heights"] = 45.00
+
+    print ("\n Done calculating minutes")
+    print ("neighborhood_commute_dict = ", neighborhood_commute_dict)
+    print ("missing: ", missing)
+    print ("missing neighborhoods: ", missing_array)
+    return neighborhood_commute_dict
+
+def update_commute_score(commute_dict):
+    # check if neighborhood exists in noise dict
+    for neighborhood in commute_dict:
+        # may not be able to filter on foreign key attribute
+        nb_obj = Neighborhood.objects.filter(name=neighborhood)
+
+        if nb_obj:
+            nb_obj = nb_obj[0]
+            # get all the scores for that nb
+            score_list = Score.objects.filter(neighborhood=nb_obj)
+            # if nb_score exists
+            if score_list:
+                score_list[0].commute_score = commute_dict[neighborhood]
+                score_list[0].save()
+            else:
+                # create nb_score
+                nb_obj = Neighborhood.objects.get(name=neighborhood)
+                score_list = Score.objects.create(
+                    neighborhood=nb_obj,
+                    night_life_score=0,
+                    commute_score=commute_dict[neighborhood],
+                    crime_score=0,
+                    noise_score=0,             
+                )
+        else:
+            print("didn't find nb_obj: ", neighborhood)
+
+    return True
+    print ("Done")
+
+def run():
+    commute = get_commute_stats(params, destinations,best_matches, api)
+    update_commute_score(commute)
 
 
-# minutes = [51.487, 77.092, 69.688, 73.292, 73.708, 75.008, 89.175, 70.258, 123.846, 89.692, 80.171, 47.325, 92.175, 105.833, 10.108, 105.017, 101.267, 133.925, 99.975, 96.308, 69.9, 89.45, 48.592, 70.95, 55.312, 71.733, 71.5, 22.762, 54.55, 61.421, 54.317, 46.013, 0, 53.771, 10.108, 69.775, 62.75, 47.775, 51.913, 41.792, 70.088, 37.408, 10.108, 50.346, 44.396, 48.754, 50.121, 36.496, 42.746, 78.958, 46.163, 41.846, 84.946, 62.867, 76.075, 55.792, 72.004, 62.0, 66.833, 72.85, 61.929, 60.467, 10.108, 71.371, 60.788, 53.837, 60.408, 69.154, 76.5, 61.233, 52.454, 57.746, 54.421, 42.092, 15.067, 56.25, 18.108, 44.396, 50.225, 72.183, 61.754, 50.2, 55.242, 13.213, 19.55, 31.854, 53.033, 42.996, 58.112, 12.867, 16.717, 48.592, 32.154, 41.296, 30.708, 38.467, 53.525, 23.996, 41.296, 30.454, 13.946, 44.837, 31.337, 25.329, 53.275, 43.658, 39.138, 37.408, 29.113, 55.221, 40.096, 30.029, 60.717, 30.029, 58.746, 23.321, 23.704, 19.754, 39.679, 69.667, 52.479, 23.488, 47.521, 18.688, 26.954, 31.85, 19.062, 20.496, 42.275, 32.433, 16.587, 25.925, 32.421, 10.113, 39.708, 11.887, 25.517, 45.192, 78.263, 39.737, 14.567, 19.425, 58.004, 81.592, 67.921, 50.558, 48.104, 21.054, 49.621, 57.504, 47.7, 49.592, 48.483, 51.879, 47.312, 46.5, 10.108, 53.671, 62.592, 0, 54.0, 48.908, 40.708, 43.708, 59.017, 33.133, 48.742, 59.487, 53.425, 38.275, 49.967, 37.521, 0, 60.188, 49.967, 39.583, 29.092, 40.175, 48.362, 27.325, 29.192, 40.508, 32.279, 32.279, 10.108, 32.329, 32.413, 56.9]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

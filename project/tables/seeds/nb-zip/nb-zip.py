@@ -1,4 +1,6 @@
 """
+****DON'T USE, UP TO DATE NB-ZIP DICTIONARY IN MAPPINGS.PY****
+
 This is a best match for zip codes to the census neighborhoods in our database.
 Mostly just grabbed the best single match zip code for a neighborhood; many neighborhoods in Manhattan have multiple zip codes.
 As of 4/20/16 only Upper East Side has a list of zip codes.

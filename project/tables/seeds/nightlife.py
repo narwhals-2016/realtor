@@ -283,6 +283,7 @@ def update_nb_nightlife_score(score_dict):
 			nb_obj = nb_obj[0]
 			score_row = Score.objects.filter(neighborhood=nb_obj)
 			# if nb_score exists
+			# probably should use get_or_create()
 			if score_row:
 				score_row[0].night_life_score = score_dict[nb]
 				score_row[0].save()

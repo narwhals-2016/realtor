@@ -12,7 +12,7 @@ from tables.models import Neighborhood, Ages, Demographic
 
 def parse_file(filename):
 	# use pandas to read excel file, and then create dataframe with first column as index
-	housing_file = pd.read_excel(filename, skiprows=[2,3])
+	housing_file = pd.read_excel(filename, skiprows=[2,3], sheetname=0)
 	indexed = housing_file.set_index('2009-2013 ACS Demographic Profile')
 	return indexed
 
