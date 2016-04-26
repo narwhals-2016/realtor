@@ -1,7 +1,7 @@
 from . import (
 	load_neighborhoods, housing_load, economic_load, 
 	demographic_load, schools_csv, social_csv,
-	nightlife, noise
+	nightlife, noise, google_distance_api
 )
 
 def seed_db(data_path, *seed_tables):
@@ -9,8 +9,8 @@ def seed_db(data_path, *seed_tables):
 	if "all" in seed_tables:
 		seed_tables = [
 			"neighborhoods","housing","economic",
-			"social", "demographic", "schools", 
-			"nightlife", "noise", "commute",
+			"social", "demographic", "nightlife", 
+			"noise", "commute", "schools",
 		]
 		
 	if "neighborhoods" in seed_tables:
