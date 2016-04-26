@@ -9,9 +9,10 @@ def seed_db(data_path, *seed_tables):
 	if "all" in seed_tables:
 		seed_tables = [
 			"neighborhoods","housing","economic",
-			"social", "demographic", "schools", "nightlife",
-			"noise",
+			"social", "demographic", "schools", 
+			"nightlife", "noise", "commute",
 		]
+		
 	if "neighborhoods" in seed_tables:
 		load_neighborhoods.run(data_path, 'housing')
 		load_neighborhoods.run(data_path, 'housing_temp')
@@ -40,6 +41,9 @@ def seed_db(data_path, *seed_tables):
 	# loads noise data
 	if "noise" in seed_tables:
 		noise.run()
+	# loads commute data
+	if "commute" in seed_tables:
+		google_distance_api.run()
 
 
 
