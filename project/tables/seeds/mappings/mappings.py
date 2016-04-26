@@ -121,7 +121,8 @@ nb_names = {
 }
 
 
-
+def alt_name(my_dict):
+	pass
 
 
 
