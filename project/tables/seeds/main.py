@@ -1,13 +1,16 @@
 from . import (
 	load_neighborhoods, housing_load, economic_load, 
 	demographic_load, schools_csv, social_csv,
-	nightlife
+	nightlife, noise
 )
 
 def seed_db(data_path, *seed_tables):
 	# creates neighborhoods
 	if "all" in seed_tables:
-		seed_tables = ["neighborhoods","housing","economic","social", "demographic", "schools"]
+		seed_tables = [
+			"neighborhoods","housing","economic",
+			"social", "demographic", "schools", "nightlife"
+		]
 	if "neighborhoods" in seed_tables:
 		load_neighborhoods.run(data_path, 'housing')
 		load_neighborhoods.run(data_path, 'housing_temp')
@@ -33,6 +36,9 @@ def seed_db(data_path, *seed_tables):
 	# nightlife not complete
 	if "nightlife" in seed_tables:
 		nightlife.run()
+	# loads noise data
+	if "noise" in seed_tables:
+		noise.run()
 
 
 
