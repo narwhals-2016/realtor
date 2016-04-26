@@ -69,3 +69,34 @@ footer.page-footer {
 #username {
 	font-style: italic;
 }
+
+#results_card {
+	margin-left: 1em;
+	margin-top: 1em;
+}
+
+#image_height {
+	margin-top: .75em;
+	height: 30vh;
+}
+
+#bold_hover:hover {
+	font-weight: bold;
+}
+
+#bigger {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+

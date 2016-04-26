@@ -87,6 +87,18 @@ class Logout(View):
 
 class Search(View):
     def post(self,request):
+    	return JsonResponse({"success": True})
+
+class Results(View):
+    def post(self,request):
     	pass
+
+
+
+
+
+
+
+
 
 

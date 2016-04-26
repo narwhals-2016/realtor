@@ -29,7 +29,6 @@ def seed_db(data_path, *seed_tables):
 	if "demographic" in seed_tables:
 		demographic_load.run(data_path, 'demographic', 'all')
 		demographic_load.run(data_path, 'demo_temp', 'all')
-		demographic_load.run(data_path, 'parkslope_demo', 'all')
 	# loads school data
 	if "schools" in seed_tables:
 		schools_csv.run(data_path + "schools/")

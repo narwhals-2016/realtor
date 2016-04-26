@@ -5,10 +5,9 @@ from pprint import pprint
 import pandas as pd
 import numpy as np
 from tables.models import SchoolEducation, School, Neighborhood
-
+ 
 
 def extract_transform_school_data(folder_path, fname, best_matches, r):
-
 
     list_of_cols = ["School Name","Enrollment",
                     "Student Achievement Rating",
@@ -16,8 +15,6 @@ def extract_transform_school_data(folder_path, fname, best_matches, r):
     dataa = {}
     dataa = pd.read_excel(fname, sheetname=0)
     index = dataa.iloc[0]
-
-
 
     school_type = fname.split('/')[-1].split('_')[2]
     if school_type == "HS":
@@ -54,31 +51,19 @@ def extract_transform_school_data(folder_path, fname, best_matches, r):
         except:
             f = 0                        
 
-        score =  calculate_score(enrol, rigor, student_achievemet)
-                        
+        score =  calculate_score(enrol, rigor, student_achievemet)                        
         for nb, vals in best_matches.items():
             if str(zipcode) in vals:
                 temp = [school,
                         addr_and_zip[0],
                         score,
-                        addr_and_zip[1],
+                        # addr_and_zip[1],
                         str(zipcode)]
                 r[nb].append(temp)
-
     return(c)
     
-
-def get_HS_rating(r,c,df_trans):
-    if c == 'New Visions Charter High School for Advanced Math':
-        print('in function***',c,'***',df_trans['Unnamed: 3'])
-    r['Number of students'] = df_trans[c]['Unnamed: 3']
-    r['Instruction Rigor rating'] = df_trans[c]['Unnamed: 4']
-    r['Student achievement rating'] = df_trans[c]['Unnamed: 10']
-    return
-
-#-----
 def calculate_score(n1, n2, n3):
-    #  n1 = enrollment, n2 = Rigorous Instruction Rating,  n3 = Student Achievement Rating    
+#  n1 = enrollment, n2 = Rigorous Instruction Rating,  n3 = Student Achievement Rating    
     score = 0
 # if  enrollment is < 250 score =5, between 250 and 500 score =4 ...
     if (int(n1) < 250):
@@ -116,8 +101,6 @@ def calculate_score(n1, n2, n3):
         score =+ 1
 
     return(score)
-
-
 
 def initialize_dict(best_matches, r):
 # initialize the dictionary r with keys from best_matches(list of neighborhoods) 
@@ -167,30 +150,27 @@ def get_3_scores(detail_list, neighborhood):
 # each item(list) in detail_list has school, schoolType, score, address and zip
     lst = []
     k_school_score = ms_school_score = hs_school_score = 0
-
     if len(detail_list) > 0:
         for i in range(0, len(detail_list)):
-            if ((detail_list[i][1] == 'Pre-K Only') or (detail_list[i][1] == 'K-12 School')):
-                k_school_score = k_school_score + detail_list[i][2]
-            elif ((detail_list[i][1] == 'Elementary') or (detail_list[i][1] == 'Middle School')):
+            if (detail_list[i][1] in ('Pre-K Only', 'DOE', 'CHARTER','NYCEEC')):
+                k_school_score = k_school_score + 1
+            elif (detail_list[i][1]  in ('Elementary','Middle School')):
                 ms_school_score = ms_school_score + detail_list[i][2]
             elif (detail_list[i][1] in  ('K-12 School', 'Junior High School', 
                                          'Junior Senior School','Senior High')):
-                hs_school_score = hs_school_score = detail_list[i][2]  
+                hs_school_score = hs_school_score + detail_list[i][2]  
         lst = [k_school_score, ms_school_score, hs_school_score]       
     return(lst)
 
 def insert_into_db(r):
     for neighborhood, school_scores in r.items():
-        score_list = get_3_scores(school_scores, neighborhood)
+        score_list = get_3_scores(school_scores, neighborhood)            
         try:
-            item =  Neighborhood.objects.get(name=neighborhood)
-            School.objects.create(
-                neighborhood=item,
-                k_school_score = score_list[0],
-                elem_school_score = score_list[1],
-                hs_school_score = score_list[2]
-            )
+            item = Neighborhood.objects.get(name=neighborhood)
+            School.objects.create(neighborhood=item,
+                                  k_school_score = score_list[0],
+                                  elem_school_score = score_list[1],
+                                  hs_school_score = score_list[2])
         except Exception as e:
             print("*"*100)
             print(neighborhood)
@@ -198,7 +178,53 @@ def insert_into_db(r):
             print(school_scores)
             print(type(e),e.args)
 
+def extract_Pre_K_school_directory(fname, best_matches, r):
+# fname is the file with preK schools(public,private etc)
+    list_of_cols = ["LocName","PreK_Type", 
+    "Borough","address", "zip",
+    "Seats","EXTENDED_DAY"]
+    dataa = pd.read_csv(fname)
+    index = dataa.iloc[0]
+    dataa.columns = index.index
+    
+    df_info = dataa[["LocName", "PreK_Type", 
+                    "Borough", "address",
+                    "zip", "Seats", "EXTENDED_DAY"]]
+    rows = df_info["LocName"].values
+    
+    df_info.index = rows
+    scls = df_info.index
+    for scl in range(0, len(scls)):
+        obj = df_info.loc[scls[scl]]
+        zipcode = obj["zip"].astype(int)
+        for nb, vals in best_matches.items():
+            if str(zipcode) in vals:
+                temp = [obj["LocName"],
+                        obj["PreK_Type"],
+                        obj["Seats"],
+                        obj["zip"]]
+                r[nb].append(temp)
+#    print('universal preK: ',r)
+
+
+# def load():
+#         try:
+#             item =  Neighborhood.objects.get(name=neighborhood)
+#             School.objects.create(
+#                 neighborhood=item,
+#                 k_school_score = score_list[0],
+#                 elem_school_score = score_list[1],
+#                 hs_school_score = score_list[2]
+#             )
+#         except Exception as e:
+#             print("*"*100)
+#             print(neighborhood)
+#             print(score_list)
+#             print(school_scores)
+#             print(type(e),e.args)
+
 def run(folder_path):
+
     #---------------------------------Main pgm -----------------------------------------------
 # r-(resultant dictionary) master dictionary with neighborhoods as keys and school(s) information/scores as values
     r = {} 
@@ -406,7 +432,11 @@ def run(folder_path):
     ELMSchool_file = folder_path + '2014_2015_EMS_SQR_Results_2016_01_07.xlsx'
     ELMschool_list = extract_transform_school_data(folder_path, ELMSchool_file, best_matches, r)   
     # print('Elementary-thru-Middleschools  ',len(ELMschool_list))
-#----------create Schools table
+
+#----------------------------1885 preK Schools---------------------------------------------
+    Pre_Kschool_file =  folder_path + 'Universal_Pre-K__UPK__School_Locations.csv' 
+    extract_Pre_K_school_directory(Pre_Kschool_file, best_matches, r)
+#----------create Schools table-----------------------------------------------------------
     insert_into_db(r)
 
 
