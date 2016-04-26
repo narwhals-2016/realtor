@@ -33,6 +33,9 @@ NUMBER_OF_UNITS_CHOICES = ('0_2', '3_10', '10_plus')
 OWNERSHIP_TYPE_CHOICES = ('rent', 'purchase')
 NUMBER_OF_ROOMS_CHOICES = ('0_3', '4_plus')
 BUILDING_AGE_CHOICES = ('pre 1970', 'post 1970')
+NIGHT_LIFE_CHOICES = ('not_high', 'high', 'very_high')
+SCHOOL_QUALITY_CHOICES = ('not_high', 'high', 'very_high')
+
 
 class QueryForm(forms.Form):
     age = forms.ChoiceField(
@@ -67,9 +70,16 @@ class QueryForm(forms.Form):
         label = 'building_age',
         choices = BUILDING_AGE_CHOICES,
     )
-
+    night_life_importance = forms.ChoiceField(
+        label = 'night_life_importance',
+        choices = NIGHT_LIFE_CHOICES,
+    )
+    school_quality_importance = forms.ChoiceField(
+        label = 'school_quality_importance',
+        choices = SCHOOL_QUALITY_CHOICES,
+    )
     # Turn checkboxes into booleans, or use widgets checkboxinput?
-    currently_in_school = forms.BooleanField()
-    marital_status_checkbox = forms.forms.BooleanField()
-
+    currently_in_school = forms.BooleanField(label = 'currently in school')
+    marital_status_checkbox = forms.forms.BooleanField(label = 'marital_status_checkbox')
+    noise_level_checkbox= forms.forms.BooleanField(label = 'noise_level_checkbox')
 
