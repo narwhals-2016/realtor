@@ -1,4 +1,6 @@
 """
+****DON'T USE DICTIONARIES/ARRAYS BELOW. MASTER NEIGHBORHOOD - ZIP CODE DICTIONARY IN MAPPINGS.PY****
+
 arrays pulled from infoshare.org -> Area Comparison page, via infoshare.js script
 """
 bronx_array = [
