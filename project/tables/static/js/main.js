@@ -141,4 +141,13 @@ $(document).ready(function(){
     });
 
 
+
+///// Results /////
+    $('#nav').on('click', "#results", function(event){
+      event.preventDefault();
+        var template = $('#results-template').html();
+        var renderM = Mustache.render(template);
+        $('#answer_div').html(renderM);
+    });
+
 });

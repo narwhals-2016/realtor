@@ -1,4 +1,79 @@
+{% load staticfiles %}
 
     <script id="results-template" type="x-tmpl-mustache/template">
 
+	<div class="row">
+		<div class="col s12 m12 l12">
+			<div class="card" id="results_card">
+
+			<div class="row">
+				<div class="col s4 m4 l4">
+
+					<div class="card-image">
+						<img src="{% static "images/central_park.jpg" %}" id="image_height">
+						<span class="card-title" id="bigger">Central Park</span>
+					</div>
+
+				</div>
+
+				<div class="col s8 m8 l8">
+
+					<div class="card-content">
+					
+						<!-- this needs to be a loop -->
+					    <div class="details"> 
+					        <div class="entry" id="place"></div>
+					        <div class="entry" id="address"><strong>Address: </strong><br></div>
+					        <br>
+					        <div class="entry" id="notes"><strong>Notes: </strong> <br></div>
+					        <div class="entry" id="phone"><strong>Contact: </strong></div>
+					        <div class="entry" id="website"><strong>Website: </strong></div>
+					        <div class="entry" id="price"><strong>Price: </strong></div>
+					        <br>
+					        <div class="entry" id="parking"><strong>Parking options: </strong></div> 
+					    </div>
+					</div>
+
+					<div class="card-action right-align">
+						<a class="blue-grey-text lighten-1-text" id="bold_hover" href="#">More Details</a>
+					</div>
+
+				</div>
+			</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="row">
+		<div class="container">
+
+			<div class="col s4 center-align">
+				<button class="btn waves-effect waves-light blue-grey" type="submit" name="action">More
+				    <i class="material-icons right">list</i>
+			    </button>
+			    <br><br>
+			</div>
+
+			<div class="col s4 center-align">	
+				<button class="btn waves-effect waves-light blue-grey" type="submit" name="action">Save Search
+				    <i class="material-icons right">grade</i>
+			    </button>
+			    <br><br>
+			</div>
+
+			<div class="col s4 center-align">
+				<button class="btn waves-effect waves-light blue-grey" type="submit" name="action">Edit
+				    <i class="material-icons right">mode_edit</i>
+			    </button>
+			    <br><br>
+			</div>
+		</div>
+	</div>
+
+
     </script>
+
+
