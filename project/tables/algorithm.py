@@ -25,8 +25,12 @@ tables_map = {
 	'ownership_type': UnitDescription,
 	'number_of_rooms': UnitDescription,
 	'building_age': Building,
-	'night_life_importance': Score,
+	# 'night_life_importance': Score,
+	# 'income_level_range': Economic,
+	# 'number_of_children': ??,
+	# 'price_range': Economic,
 }
+
 
 
 def make_queries(form):
@@ -35,7 +39,10 @@ def make_queries(form):
 		# perform 'ten best' query for each key in form results #
 		# if the form results mapping of choices in forms.py for 
 		# SearchForm works, can just use form[key] for field
-		ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=form[key])
+		if form[key] != 'empty':
+			if form[key] in tables_map:
+				print('in ten results part', key)
+				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=form[key])
 	return ten_results
 
 def sort_by_largest_to_smallest(table, field):
@@ -64,13 +71,17 @@ def find_three_most_common(nb_dict):
 	# gets the last three, or the ones with the highest count
 	three_most_common = sorted_dict[len(sorted_dict)-3:]
 	# get list of neighborhood names
+	print('common', three_most_common)
 	three_neighborhoods = [nb[0] for nb in three_most_common]
+	print('n', three_neighborhoods)
 	return three_neighborhoods
 
 
 def get_results(form_dict):
 	# performs each query and gathers data
 	query_results = make_queries(form_dict)
+	print('query_results', query_results)
 	# tally the neighborhoods in query results
 	nb_count = count_neighborhoods(query_results)
+	print('nb_count result', nb_count)
 	return find_three_most_common(nb_count)

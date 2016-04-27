@@ -13,7 +13,7 @@ import pprint
 
 from .forms import UserForm, LoginForm, SearchForm
 from .models import Neighborhood, Ages, Economic, SchoolEducation, Building, Demographic, UnitValue, UnitDescription
-
+from .algorithm import get_results
 
 class Index(View):
 	def get(self, request):
@@ -87,20 +87,38 @@ class Logout(View):
 
 
 class Search(View):
-    def post(self,request):
-    	print(request.POST)
-    	form = SearchForm(request.POST)
-    	form.is_valid()
-    	print(form.errors)
-    	pprint.pprint(form.cleaned_data)
-    	results = form.cleaned_data
-    	# return results
-    	return JsonResponse({"success": True})
+	def post(self,request):
+		form = SearchForm(request.POST)
+		form.is_valid()
+		cd = form.cleaned_data
+		f = self.get_table_fields(form.fields, cd)
+		nb_list = get_results(f)
+		print(nb_list)
+		return JsonResponse({"success": True})
 
-    	# if form.is_valid():
-    	# 	# form.execute_queries()
-    	# 	Algorithm(form)
-
+	def get_table_fields(self, form_fields, cleaned_data):
+		field_choice_dict = {}
+		for field in form_fields:
+			# charfields, not choicefields
+			if field == 'income_level_range':
+				field_choice_dict[field] = cleaned_data.get(field, 'empty')
+			elif field == 'price_range': 
+				field_choice_dict[field] = cleaned_data.get(field, 'empty')
+			elif field == 'commute_address':
+				field_choice_dict[field] = cleaned_data.get(field, 'empty')
+			elif field == 'commute_time_range':
+				field_choice_dict[field] = cleaned_data.get(field, 'empty')
+			# get field name, not html form input name
+			else:
+				# print('1: ', field)
+				field_choices = dict(form_fields[field].choices)
+				# print('2: ', field_choices)
+				cleaned_choice = cleaned_data.get(field, 'empty')
+				choice = field_choices.get(cleaned_choice, 'empty')
+				# choice = field_choices[cleaned_data[field]]
+				# print('3: ', choice)
+				field_choice_dict[field] = choice
+		return field_choice_dict
 class Results(View):
 	def post(self,request):
 		pass
