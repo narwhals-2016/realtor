@@ -39,49 +39,40 @@ SCHOOL_QUALITY_CHOICES = [('not_high','not_high'), ('high','high'), ('very_high'
 
 class SearchForm(forms.Form):
     age = forms.ChoiceField(
-        # label = 'your age',
         choices = AGE_CHOICES,
     )
     gender = forms.ChoiceField(
-        label = 'your gender',
         choices = GENDER_CHOICES,
     )
     number_of_children = forms.ChoiceField(
-        label = 'number of children',
         choices = NUMBER_OF_CHILDREN_CHOICES,
     )
     current_edu_level = forms.ChoiceField(
-        label = 'education level',
         choices = CURRENT_EDU_LEVEL_CHOICES,
     )
     number_of_units = forms.ChoiceField(
-        label = 'number_of_units',
         choices = NUMBER_OF_UNITS_CHOICES,    
     )
     resident_type = forms.ChoiceField(
-        label = 'ownership type',
         choices = OWNERSHIP_TYPE_CHOICES,
     )
     rooms_per_unit = forms.ChoiceField(
-        label = 'number of rooms',
         choices = NUMBER_OF_ROOMS_CHOICES,
     )
     building_age = forms.ChoiceField(
-        label = 'building_age',
         choices = BUILDING_AGE_CHOICES,
     )
     night_life_importance = forms.ChoiceField(
-        label = 'night_life_importance',
         choices = NIGHT_LIFE_CHOICES,
     )
     school_quality_importance = forms.ChoiceField(
-        label = 'school_quality_importance',
         choices = SCHOOL_QUALITY_CHOICES,
     )
     # Turn checkboxes into booleans, or use widgets checkboxinput?
     # currently_in_school = forms.BooleanField(label = 'currently in school')
     # marital_status_checkbox = forms.forms.BooleanField(label = 'marital_status_checkbox')
     # noise_level_checkbox= forms.forms.BooleanField(label = 'noise_level_checkbox')
+
 
     # def is_valid():
         # pass
