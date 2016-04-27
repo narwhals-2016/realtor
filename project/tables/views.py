@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 import json
-# import twython import Twython
+import pprint
 
 from .forms import UserForm, LoginForm, SearchForm
 from .models import Neighborhood, Ages, Economic, SchoolEducation, Building, Demographic, UnitValue, UnitDescription
@@ -87,9 +87,10 @@ class Logout(View):
 
 class Search(View):
     def post(self,request):
+    	print(request.POST)
     	form = SearchForm(request.POST)
-    	import pprint
-    	pprint.pprint(form.is_valid())
+    	form.is_valid()
+    	print(form.errors)
     	pprint.pprint(form.cleaned_data)
 
     	# if form.is_valid():
