@@ -40,7 +40,7 @@ def make_queries(form):
 		# if the form results mapping of choices in forms.py for 
 		# SearchForm works, can just use form[key] for field
 		if form[key] != 'empty':
-			if form[key] in tables_map:
+			if key in tables_map:
 				print('in ten results part', key)
 				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=form[key])
 	return ten_results
