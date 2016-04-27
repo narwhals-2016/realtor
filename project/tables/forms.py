@@ -107,6 +107,7 @@ class SearchForm(forms.Form):
         choices = CRIME_LEVEL_CHOICES,
     )
 
+
     # def is_valid():
     #     pass
 

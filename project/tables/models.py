@@ -116,7 +116,7 @@ class Building(models.Model):
 
 class Demographic(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
-    children_under_18 = models.DecimalField(max_digits=10, decimal_places=2)
+    # children_under_18 = models.DecimalField(max_digits=10, decimal_places=2)
     married = models.DecimalField(max_digits=10, decimal_places=2)
     divorced = models.DecimalField(max_digits=10, decimal_places=2)
     one_yr_turnover = models.DecimalField(max_digits=10, decimal_places=2)
