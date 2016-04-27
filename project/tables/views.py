@@ -94,7 +94,9 @@ class Search(View):
     	print(form.errors)
     	pprint.pprint(form.cleaned_data)
     	results = form.cleaned_data
-    	return results
+    	# return results
+    	return JsonResponse({"success": True})
+
     	# if form.is_valid():
     	# 	# form.execute_queries()
     	# 	Algorithm(form)
