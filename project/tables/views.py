@@ -10,7 +10,8 @@ from django.contrib.auth.models import User
 import json
 # import twython import Twython
 
-from .forms import UserForm, LoginForm, QueryForm
+
+from .forms import UserForm, LoginForm, SearchForm
 from .models import Neighborhood, Ages, Economic, SchoolEducation, Building, Demographic, UnitValue, UnitDescription
 
 
@@ -86,11 +87,17 @@ class Logout(View):
 
 
 class Search(View):
-	def post(self,request):
-		form = QueryForm(request.POST)
-		from pprint import pprint
-		pprint(dir(form.fields['age'].choices.count))
-		return JsonResponse({"success": True})
+    def post(self,request):
+    	form = SearchForm(request.POST)
+    	import pprint
+    	pprint.pprint(form.is_valid())
+    	pprint.pprint(form.cleaned_data)
+
+    	# if form.is_valid():
+    	# 	# form.execute_queries()
+    	# 	Algorithm(form)
+
+    	return JsonResponse({"success": True})
 
 class Results(View):
 	def post(self,request):
