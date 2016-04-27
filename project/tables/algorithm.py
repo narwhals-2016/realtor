@@ -1,7 +1,12 @@
 from tables.models import Ages, Demographic, Economic, UnitDescription,
+from statistics import mode
 
 
-def make_queries(querystring):
+form = {'age': '0_19', 'gender': 'male'}
+
+def make_queries(form):
+	for key in form:
+		pass
 
 
 
