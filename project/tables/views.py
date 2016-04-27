@@ -92,12 +92,11 @@ class Search(View):
     	import pprint
     	pprint.pprint(form.is_valid())
     	pprint.pprint(form.cleaned_data)
-
+    	results = form.cleaned_data
+    	return results
     	# if form.is_valid():
     	# 	# form.execute_queries()
     	# 	Algorithm(form)
-
-    	return JsonResponse({"success": True})
 
 class Results(View):
 	def post(self,request):
