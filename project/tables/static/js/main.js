@@ -9,7 +9,7 @@ $(document).ready(function(){
     $('#nav').on('click', "#register", function(event){
       event.preventDefault();
         var template = $('#register-template').html();
-        var renderM = Mustache.render(template);
+        var renderM = Mustache.render(template, {});
         $('#answer_div').html(renderM);
         window.scrollTo(0, 0);
     });
