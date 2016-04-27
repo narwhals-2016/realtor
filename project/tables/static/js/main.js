@@ -160,6 +160,7 @@ $(document).ready(function(){
     $("#answer_div").on('click', 'input[id="purchase"]',function(event){
         var $is_checked = $(this).is(':checked')
 
+        // purchase //
         if ($is_checked === true) {
           $(price_range_title).html("Price Range (in thousands)")
           $("#price_range").attr("min","250");
@@ -170,22 +171,12 @@ $(document).ready(function(){
     $("#answer_div").on('click', 'input[id="rent"]',function(event){
         var $is_checked = $(this).is(':checked')
 
+        // rent //
         if ($is_checked === true) {
           $(price_range_title).html("Price Range")
           $("#price_range").attr("min","500");
           $("#price_range").attr("max","2000");
         };
     });
-
-
-
-///// Results /////
-    // $('#nav').on('click', "#results", function(event){
-    //   event.preventDefault();
-    //     var template = $('#results-template').html();
-    //     var renderM = Mustache.render(template);
-    //     $('#answer_div').html(renderM);
-    //     window.scrollTo(0, 0);
-    // });
 
 });
