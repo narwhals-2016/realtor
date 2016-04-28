@@ -1,6 +1,6 @@
-from tables.models import Ages, Demographic, Economic, UnitDescription, SchoolEducation, Building, Score
+from tables.models import Ages, Demographic, Economic, UnitDescription, SchoolEducation, Building, Score, UnitValue
 from pprint import pprint
-
+from numpy import repeat
 # expecting that Jack's tuples 
 # will match up form's input results--not the keys but the values--
 # with fields in the database. if not can make a dictionary here
@@ -25,11 +25,43 @@ tables_map = {
 	'ownership_type': UnitDescription,
 	'number_of_rooms': UnitDescription,
 	'building_age': Building,
-	# 'night_life_importance': Score,
-	# 'income_level_range': Economic,
+	'night_life_importance': Score,
+	'noise_level_checkbox': Score,
+	'crime_level_checkbox': Score,
+	'income_level_range': Economic,
+	'marital_status_checkbox': Demographic,
+	'number_of_vehicles': UnitDescription,
 	# 'number_of_children': ??,
-	# 'price_range': Economic,
+	# 'price_range': UnitValue,
 }
+
+range_list = [
+	'income_level_range',
+	# 'price_range',
+	# 'commute_time_range',
+]
+
+importance_fields_three_levels = {
+	'night_life_importance': 'night_life_score',
+}
+
+importance_fields_two_levels = [
+	'noise_level_checkbox',
+	'crime_level_checkbox',
+]
+
+
+def put_value_in_group(key, value):
+	if key == 'income_level_range':
+		if 0 <= value < 50:
+			result = 'income_0_50'
+		elif 50 <= value < 100:
+			result = 'income_50_100'
+		elif 100 <= value < 200:
+			result = 'income_100_200'
+		elif value >= 200:
+			result = 'income_200_plus'
+	return result
 
 
 
@@ -41,16 +73,40 @@ def make_queries(form):
 		# SearchForm works, can just use form[key] for field
 		if form[key] != 'empty':
 			if key in tables_map:
-				print('in ten results part', key)
-				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=form[key])
+				print('in tables_map', key)
+				if key in range_list:
+					print(form[key])
+					field = put_value_in_group(key, int(form[key]))
+					print('field result', field)
+					ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=field)
+				elif key in importance_fields_two_levels:
+					print('INSIDE IMPORTANCE TWO FIELDS', key)
+					ten_results[key] = sort_by_smallest_to_largest(table=tables_map[key], field=form[key])
+				elif key in importance_fields_three_levels:
+					print('INSIDE IMPORTANCE THREE FIELDS', key)
+					if form[key] == 'high':
+						print('INSIDE IMPORTANCE HIGH', key) 
+						ten_results[key] = sort_by_smallest_to_largest(
+							table=tables_map[key], field=importance_fields_three_levels[key]
+						)
+					elif form[key] == 'very_high':
+						print('INSIDE IMPORTANCE VERY HIGH', key)
+						nb_list = sort_by_smallest_to_largest(
+							table=tables_map[key], field=importance_fields_three_levels[key]
+						)
+						new_list = repeat(nb_list, 2)
+						ten_results[key] = new_list
+				else:
+					print('in ten results part', key)
+					ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=form[key])
 	return ten_results
 
 def sort_by_largest_to_smallest(table, field):
 	# '-' orders by descending
-	return table.objects.order_by('-' + field)[:10]
+	return table.objects.order_by('-' + field)[:5]
 
 def sort_by_smallest_to_largest(table, field):
-	return table.objects.order_by(field)[:10]
+	return table.objects.order_by(field)[:5]
 
 def count_neighborhoods(results_dict):
 	nb_counter = {} 
