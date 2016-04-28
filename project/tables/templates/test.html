@@ -1,13 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Simple History.js Ajax example by dansalmo</title>
 
-	  <div class="container">
-        <form action="" id='register_form' method="POST">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="http://balupton.github.com/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
 
-            {% csrf_token %}
-            {{ query_from.as_p }}
+    <style type='text/css'>
+      .hidden {
+        display: none;
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/home">Home</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+    <a href="/other">Other</a>
 
-            <input class="btn waves-effect waves-light" id="register_button" type="submit" name="action" value= "Submit Registration" <i class="material-icons right"></i>
-            <br><br><br>
-        </div>
+    <p>The whole page will not re-load when the content below is updated, yet the URL is clean and the back button works!<p><br />
+    <div id="content">
+      <div id="home">Home Page content</div>
+    </div>
+    <br />
+    <p>The content div will be updated with a selected div fragment from an HTML file hosted on github, however the broswer will see each content update request as a part of the page history so that the back button can be used.</p>
+    <br  />
+    <p>Adding more menu items is as simple as adding the new links and their corresponding html fragments.<p>
+    <div id="hidden_content" class="hidden"></div>
+  </body>
+    <script type='text/javascript'>//<![CDATA[ 
+  $(function(){
+  var History = window.History;
+  if (History.enabled) {
+      State = History.getState();
+      // set initial state to first page that was loaded
+      History.pushState({urlPath: window.location.pathname}, $("title").text(), State.urlPath);
+  } else {
+      return false;
+  }
 
-        </form>
+  var loadAjaxContent = function(target, urlBase, selector) {
+      $(target).load(urlBase + ' ' + selector);
+  };
 
+  var updateContent = function(State) {
+      var selector = '#' + State.data.urlPath.substring(1);
+    if ($(selector).length) { //content is already in #hidden_content
+        $('#content').children().appendTo('#hidden_content');
+        $(selector).appendTo('#content');
+    } else { 
+        $('#content').children().clone().appendTo('#hidden_content');
+        loadAjaxContent('#content', State.url, selector);
+    }
+  };
+
+  // Content update and back/forward button handler
+  History.Adapter.bind(window, 'statechange', function() {
+      updateContent(History.getState());
+  });
+
+  // navigation link handler
+  $('body').on('click', 'a', function(e) {
+      var urlPath = $(this).attr('href');
+      var title = $(this).text();
+      History.pushState({urlPath: urlPath}, title, urlPath);
+      return false; // prevents default click action of <a ...>
+  });
+  });//]]>  
+
+  </script>
+</html>
