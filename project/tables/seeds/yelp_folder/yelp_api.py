@@ -4,40 +4,43 @@ from pprint import pprint
 
 from yelp.client import Client
 from yelp.oauth1_authenticator import Oauth1Authenticator
-
+from django.conf import settings
 
 """
 how auth and client objects are made:
 
 auth = Oauth1Authenticator(
-    consumer_key=YOUR_CONSUMER_KEY,
-    consumer_secret=YOUR_CONSUMER_SECRET,
-    token=YOUR_TOKEN,
-    token_secret=YOUR_TOKEN_SECRET
+	consumer_key=YOUR_CONSUMER_KEY,
+	consumer_secret=YOUR_CONSUMER_SECRET,
+	token=YOUR_TOKEN,
+	token_secret=YOUR_TOKEN_SECRET
 )
 
 client = Client(auth)
 """
 
+"""
+goal: return search results using mappings dictionary and whatever search terms specified
+"""
+
 # read API keys
 def get(location, term):
+	print('in yelp_api.get, with term: ', term)
 	params = {
 		'location': location,
 		'term': term,
 	}
-	with open('yelp_config_secret.json') as cred:
-	    creds = json.load(cred)
-	    auth = Oauth1Authenticator(**creds)
-	    client = Client(auth)
-	    response = client.search(**params)
-	    total_results = response.total
-	    businesses = [business for business in response.businesses]
-	    average_rating = sum([business.rating for business in businesses])/len(businesses)
-	    return {
-	    	'total': total_results,
-	    	'selected_businesses_count': len(businesses),
-	    	'average_rating': average_rating,
-	    }
+	auth = Oauth1Authenticator(**settings.YELP_CONFIG)
+	client = Client(auth)
+	response = client.search(**params)
+	total_results = response.total
+	businesses = [business for business in response.businesses]
+	average_rating = sum([business.rating for business in businesses])/len(businesses)
+	return {
+		'total': total_results,
+		'selected_businesses_count': len(businesses),
+		'average_rating': average_rating,
+	}
 
 
 
@@ -57,26 +60,31 @@ def run(nb_dict, term):
 # do yelp call for array of zip codes; business totals are added for each nb,
 # while rating is averaged
 # dictionary in mappings.py used
-def run_list(nb_dict, term):
+# pass whatever terms are wanted in terms parameter
+def run_list(nb_dict, terms):
+	responses_holder = []
 	responses = {}
-	for nb in nb_dict:
-		zip_code_container = []
-		for zip_code in nb_dict[nb]:
-			response = get(location=nb + "," + zip_code, term=term)
-			zip_code_container.append((
-				response['total'], 
-				response['selected_businesses_count'], 
-				response['average_rating']
-			))
-		responses[nb] = (
-			sum([tup[0] for tup in zip_code_container]),
-			sum([tup[1] for tup in zip_code_container]),
-			sum([tup[2] for tup in zip_code_container])/len(zip_code_container),
-		)
-	return responses
+	for term in terms:
+		for nb in nb_dict:
+			zip_code_container = []
+			for zip_code in nb_dict[nb]:
+				print('in run_list: ', nb, ' - ', term)
+				response = get(location=nb + "," + zip_code, term=term)
+				zip_code_container.append((
+					response['total'], 
+					response['selected_businesses_count'], 
+					response['average_rating']
+				))
+			responses[nb] = (
+				sum([tup[0] for tup in zip_code_container]),
+				sum([tup[1] for tup in zip_code_container]),
+				sum([tup[2] for tup in zip_code_container])/len(zip_code_container),
+			)
+		responses_holder.append(responses)
+	return responses_holder
 
 
-def get_scores(my_dict):
+def get_yelp_score(my_dict):
 	results = {}
 	for key in my_dict:
 		values = my_dict[key]
