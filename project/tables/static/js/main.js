@@ -18,7 +18,6 @@ $(document).ready(function(){
     event.preventDefault();
 
     var query_string = $(this).serialize() // returns all the data in your form
-
     $.ajax({
         method: "POST",
         url: "register",
@@ -62,7 +61,7 @@ $(document).ready(function(){
 
     if (data.success){
         ////// if they login correctly ////////
-          console.log("HERE")
+          console.log("HERE");
           document.location.href="/";
           window.scrollTo(0, 0);
 
