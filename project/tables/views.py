@@ -34,7 +34,6 @@ class Index(View):
 
 
 class Register(View):
-<<<<<<< HEAD
 	def post(self, request):
 		body = request.body.decode()
 		if not body: 
