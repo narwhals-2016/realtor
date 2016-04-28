@@ -35,7 +35,7 @@ $(document).ready(function(){
             // $('#answer_div').append(data.Message);
             }
       else {
-        console.log (data.errors)
+        // console.log (data.errors)
         var template = $('#register-template').html();
         var renderM = Mustache.render(template, data.errors);
         $('#answer_div').html(renderM);
@@ -50,39 +50,54 @@ $(document).ready(function(){
     $('#nav').on('click', "#login", function(event){
       event.preventDefault();
         var template = $('#login-template').html();
-        var renderM = Mustache.render(template);
+        var renderM = Mustache.render(template, {'id_username':'account_circle','id_password':'verified_user'});
         $('#answer_div').html(renderM);
         window.scrollTo(0, 0);
     });
 
     $('#answer_div').on('submit', '#login_form',function(event){
-    event.preventDefault();
-    console.log("clicked login")
+      event.preventDefault();
+      console.log("clicked login")
 
-    var query_string = $(this).serialize() //returns all the data in your form
-    // console.log(query_string)
+      var query_string = $(this).serialize() //returns all the data in your form
+      // console.log(query_string)
 
-    $.ajax({
-        method: "POST",
-        url: "login",
-        data: query_string,
-    }).done(function(data, status){
+      $.ajax({
+          method: "POST",
+          url: "login",
+          data: query_string,
+      }).done(function(data, status){
 
-    if (data.success){
-        ////// if they login correctly ////////
-          console.log("HERE")
-          document.location.href="/";
-          window.scrollTo(0, 0);
+          if (data.success){
+          ////// if they login correctly ////////
+            console.log("HERE")
+            document.location.href="/";
+            window.scrollTo(0, 0);
+          } 
+          else{
+            // crazy code to select for the error formating
+            var template = $('#login-template').html();
+            var errorNames = Object.keys(data.errors).reduce(function(previousValue, currentValue, currentIndex, array){
+              return (previousValue ? previousValue + ',':'') + 'input[name="'+currentValue+'"]'
+            }, '');
+            var renderM = Mustache.render(template, $.extend(data.errors,{'id_username':'account_circle','id_password':'verified_user'}));
+            $('#answer_div').html(renderM);
 
-          // var template = $('#user-template').html();
-          // var renderM = Mustache.render(template);
-          // $('#answer_div').html(renderM);
+            var inputs = $('#login_form').find(errorNames);
+            inputs.addClass('invalid');
+            $.each(inputs, function(idx, el){
+              $($(el).next()).css("white-space", "nowrap");
+              $($(el).next()).css("overflow", "hidden;");
+            });
 
-          // $('#answer_div').append(data.Message);
-          // $('#nav').append(data.username);
+            // prints errors that are not missing fields to the end of the form
+            $('.tall .container').append(data.errors["__all__"][0]);
+            $('.tall .container').css("color", "red");
+
+            window.scrollTo(0, 0);
           }
 
-        });
+      });
     });
 
 ///// Logout /////
