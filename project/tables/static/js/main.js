@@ -7,6 +7,18 @@ $(document).ready(function(){
     $('.carousel').carousel();
     $('.slider').slider();
 
+
+// window.onhashchange = function (e) {
+//     if (window.location.hash === "#" || window.location.hash === "") {
+//         calendar_view.show();
+//         event_form_view.hide();
+//     } else if (window.location.hash === "#form") {
+//         calendar_view.hide();
+//         event_form_view.show();
+//     }
+// };
+
+
 ///// Register /////
     $('#nav').on('click', "#register", function(event){
       event.preventDefault();
@@ -145,16 +157,28 @@ $(document).ready(function(){
 
     if (data.success){
         ////// if submit form correctly ////////
-          console.log("HERE")
-
+        $('#ja_search').attr("class","hide");
           var template = $('#results-template').html();
           var renderM = Mustache.render(template);
-          $('#answer_div').html(renderM);
+          // just append the new results to the page
+          $('#answer_div').append(renderM);
           window.scrollTo(0, 0);
           }
 
         });
     });
+
+
+///// Edit Form Button /////
+    $('#answer_div').on('click', '#edit_button',function(event){
+      event.preventDefault();
+        // show the previous search form
+        $('#ja_search').attr("class","show");
+        // get rid of previous results
+        $('#ja_results').remove();
+        window.scrollTo(0, 0);
+    });
+
 
 
 ///// Form - Education toggle/////

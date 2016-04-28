@@ -166,8 +166,10 @@ class UnitDescription(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
     units_occupied = models.DecimalField(max_digits=10, decimal_places=2)
     units_vacant = models.DecimalField(max_digits=10, decimal_places=2)
-    rooms_per_unit_under_3 = models.DecimalField(max_digits=10, decimal_places=2)
-    rooms_per_unit_over_4 = models.DecimalField(max_digits=10, decimal_places=2)
+    rooms_per_unit_1 = models.DecimalField(max_digits=10, decimal_places=2)
+    rooms_per_unit_2 = models.DecimalField(max_digits=10, decimal_places=2)
+    rooms_per_unit_3_5 = models.DecimalField(max_digits=10, decimal_places=2)
+    rooms_per_unit_6_plus = models.DecimalField(max_digits=10, decimal_places=2)
     rooms_median = models.DecimalField(max_digits=10, decimal_places=2)
     resident_type_owner = models.DecimalField(max_digits=10, decimal_places=2)
     resident_type_renter = models.DecimalField(max_digits=10, decimal_places=2)
