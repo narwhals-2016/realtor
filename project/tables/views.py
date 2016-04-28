@@ -34,6 +34,7 @@ class Index(View):
 
 
 class Register(View):
+<<<<<<< HEAD
 	def post(self, request):
 		body = request.body.decode()
 		if not body: 
@@ -46,6 +47,7 @@ class Register(View):
 			return JsonResponse({"Message": "Register succesfull", "success": True})
 		else:
 			return JsonResponse ({"response":"Invalid information", 'success' : False, 'errors': user_form.errors })
+
 
 
 class Login(View):

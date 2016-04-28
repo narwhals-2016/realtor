@@ -37,7 +37,7 @@ HIGHEST_EDU_LEVEL_CHOICES = [('hs_plus','education_highschool_over'), ('college_
 MARITAL_STATUS_CHOICES = [('on','married'), ('off','divorced')]
 NUMBER_OF_UNITS_CHOICES = [('0_2','number_of_units_2_less'), ('3_10','number_of_units_3_10'), ('10_+','number_of_units_10_plus')]
 OWNERSHIP_TYPE_CHOICES = [('rent','resident_type_renter'), ('purchase','resident_type_owner')]
-NUMBER_OF_ROOMS_CHOICES = [('3_minus','rooms_per_unit_under_3'), ('4_plus','rooms_per_unit_over_4')]
+NUMBER_OF_ROOMS_CHOICES = [('1_room','rooms_per_unit_1'), ('2_room','rooms_per_unit_2'),('3_5_room','rooms_per_unit_3_5'), ('6_plus','rooms_per_unit_6_plus')]
 BUILDING_AGE_CHOICES = [('pre_1970','constucted_before_1970'), ('post_1970','constucted_1970_2000'), ('2000+','constucted_after_2000')]
 NUMBER_OF_VEHICLES_CHOICES = [('off','vehicles_0'), ('on','vehicles_1'), ('on','vehicles_2_plus')]
 # there is no commute types field in the db 
