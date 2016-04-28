@@ -9,7 +9,7 @@ $(document).ready(function(){
     $('#nav').on('click', "#register", function(event){
       event.preventDefault();
         var template = $('#register-template').html();
-        var renderM = Mustache.render(template);
+        var renderM = Mustache.render(template, {});
         $('#answer_div').html(renderM);
         window.scrollTo(0, 0);
     });
@@ -34,6 +34,14 @@ $(document).ready(function(){
             window.scrollTo(0, 0);
             // $('#answer_div').append(data.Message);
             }
+      else {
+        console.log (data.errors)
+        var template = $('#register-template').html();
+        var renderM = Mustache.render(template, data.errors);
+        $('#answer_div').html(renderM);
+        window.scrollTo(0, 0);
+      }
+
         });
     });
 
@@ -148,14 +156,27 @@ $(document).ready(function(){
     });
 
 
+///// Form - Price Range Adjuster/////
+    $("#answer_div").on('click', 'input[id="purchase"]',function(event){
+        var $is_checked = $(this).is(':checked')
 
-///// Results /////
-    // $('#nav').on('click', "#results", function(event){
-    //   event.preventDefault();
-    //     var template = $('#results-template').html();
-    //     var renderM = Mustache.render(template);
-    //     $('#answer_div').html(renderM);
-    //     window.scrollTo(0, 0);
-    // });
+        // purchase //
+        if ($is_checked === true) {
+          $(price_range_title).html("Price Range (in thousands)")
+          $("#price_range").attr("min","250");
+          $("#price_range").attr("max","2000");
+        };
+    });
+
+    $("#answer_div").on('click', 'input[id="rent"]',function(event){
+        var $is_checked = $(this).is(':checked')
+
+        // rent //
+        if ($is_checked === true) {
+          $(price_range_title).html("Price Range")
+          $("#price_range").attr("min","500");
+          $("#price_range").attr("max","2000");
+        };
+    });
 
 });
