@@ -190,14 +190,16 @@ def make_unit_description_row(dataframe, nb):
 	occupied_units = total_occupied_units_df.iloc[0,0]
 	vacant_units = dataframe.loc['Vacant housing units'][0]
 
-	rooms_3_or_less = sum([
-		dataframe.loc['1 room'][0],
-		dataframe.loc['2 room'][0],
+	rooms_1 = dataframe.loc['1 room'][0]
+	rooms_2 = dataframe.loc['2 room'][0]
+
+	rooms_3_to_5 = sum([
 		dataframe.loc['3 room'][0],
-	])
-	rooms_4_or_more = sum([
 		dataframe.loc['4 room'][0],
 		dataframe.loc['5 room'][0],
+	])
+
+	rooms_6_or_more = sum([
 		dataframe.loc['6 room'][0],
 		dataframe.loc['7 room'][0],
 		dataframe.loc['8 room'][0],
@@ -228,8 +230,10 @@ def make_unit_description_row(dataframe, nb):
 		neighborhood =nb,
 		units_occupied = round((occupied_units/total_units)*100,2),
 		units_vacant = round((vacant_units/total_units)*100,2),
-		rooms_per_unit_under_3 = round((rooms_3_or_less/total_units)*100,2),
-		rooms_per_unit_over_4 = round((rooms_4_or_more/total_units)*100,2),
+		rooms_per_unit_1 = round((rooms_1/total_units)*100,2),
+		rooms_per_unit_2 = round((rooms_2/total_units)*100,2),
+		rooms_per_unit_3_5 = round((rooms_3_to_5/total_units)*100,2),
+		rooms_per_unit_6_plus = round((rooms_6_or_more/total_units)*100,2),
 		resident_type_owner = round((resident_type_owner/occupied_units)*100,2),
 		resident_type_renter = round((resident_type_renter/occupied_units)*100,2),
 		length_residence_before_2000 = round((moved_in_before_2000/occupied_units)*100,2),

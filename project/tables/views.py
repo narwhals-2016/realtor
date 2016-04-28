@@ -17,54 +17,54 @@ from .models import Neighborhood, Ages, Economic, SchoolEducation, Building, Dem
 from .algorithm import get_results
 
 class Index(View):
-    def get(self, request):
-        context = {}
-        # check to see if someone is already logged in
-        if request.user.is_authenticated(): 
-            # get their username  
-            username = request.user.username
-            context = {
-                'username': username,
-            }
-        user_form = UserForm()
-        login_form = AuthenticationForm()
-        context ["user_form"] = user_form
-        context ["login_form"] = login_form
-        return render(request, "index.html", context)
+	def get(self, request):
+		context = {}
+		# check to see if someone is already logged in
+		if request.user.is_authenticated(): 
+			# get their username  
+			username = request.user.username
+			context = {
+				'username': username,
+			}
+		user_form = UserForm()
+		login_form = AuthenticationForm()
+		context ["user_form"] = user_form
+		context ["login_form"] = login_form
+		return render(request, "index.html", context)
 
 
 class Register(View):
-    def post(self, request):
-        body = request.body.decode()
-        if not body: 
-            return JsonResponse ({"response":"Missing Body"})
-        data = json.loads(body)
+	def post(self, request):
+		body = request.body.decode()
+		if not body: 
+			return JsonResponse ({"response":"Missing Body"})
+		data = json.loads(body)
 
-        user_form = UserForm(data)
-        if user_form.is_valid():
-            user = user_form.save()
-            return JsonResponse({"Message": "Register succesfull", "success": True})
-        else:
-            return JsonResponse ({"response":"Invalid information", 'success' : False, 'errors': user_form.errors })
+		user_form = UserForm(data)
+		if user_form.is_valid():
+			user = user_form.save()
+			return JsonResponse({"Message": "Register succesfull", "success": True})
+		else:
+			return JsonResponse ({"response":"Invalid information", 'success' : False, 'errors': user_form.errors })
 
 
 class Login(View):
-    def post(self, request):
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            request.session.set_expiry(30000)
-            return JsonResponse({"username":username, "success": True})
-        else:
-            return JsonResponse({'errors': form.errors})
+	def post(self, request):
+		form = AuthenticationForm(request, data=request.POST)
+		if form.is_valid():
+			user = form.get_user()
+			login(request, user)
+			request.session.set_expiry(30000)
+			return JsonResponse({"username":username, "success": True})
+		else:
+			return JsonResponse({'errors': form.errors})
 
 
 class Logout(View):
-    def post(self, request):
-        print(request)
-        logout(request) # django built in logout 
-        return JsonResponse ({"Message":"Logout Successful"})
+	def post(self, request):
+		print(request)
+		logout(request) # django built in logout 
+		return JsonResponse ({"Message":"Logout Successful"})
 
 
 class Search(View):
@@ -72,38 +72,47 @@ class Search(View):
 		form = SearchForm(request.POST)
 		form.is_valid()
 		cd = form.cleaned_data
-		f = self.get_table_fields(form.fields, cd)
-		nb_list = get_results(f)
+		field_mappings = self.map_table_fields(form.fields, cd)
+		nb_list = get_results(field_mappings)
 		print(nb_list)
 		return JsonResponse({"success": True})
 
-	def get_table_fields(self, form_fields, cleaned_data):
+	def map_table_fields(self, form_fields, cleaned_data):
+		field_values_list = [
+			'income_level_range',
+			'price_range',
+			'commute_address',
+			'commute_time_range',
+			'night_life_importance',
+		]
 		field_choice_dict = {}
 		for field in form_fields:
 			# charfields, not choicefields
-			if field == 'income_level_range':
-				field_choice_dict[field] = cleaned_data.get(field, 'empty')
-			elif field == 'price_range': 
-				field_choice_dict[field] = cleaned_data.get(field, 'empty')
-			elif field == 'commute_address':
-				field_choice_dict[field] = cleaned_data.get(field, 'empty')
-			elif field == 'commute_time_range':
-				field_choice_dict[field] = cleaned_data.get(field, 'empty')
-			# get field name, not html form input name
+			# if field == 'income_level_range':
+			# 	field_choice_dict[field] = cleaned_data.get(field, 'empty')
+			# elif field == 'price_range': 
+			# 	field_choice_dict[field] = cleaned_data.get(field, 'empty')
+			# elif field == 'commute_address':
+			# 	field_choice_dict[field] = cleaned_data.get(field, 'empty')
+			# elif field == 'commute_time_range':
+			# 	field_choice_dict[field] = cleaned_data.get(field, 'empty')
+			# elif field == 'night_life_importance':
+			if field in field_values_list:
+				field_choice_dict[field] = self.map_values(field, cleaned_data)
 			else:
-				# print('1: ', field)
+				# get field name, not html form input name
 				field_choices = dict(form_fields[field].choices)
-				# print('2: ', field_choices)
 				cleaned_choice = cleaned_data.get(field, 'empty')
 				choice = field_choices.get(cleaned_choice, 'empty')
-				# choice = field_choices[cleaned_data[field]]
-				# print('3: ', choice)
 				field_choice_dict[field] = choice
 		return field_choice_dict
+	
+	def map_values(self, field, cleaned_data):
+		return cleaned_data.get(field, 'empty')
 
 class Results(View):
-    def post(self,request):
-        pass
+	def post(self,request):
+		pass
 
 
 
