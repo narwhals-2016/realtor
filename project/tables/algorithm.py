@@ -103,10 +103,10 @@ def make_queries(form):
 
 def sort_by_largest_to_smallest(table, field):
 	# '-' orders by descending
-	return table.objects.order_by('-' + field)[:10]
+	return table.objects.order_by('-' + field)[:5]
 
 def sort_by_smallest_to_largest(table, field):
-	return table.objects.order_by(field)[:10]
+	return table.objects.order_by(field)[:5]
 
 def count_neighborhoods(results_dict):
 	nb_counter = {} 
