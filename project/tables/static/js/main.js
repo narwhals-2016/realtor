@@ -157,11 +157,10 @@ $(document).ready(function(){
 
     if (data.success){
         ////// if submit form correctly ////////
-        $('#ja_search').addClass("hide");
-          console.log("HERE")
-
+        $('#ja_search').attr("class","hide");
           var template = $('#results-template').html();
           var renderM = Mustache.render(template);
+          // just append the new results to the page
           $('#answer_div').append(renderM);
           window.scrollTo(0, 0);
           }
@@ -170,12 +169,14 @@ $(document).ready(function(){
     });
 
 
-///// Back Button /////
-    $('#answer_div').on('click', '#back_button',function(event){
+///// Edit Form Button /////
+    $('#answer_div').on('click', '#edit_button',function(event){
       event.preventDefault();
+        // show the previous search form
         $('#ja_search').attr("class","show");
-        $('#ja_results').addClass("hide");
-        console.log("DONE!")
+        // get rid of previous results
+        $('#ja_results').remove();
+        window.scrollTo(0, 0);
     });
 
 
