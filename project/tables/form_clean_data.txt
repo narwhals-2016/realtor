@@ -1,0 +1,37 @@
+
+output = form.clean_data
+output = {
+	'age': '0_19',
+	'building_age': 'pre_1970',
+	'commute_time_range': '65',
+	'commute_type': 'drive',
+	'crime_level_checkbox': 'on',
+	'gender': 'female',
+	'highest_edu_level': 'college_plus',
+	'income_level_range': '135',
+	'marital_status_checkbox': 'on',
+	'night_life_importance': 'high',
+	'noise_level_checkbox': 'on',
+	'number_of_children': 'none',
+	'number_of_rooms': '4_plus',
+	'number_of_units': '3_10',
+	'number_of_vehicles_checkbox': 'on',
+	'ownership_type': 'rent',
+	'price_range': '1250',
+	'school_level': 'school_1-8',
+	'school_quality_importance': 'not_high'
+}
+
+MEDIA_CHOICES = (
+    ('Audio', (
+            ('vinyl', 'Vinyl'),
+            ('cd', 'CD'),
+        )
+    ),
+    ('Video', (
+            ('vhs', 'VHS Tape'),
+            ('dvd', 'DVD'),
+        )
+    ),
+    ('unknown', 'Unknown'),
+)
