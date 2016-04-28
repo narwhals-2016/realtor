@@ -35,11 +35,7 @@ class Index(View):
 
 class Register(View):
     def post(self, request):
-        body = request.body.decode()
-        if not body: 
-            return JsonResponse ({"response":"Missing Body"})
-        data = json.loads(body)
-
+        data = request.POST
         user_form = UserForm(data)
         if user_form.is_valid():
             user = user_form.save()

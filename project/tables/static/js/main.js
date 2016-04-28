@@ -4,6 +4,8 @@ $(document).ready(function(){
 
     $('.button-collapse').sideNav();
     $('.parallax').parallax();
+    $('.carousel').carousel();
+    $('.slider').slider();
 
 ///// Register /////
     $('#nav').on('click', "#register", function(event){
