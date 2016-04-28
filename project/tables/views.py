@@ -49,7 +49,7 @@ class Register(View):
 			user = user_form.save()
 			return JsonResponse({"Message": "Register succesfull", "success": True})
 		else:
-			return JsonResponse ({"response":"Invalid information"})
+			return JsonResponse ({"response":"Invalid information", 'success' : False, 'errors': user_form.errors })
 
 
 class Login(View):
