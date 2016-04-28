@@ -88,18 +88,11 @@ class Search(View):
 		]
 		field_choice_dict = {}
 		for field in form_fields:
-			# charfields, not choicefields
-			# if field == 'income_level_range':
-			# 	field_choice_dict[field] = cleaned_data.get(field, 'empty')
-			# elif field == 'price_range': 
-			# 	field_choice_dict[field] = cleaned_data.get(field, 'empty')
-			# elif field == 'commute_address':
-			# 	field_choice_dict[field] = cleaned_data.get(field, 'empty')
-			# elif field == 'commute_time_range':
-			# 	field_choice_dict[field] = cleaned_data.get(field, 'empty')
-			# elif field == 'night_life_importance':
 			if field in field_values_list:
+				print('FVL - field', field)
+				# the forms' choices don't match the table's fields, we want the raw form submission
 				field_choice_dict[field] = self.map_values(field, cleaned_data)
+				print('FVL - val', field_choice_dict[field])
 			else:
 				# get field name, not html form input name
 				field_choices = dict(form_fields[field].choices)

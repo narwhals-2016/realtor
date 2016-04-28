@@ -29,6 +29,7 @@ tables_map = {
 	'noise_level_checkbox': Score,
 	'crime_level_checkbox': Score,
 	'income_level_range': Economic,
+	'price_range': UnitValue,
 	'marital_status_checkbox': Demographic,
 	'number_of_vehicles': UnitDescription,
 	# 'number_of_children': ??,
@@ -37,7 +38,7 @@ tables_map = {
 
 range_list = [
 	'income_level_range',
-	# 'price_range',
+	'price_range',
 	# 'commute_time_range',
 ]
 
@@ -51,8 +52,9 @@ importance_fields_two_levels = [
 ]
 
 
-def put_value_in_group(key, value):
+def put_value_in_group(ownership_type, key, value):
 	if key == 'income_level_range':
+		print('INCOME GROUP')
 		if 0 <= value < 50:
 			result = 'income_0_50'
 		elif 50 <= value < 100:
@@ -61,6 +63,23 @@ def put_value_in_group(key, value):
 			result = 'income_100_200'
 		elif value >= 200:
 			result = 'income_200_plus'
+	elif key == 'price_range':
+		if ownership_type == 'resident_type_renter':
+			print('RENT GROUP')
+			if 0 <= value < 1000:
+				result = 'gross_rent_1000_less'
+			elif 1000 <= value < 1500:
+				result = 'gross_rent_1000_1500'
+			elif value >= 1500:
+				result = 'gross_rent_1500_plus'
+		elif ownership_type == 'resident_type_owner':
+			print('PURCHASE GROUP')
+			if 0 <= value < 500:
+				result = 'value_of_unit_500_less'
+			elif 500 <= value < 1000:
+				result = 'value_of_unit_500_1M'
+			elif value >= 1000:
+				result = 'value_of_unit_1M_plus'
 	return result
 
 
@@ -75,8 +94,9 @@ def make_queries(form):
 			if key in tables_map:
 				print('in tables_map', key)
 				if key in range_list:
-					print(form[key])
-					field = put_value_in_group(key, int(form[key]))
+					print('IN RANGE_LIST', form[key])
+					print('ownership_type', form['ownership_type'])
+					field = put_value_in_group(form['ownership_type'], key, int(form[key]))
 					print('field result', field)
 					ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=field)
 				elif key in importance_fields_two_levels:
@@ -90,6 +110,7 @@ def make_queries(form):
 							table=tables_map[key], field=importance_fields_three_levels[key]
 						)
 					elif form[key] == 'very_high':
+						# increase count for top neighborhoods in very important categories
 						print('INSIDE IMPORTANCE VERY HIGH', key)
 						nb_list = sort_by_smallest_to_largest(
 							table=tables_map[key], field=importance_fields_three_levels[key]
@@ -103,10 +124,10 @@ def make_queries(form):
 
 def sort_by_largest_to_smallest(table, field):
 	# '-' orders by descending
-	return table.objects.order_by('-' + field)[:5]
+	return table.objects.order_by('-' + field)[:10]
 
 def sort_by_smallest_to_largest(table, field):
-	return table.objects.order_by(field)[:5]
+	return table.objects.order_by(field)[:10]
 
 def count_neighborhoods(results_dict):
 	nb_counter = {} 
@@ -129,7 +150,6 @@ def find_three_most_common(nb_dict):
 	# get list of neighborhood names
 	print('common', three_most_common)
 	three_neighborhoods = [nb[0] for nb in three_most_common]
-	print('n', three_neighborhoods)
 	return three_neighborhoods
 
 
