@@ -114,5 +114,9 @@ class SearchForm(forms.Form):
     # def execute_queries(self):
     #     pass
 
+class ResultsForm(forms.Form):
+    pass
+    # name = forms.CharField
+
 
 
