@@ -14,7 +14,7 @@ import pprint
 
 from .forms import UserForm, LoginForm, SearchForm
 from .models import Neighborhood, Ages, Economic, SchoolEducation, Building, Demographic, UnitValue, UnitDescription
-from .algorithm import get_results
+from .algorithm import get_results, get_nb_data
 
 class Index(View):
 	def get(self, request):
@@ -75,8 +75,13 @@ class Search(View):
 		cd = form.cleaned_data
 		field_mappings = self.map_table_fields(form.fields, cd)
 		nb_list = get_results(field_mappings)
-		print(nb_list)
-		return JsonResponse({"success": True})
+		nb_list = [nb[0] for nb in nb_list]
+		nb_data = get_nb_data(nb_list)
+		print('just data', nb_list)
+		return JsonResponse({
+			"success": True,
+			'nb_list': nb_data,
+		})
 
 	def map_table_fields(self, form_fields, cleaned_data):
 		field_values_list = [
@@ -103,6 +108,8 @@ class Search(View):
 	
 	def map_values(self, field, cleaned_data):
 		return cleaned_data.get(field, 'empty')
+
+
 
 class Results(View):
 	def post(self,request):

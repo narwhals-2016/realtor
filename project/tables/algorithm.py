@@ -64,7 +64,8 @@ def put_value_in_group(ownership_type, key, value):
 		elif value >= 200:
 			result = 'income_200_plus'
 	elif key == 'price_range':
-		if ownership_type == 'resident_type_renter':
+		# assume a renter if left ownership type left blank
+		if ownership_type == 'resident_type_renter' or ownership_type == 'empty':
 			print('RENT GROUP')
 			if 0 <= value < 1000:
 				result = 'gross_rent_1000_less'
@@ -135,11 +136,16 @@ def count_neighborhoods(results_dict):
 		# value of results_dict[key] is list of neighborhoods
 		for result in results_dict[key]:
 			# if that neighborhood already in nb_counter, increment by one
-			if result.neighborhood.name in nb_counter:
-				nb_counter[result.neighborhood.name] += 1
+			# if result.neighborhood.name in nb_counter:
+			# 	nb_counter[result.neighborhood.name] += 1
+			# else:
+			# 	# if not in nb_counter, add to nb_counter
+			# 	nb_counter[result.neighborhood.name] = 1
+			if result.neighborhood in nb_counter:
+				nb_counter[result.neighborhood] += 1
 			else:
 				# if not in nb_counter, add to nb_counter
-				nb_counter[result.neighborhood.name] = 1
+				nb_counter[result.neighborhood] = 1
 	# sorts least to greatest, returns array of tuples of neighborhood and count
 	return nb_counter
 
@@ -149,9 +155,20 @@ def find_three_most_common(nb_dict):
 	three_most_common = sorted_dict[len(sorted_dict)-3:]
 	# get list of neighborhood names
 	print('common', three_most_common)
-	three_neighborhoods = [nb[0] for nb in three_most_common]
-	return three_neighborhoods
+	# three_neighborhoods = [nb[0] for nb in three_most_common]
+	return three_most_common
 
+def get_nb_data(nb_list):
+	# get age_median, income_median, rent_median
+	data = []
+	for nb in nb_list:
+		nb_dict = {}
+		nb_dict['name'] = nb.name
+		nb_dict['age_median'] = str(Ages.objects.get(neighborhood=nb).age_median)
+		nb_dict['income_median'] = str(Economic.objects.get(neighborhood=nb).median_income)
+		nb_dict['rent_median'] = str(UnitValue.objects.get(neighborhood=nb).gross_rent_median)
+		data.append(nb_dict)
+	return data
 
 def get_results(form_dict):
 	# performs each query and gathers data
@@ -161,3 +178,5 @@ def get_results(form_dict):
 	nb_count = count_neighborhoods(query_results)
 	print('nb_count result', nb_count)
 	return find_three_most_common(nb_count)
+
+
