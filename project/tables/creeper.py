@@ -46,8 +46,11 @@ def genderfind(user_dic):
 
 def agefind(user_dic):
 	if user_dic.get('birthday'):
-		print(user_dic.get('birthday'))
-		return True 
+		bday = user_dic.get('birthday')
+		if len(bday) == 10:
+
+			
+
 
 
 
