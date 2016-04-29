@@ -48,6 +48,7 @@ def agefind(user_dic):
 	if user_dic.get('birthday'):
 		bday = user_dic.get('birthday')
 		if len(bday) == 10:
+			pass 
 
 			
 
