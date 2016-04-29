@@ -32,7 +32,6 @@ $(document).ready(function(){
     event.preventDefault();
 
     var query_string = $(this).serialize() // returns all the data in your form
-
     $.ajax({
         method: "POST",
         url: "register",
@@ -81,7 +80,7 @@ $(document).ready(function(){
           url: "login",
           data: query_string,
       }).done(function(data, status){
-
+        
           if (data.success){
           ////// if they login correctly ////////
             console.log("HERE")
@@ -96,6 +95,7 @@ $(document).ready(function(){
             }, '');
             var renderM = Mustache.render(template, $.extend(data.errors,{'id_username':'account_circle','id_password':'verified_user'}));
             $('#answer_div').html(renderM);
+
 
             var inputs = $('#login_form').find(errorNames);
             inputs.addClass('invalid');
@@ -140,6 +140,8 @@ $(document).ready(function(){
         var template = $('#form_template').html();
         var renderM = Mustache.render(template);
         $('#answer_div').html(renderM);
+        check_college();
+        check_gender();
         window.scrollTo(0, 0);
     });
 
