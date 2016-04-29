@@ -17,10 +17,19 @@
 
 	  <div class="container">
         <form action="" id='register_form' method="POST">
-
+            {% with hash="#" open="{{" close="}}"%}
             {% csrf_token %}
-            {{ user_form.as_p }}
 
+            {% for field in user_form %}
+                <div class="{{open}}{{hash}}{{field.html_name}}{{close}}error{{open}}/{{field.html_name}}{{close}}">
+                    {{field.label_tag}}{{ field }}
+                </div>
+                {{open}}{{hash}}{{field.html_name}}{{close}}
+                    <small class="error">{{open}} . {{close}}</small>
+                {{open}}/{{field.html_name}}{{close}}
+            {% endfor %}
+            {% endwith %}
+            <br><br>
             <input class="btn waves-effect waves-light" id="register_button" type="submit" name="action" value= "Submit Registration" <i class="material-icons right"></i>
             <br><br><br>
         </div>
@@ -28,3 +37,5 @@
         </form>
 
     </script>
+
+

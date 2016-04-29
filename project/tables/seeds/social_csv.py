@@ -47,15 +47,18 @@ def insert_row_in_demographic(r):
 
     try:
         item =  Neighborhood.objects.get(name=r['neighborhood'])
-        Demographic.objects.create(neighborhood=item,
-                   children_under_18 = r['HH_with_under_18_percentage'],
-                   married = r['Married_percentage'],
-                   divorced= r['Divorced_percentage'],
-                   one_yr_turnover = r['Left_the_house_in_1yr_percentage'],
-                   birth_native = r['Native_population_percentage'],
-                   birth_foreign = r['Foreign_born_percentage'],
-                   gender_m = 58.00,
-                   gender_f = 42.00)
+        Demographic.objects.create(
+          neighborhood=item,
+          # children_under_18 = r['HH_with_under_18_percentage'],
+          married = r['Married_percentage'],
+          # not_married = 1 - r['Married_percenatage'],
+          divorced= r['Divorced_percentage'],
+          one_yr_turnover = r['Left_the_house_in_1yr_percentage'],
+          birth_native = r['Native_population_percentage'],
+          birth_foreign = r['Foreign_born_percentage'],
+          gender_m = 0.00,
+          gender_f = 0.00
+        )
     except:
         print('demographic item not found+++++',r['neighborhood'])
 

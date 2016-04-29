@@ -4,7 +4,10 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Neighborhood(models.Model):
     # id = models.ForeignKey(Neighborhood) # FK to the neighborhood table
-    name = models.CharField(max_length=256)
+    name      = models.CharField(max_length=256)
+    latitude  = models.CharField(max_length = 25, blank=True, default='') 
+    longitude = models.CharField(max_length = 25, blank=True, default='')
+    pic_link  = models.URLField(max_length=500, blank=True, default='')
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -118,6 +121,7 @@ class Demographic(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
     # children_under_18 = models.DecimalField(max_digits=10, decimal_places=2)
     married = models.DecimalField(max_digits=10, decimal_places=2)
+    # not_married = models.DecimalField(max_digits=10, decimal_places=2)
     divorced = models.DecimalField(max_digits=10, decimal_places=2)
     one_yr_turnover = models.DecimalField(max_digits=10, decimal_places=2)
     birth_native = models.DecimalField(max_digits=10, decimal_places=2)
@@ -166,8 +170,10 @@ class UnitDescription(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
     units_occupied = models.DecimalField(max_digits=10, decimal_places=2)
     units_vacant = models.DecimalField(max_digits=10, decimal_places=2)
-    rooms_per_unit_under_3 = models.DecimalField(max_digits=10, decimal_places=2)
-    rooms_per_unit_over_4 = models.DecimalField(max_digits=10, decimal_places=2)
+    rooms_per_unit_1 = models.DecimalField(max_digits=10, decimal_places=2)
+    rooms_per_unit_2 = models.DecimalField(max_digits=10, decimal_places=2)
+    rooms_per_unit_3_5 = models.DecimalField(max_digits=10, decimal_places=2)
+    rooms_per_unit_6_plus = models.DecimalField(max_digits=10, decimal_places=2)
     rooms_median = models.DecimalField(max_digits=10, decimal_places=2)
     resident_type_owner = models.DecimalField(max_digits=10, decimal_places=2)
     resident_type_renter = models.DecimalField(max_digits=10, decimal_places=2)

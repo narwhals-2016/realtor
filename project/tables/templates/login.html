@@ -8,6 +8,7 @@
 
 			<form action="" id='login_form' method="POST">
 
+
 			    {% csrf_token %}
 
 			  <div class="row">
@@ -25,6 +26,21 @@
 
 	          <input class="btn waves-effect waves-light" id="submit_login_button" type="submit" name="action" value= "Login" <i class="material-icons right"></i>
 	          
+
+			{% with hash="#" open="{{" close="}}"%}
+            {% csrf_token %}
+			<div class="row">
+	            {% for field in login_form %}
+	                <div class="input-field col s11 white-text {{open}}{{hash}}{{field.html_name}}{{close}}error{{open}}/{{field.html_name}}{{close}}">
+			        	<i class="material-icons prefix">{{open}}{{field.label_tag_id}}{{close}}</i>
+	                    {{ field }}
+	                    <label for="{{field.label_tag_id}}" {{open}}{{hash}}{{field.html_name}}{{close}}data-error="{{open}} . {{close}}"{{open}}/{{field.html_name}}{{close}}>{{field.label}}</label>
+	                </div>
+	            {% endfor %}
+	         </div>
+            {% endwith %}
+            <input class="btn waves-effect waves-light" id="submit_login_button" type="submit" name="action" value= "Login" <i class="material-icons right"></i>
+
 	        </form>
 
 	        <div>
