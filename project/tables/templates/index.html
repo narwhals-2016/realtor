@@ -212,6 +212,24 @@ cool paralax stuff - look at politipic
 	{% include "register.html"%}
 	{% include "login.html"%}
 	{% include "results.html"%}
+	{% if user.is_authenticated and isgraduated == True %}
+	<script type="text/javascript">
+	function check_college() {
+	document.getElementById("college_plus").checked = true;
+	}</script>
+	{% else %}
+	{% endif %}
+	{% if user.is_authenticated and gender == "male" %}
+	<script type="text/javascript">
+	function check_gender() {
+	document.getElementById("male").checked = true;
+	}</script>
+	{% else %}
+	<script type="text/javascript">
+	function check_gender() {
+	document.getElementById("female").checked = true;
+	}</script>
+	{% endif %}
 	
 
 {% endblock templates %}

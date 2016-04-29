@@ -102,6 +102,8 @@ $(document).ready(function(){
         var template = $('#form_template').html();
         var renderM = Mustache.render(template);
         $('#answer_div').html(renderM);
+        check_college();
+        check_gender();
         window.scrollTo(0, 0);
     });
 

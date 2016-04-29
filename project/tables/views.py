@@ -14,25 +14,41 @@ import pprint
 from .forms import UserForm, LoginForm, SearchForm
 from .models import Neighborhood, Ages, Economic, SchoolEducation, Building, Demographic, UnitValue, UnitDescription
 import requests 
-from allauth.socialaccount import providers
-from allauth.socialaccount.models import SocialLogin, SocialToken, SocialApp
-from allauth.socialaccount.providers.facebook.views import fb_complete_login
-from allauth.socialaccount.helpers import complete_social_login
-import allauth.account
+from allauth.socialaccount.models import SocialToken
+from .creeper import hasGraduated, genderfind, agefind
 
 class Index(View):
 	def get(self, request):
-		access_token = SocialToken.objects.get(account__user=request.user, account__provider='facebook')
-		r = requests.get('https://graph.facebook.com/me?access_token='+access_token.token+'&fields=id,name,email')
-		print(r)
+		if request.user.is_authenticated() and not request.session.get('access_token'):
+			request.session['access_token'] = str(SocialToken.objects.get(account__user=request.user, account__provider='facebook'))
+			r = requests.get('https://graph.facebook.com/me?access_token='+request.session['access_token']+'&fields=education,birthday,gender')
+			print(r.json())
+			gender = genderfind(r.json())
+			isgraduated = hasGraduated(r.json())
+			age = agefind(r.json())
+
+
+			context = {}
+			username = request.user.username
+			context['username']= username
+	
+			user_form = UserForm()
+			login_form = LoginForm()
+
+			context ["user_form"] = user_form
+			context ["login_form"] = login_form
+			context["isgraduated"] = isgraduated
+			context["gender"] = gender
+
+			return render(request, "index.html", context)
+
 		context = {}
 		# check to see if someone is already logged in
 		if request.user.is_authenticated(): 
 			# get their username  
 			username = request.user.username
 			context['username']= username
-		import pprint
-		pprint.pprint(dir(request.user))
+	
 		user_form = UserForm()
 		login_form = LoginForm()
 
