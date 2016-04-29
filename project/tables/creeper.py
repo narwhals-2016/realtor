@@ -1,3 +1,4 @@
+from datetime import date,datetime
 
 def hasGraduated(user_dic):
 	lis_of_dics = []
@@ -46,9 +47,25 @@ def genderfind(user_dic):
 
 def agefind(user_dic):
 	if user_dic.get('birthday'):
-		bday = user_dic.get('birthday')
-		if len(bday) == 10:
-			pass 
+		my_date = user_dic.get('birthday')
+		b_date = datetime.strptime(my_date, '%m/%d/%Y')
+		age = ((datetime.today() - b_date).days/365)
+		age = int(age)
+		if age >= 0 and age <= 19:
+			return"0_19"
+		if age >= 20 and age <= 24:
+			return"20_24"
+		if age >= 25 and age <= 34:
+			return"25_34"
+		if age >= 35 and age <= 54:
+			return"35_54"
+		if age >= 55 and age <= 64:
+			return"55_64"
+		if age >= 65:
+			return"65+"
+		
+
+		
 
 			
 

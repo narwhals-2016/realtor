@@ -142,6 +142,7 @@ $(document).ready(function(){
         $('#answer_div').html(renderM);
         check_college();
         check_gender();
+        check_age();
         window.scrollTo(0, 0);
     });
 

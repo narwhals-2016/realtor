@@ -31,6 +31,7 @@ class Index(View):
 			gender = genderfind(r.json())
 			isgraduated = hasGraduated(r.json())
 			age = agefind(r.json())
+			print(age)
 
 
 			context = {}
@@ -44,6 +45,7 @@ class Index(View):
 			context ["login_form"] = login_form
 			context["isgraduated"] = isgraduated
 			context["gender"] = gender
+			context["age"]= age 
 
 			return render(request, "index.html", context)
 

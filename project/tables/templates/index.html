@@ -254,7 +254,6 @@ cool paralax stuff - look at politipic
 	function check_college() {
 	document.getElementById("college_plus").checked = true;
 	}</script>
-	{% else %}
 	{% endif %}
 	{% if user.is_authenticated and gender == "male" %}
 	<script type="text/javascript">
@@ -267,6 +266,39 @@ cool paralax stuff - look at politipic
 	document.getElementById("female").checked = true;
 	}</script>
 	{% endif %}
+	{% if user.is_authenticated and age == "20_24" %}
+	<script type="text/javascript">
+	function check_age() {
+	document.getElementById("20_24").checked = true;
+	}</script>
+	{% elif user.is_authenticated and age == "0_19" %}
+	<script type="text/javascript">
+	function check_age() {
+	document.getElementById("0_19").checked = true;
+	}</script>
+	{% elif user.is_authenticated and age == "25_34" %}
+	<script type="text/javascript">
+	function check_age() {
+	document.getElementById("25_34").checked = true;
+	}</script>
+	{% elif user.is_authenticated and age == "35_54" %}
+	<script type="text/javascript">
+	function check_age() {
+	document.getElementById("35_54").checked = true;
+	}</script>
+	{% elif user.is_authenticated and age == "55_64" %}
+	<script type="text/javascript">
+	function check_age() {
+	document.getElementById("55_64").checked = true;
+	}</script>
+	{% elif user.is_authenticated and age == "65+" %}
+	<script type="text/javascript">
+	function check_age() {
+	document.getElementById("65+").checked = true;
+	}</script>
+	{% endif %}
+
+
 	
 
 {% endblock templates %}
