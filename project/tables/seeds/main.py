@@ -1,14 +1,15 @@
 from . import (
 	load_neighborhoods, housing_load, economic_load, 
 	demographic_load, schools_csv, social_csv,crime,
-	nightlife
-
+	nightlife, noise, crime
+# google_distance_api waiting for GOOGLE_KEY
 )
 
 def seed_db(data_path, *seed_tables):
 	# creates neighborhoods
 	if "all" in seed_tables:
-		seed_tables = ["neighborhoods","housing","crime","economic","social", "demographic", "schools"]
+		# waiting for GOOGLE_KEY to add "commute"
+		seed_tables = ["neighborhoods","housing","crime","economic","social", "demographic", "nightlife", "noise"]
 
 	if "neighborhoods" in seed_tables:
 		load_neighborhoods.run(data_path, 'housing')
@@ -32,7 +33,7 @@ def seed_db(data_path, *seed_tables):
 	# loads school data
 	if "schools" in seed_tables:
 		schools_csv.run(data_path + "schools/")
-	# nightlife not complete
+	# nightlife complete
 	if "nightlife" in seed_tables:
 		nightlife.run()
 	# loads noise data
