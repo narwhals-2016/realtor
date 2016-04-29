@@ -1,11 +1,9 @@
-    <script id="login-template" type="x-tmpl-mustache/template">
-
+<script id="login-template" type="x-tmpl-mustache/template">
 <div class="parallax-container tall">
 	<div class="container">
 	<br><br>
 	<h1 class="header center white-text">Login</h1>
 		<div class="row center">
-
 			<form action="" id='login_form' method="POST">
 			{% with hash="#" open="{{" close="}}"%}
             {% csrf_token %}
@@ -21,12 +19,13 @@
             {% endwith %}
             <input class="btn waves-effect waves-light" id="submit_login_button" type="submit" name="action" value= "Login" <i class="material-icons right"></i>
 	        </form>
-
+	          <div class="fb-login-button" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>
+	        <a href="/accounts/facebook/login/?process=login" id="fb_link">Login With Facebook</a>
+	        
+	        </div>
 		<div class="parallax blur tall" id="background_pic">
 		</div>
-
 	</div>
 	</div>
 </div>
-
     </script>
