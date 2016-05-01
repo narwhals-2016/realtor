@@ -158,10 +158,11 @@ $(document).ready(function(){
     }).done(function(data, status){
 
     if (data.success){
+      console.log(data)
         ////// if submit form correctly ////////
         $('#ja_search').attr("class","hide");
           var template = $('#results-template').html();
-          var renderM = Mustache.render(template);
+          var renderM = Mustache.render(template, data);
           // just append the new results to the page
           $('#answer_div').append(renderM);
           window.scrollTo(0, 0);
