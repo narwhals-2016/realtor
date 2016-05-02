@@ -34,7 +34,7 @@
 	</div>
 	
 	{% verbatim %}
-	{{#nb_list}}
+	{{#first_three}}
 	{% endverbatim %}			
 	<div class="row">
 		<div class="col s12 m12 l12">
@@ -57,16 +57,14 @@
 				
 					<div class="card-content">
 					    <div class="details"> 
-					        <div class="entry" id="place"></div>
+					        <div class="entry" id="neighborhood"></div>
 					        {% verbatim %}
-					        <div class="entry" id="address"><strong>Age Median: {{age_median}}</strong><br></div>
 					        <br>
-					        <div class="entry" id="notes"><strong>Rent Median: {{rent_median}}</strong> <br></div>
-					        <div class="entry" id="phone"><strong>Income Median: {{income_median}}</strong></div>
-					        <div class="entry" id="website"><strong>Website: </strong></div>
-					        <div class="entry" id="price"><strong>Price: </strong></div>
-					        <br>
-					        <div class="entry" id="parking"><strong>Parking options: </strong></div> 
+					        <div class="entry" id="ren"><strong>Rent Median: </strong>{{rent_median}} <br></div>
+					        <div class="entry" id="rooms"><strong>Average Number of Rooms: </strong>{{rooms_median}}</div><br>
+					        <div class="entry" id="age"><strong>Average Age: </strong>{{age_median}}<br></div>
+					        <div class="entry" id="income"><strong>Income Median: </strong>{{income_median}}</div>
+					        <div class="entry" id="commute"><strong>Average Commute Time <em>(To NYC in Min.):</em> </strong>{{commute_score}}</div>
 					    	{% endverbatim %}
 					    </div>
 					</div>
@@ -82,7 +80,7 @@
 		</div>
 	</div>
 	{% verbatim %}
-	{{/nb_list}}
+	{{/first_three}}
 	{% endverbatim %}
 
 
