@@ -16,7 +16,6 @@ Including another URLconf
 from django.conf.urls import url, include 
 from django.contrib import admin
 from tables import views
-print(admin.site.urls)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include("tables.urls", namespace="tables")),

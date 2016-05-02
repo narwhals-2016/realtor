@@ -1,4 +1,7 @@
-from tables.models import Ages, Demographic, Economic, UnitDescription, SchoolEducation, Building, Score, UnitValue
+from tables.models import (
+	Ages, Demographic, Economic, UnitDescription, 
+	SchoolEducation, Building, Score, UnitValue, Neighborhood
+)
 from pprint import pprint
 from numpy import repeat
 # expecting that Jack's tuples 
@@ -91,36 +94,37 @@ def make_queries(form):
 		# perform 'ten best' query for each key in form results #
 		# if the form results mapping of choices in forms.py for 
 		# SearchForm works, can just use form[key] for field
-		if form[key] != 'empty':
-			if key in tables_map:
-				print('in tables_map', key)
-				if key in range_list:
-					print('IN RANGE_LIST', form[key])
-					print('ownership_type', form['ownership_type'])
-					field = put_value_in_group(form['ownership_type'], key, int(form[key]))
-					print('field result', field)
-					ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=field)
-				elif key in importance_fields_two_levels:
-					print('INSIDE IMPORTANCE TWO FIELDS', key)
-					ten_results[key] = sort_by_smallest_to_largest(table=tables_map[key], field=form[key])
-				elif key in importance_fields_three_levels:
-					print('INSIDE IMPORTANCE THREE FIELDS', key)
-					if form[key] == 'high':
-						print('INSIDE IMPORTANCE HIGH', key) 
-						ten_results[key] = sort_by_smallest_to_largest(
-							table=tables_map[key], field=importance_fields_three_levels[key]
-						)
-					elif form[key] == 'very_high':
-						# increase count for top neighborhoods in very important categories
-						print('INSIDE IMPORTANCE VERY HIGH', key)
-						nb_list = sort_by_smallest_to_largest(
-							table=tables_map[key], field=importance_fields_three_levels[key]
-						)
-						new_list = repeat(nb_list, 2)
-						ten_results[key] = new_list
-				else:
-					print('in ten results part', key)
-					ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=form[key])
+		if form[key] == 'empty':
+			continue
+		if key in tables_map:
+			print('in tables_map', key)
+			if key in range_list:
+				print('IN RANGE_LIST', form[key])
+				print('ownership_type', form['ownership_type'])
+				field = put_value_in_group(form['ownership_type'], key, int(form[key]))
+				print('field result', field)
+				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=field)
+			elif key in importance_fields_two_levels:
+				print('INSIDE IMPORTANCE TWO FIELDS', key)
+				ten_results[key] = sort_by_smallest_to_largest(table=tables_map[key], field=form[key])
+			elif key in importance_fields_three_levels:
+				print('INSIDE IMPORTANCE THREE FIELDS', key)
+				if form[key] == 'high':
+					print('INSIDE IMPORTANCE HIGH', key) 
+					ten_results[key] = sort_by_smallest_to_largest(
+						table=tables_map[key], field=importance_fields_three_levels[key]
+					)
+				elif form[key] == 'very_high':
+					# increase count for top neighborhoods in very important categories
+					print('INSIDE IMPORTANCE VERY HIGH', key)
+					nb_list = sort_by_smallest_to_largest(
+						table=tables_map[key], field=importance_fields_three_levels[key]
+					)
+					new_list = repeat(nb_list, 2)
+					ten_results[key] = new_list
+			else:
+				print('in ten results part', key)
+				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=form[key])
 	return ten_results
 
 def sort_by_largest_to_smallest(table, field):
@@ -144,14 +148,14 @@ def count_neighborhoods(results_dict):
 	# sorts least to greatest, returns array of tuples of neighborhood and count
 	return nb_counter
 
-def find_three_most_common(nb_dict):
-	sorted_dict = sorted(nb_dict.items(), key = lambda x:x[1])
-	# gets the last three, or the ones with the highest count
-	three_most_common = sorted_dict[len(sorted_dict)-3:]
+def find_n_most_common(nb_dict, n):
+	sorted_dict = sorted(nb_dict.items(), key = lambda x:x[1], reverse=True)
+	# gets the last n, or the ones with the highest count
+	n_most_common = sorted_dict[:n]
 	# get list of neighborhood names
-	print('common', three_most_common)
-	# three_neighborhoods = [nb[0] for nb in three_most_common]
-	return three_most_common
+	print('common', n_most_common)
+	# n_neighborhoods = [nb[0] for nb in n_most_common]
+	return n_most_common
 
 def get_nb_data(nb_list):
 	# get age_median, income_median, rent_median
@@ -162,6 +166,9 @@ def get_nb_data(nb_list):
 		nb_dict['age_median'] = str(Ages.objects.get(neighborhood=nb).age_median)
 		nb_dict['income_median'] = str(Economic.objects.get(neighborhood=nb).median_income)
 		nb_dict['rent_median'] = str(UnitValue.objects.get(neighborhood=nb).gross_rent_median)
+		nb_dict['rooms_median'] = str(UnitDescription.objects.get(neighborhood=nb).rooms_median)
+		nb_dict['commute_score'] = str(Score.objects.get(neighborhood=nb).commute_score)
+		nb_dict['pic_link'] = nb.pic_link
 		data.append(nb_dict)
 	return data
 
@@ -172,6 +179,6 @@ def get_results(form_dict):
 	# tally the neighborhoods in query results
 	nb_count = count_neighborhoods(query_results)
 	print('nb_count result', nb_count)
-	return find_three_most_common(nb_count)
+	return find_n_most_common(nb_count, 10)
 
 
