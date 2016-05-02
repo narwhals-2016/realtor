@@ -249,10 +249,16 @@ cool paralax stuff - look at politipic
 	{% include "register.html"%}
 	{% include "login.html"%}
 	{% include "results.html"%}
-	{% if user.is_authenticated and isgraduated == True %}
+	{% if user.is_authenticated and isgraduated == "True" %}
 	<script type="text/javascript">
 	function check_college() {
 	document.getElementById("college_plus").checked = true;
+	}</script>
+	{% elif user.is_authenticated and isgraduated == "college_student" %}
+	<script type="text/javascript">
+	function check_college() {
+	document.getElementById("in_school_toggle").checked = true;
+	document.getElementById("college").checked = true;
 	}</script>
 	{% endif %}
 	{% if user.is_authenticated and gender == "male" %}

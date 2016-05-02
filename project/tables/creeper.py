@@ -35,7 +35,9 @@ def parse_schools(lis):
 				year = year_dic.get('name')
 				year = int(year)
 				if year <= 2016:
-					return True
+					return "True"
+				if year > 2017:
+					return "college_student"
 				return False 
 
 def genderfind(user_dic):
