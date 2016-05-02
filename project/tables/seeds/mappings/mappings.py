@@ -60,7 +60,7 @@ nb_zip ={
 	'Stuyvesant Town-Cooper Village': ['10009', '10010'], 'Springfield Gardens North': ['11413'], 
 	'Rego Park': ['11374'], 'New Springville-Bloomfield-Travis': ['10314'], 
 	'Hollis': ['11423'], 'Springfield Gardens South-Brookville': ['11413'], 
-	'Brooklyn Heights-Cobble Hill': ['11201'], 'Turtle Bay-East Midtown': ['10022'], 
+	'Brooklyn Heights-Cobble Hill': ['11201'], 'Turtle Bay-East Midtown': ['10022', '10017'], 
 	'Manhattanville': ['10027'], 'Lincoln Square': ['10023'], 'Murray Hill': ['10016'], 
 	'Flatlands': ['11234'], 'East Concourse-Concourse Village': ['10451'], 
 	'DUMBO-Vinegar Hill-Downtown Brooklyn-Boerum H': ['11201', '11217'], 
@@ -119,11 +119,20 @@ nb_names = {
 	'Stuyvesant Heights nyc': 'Stuyvesant Heights',
 	'Yorkville nyc': 'Yorkville',
 }
+# census names: display names
 
-
-def alt_name(my_dict):
-	pass
-
+# function to update names is seeds.load_neighborhoods.load_display_names
+name_mappings = {
+	'North Side-South Side': 'Williamsburg',
+	'Williamsburg': 'South Williamsburg',
+	'Clinton': "Hell's Kitchen",
+	'DUMBO-Vinegar Hill-Downtown Brooklyn-Boerum H': 'DUMBO-Boerum Hill',
+	'SoHo-TriBeCa-Civic Center-Little Italy': 'SoHo-TriBeCa-Little Italy',
+	'Midtown-Midtown South': 'Midtown',		
+	'Sheepshead Bay-Gerritsen Beach-Manhattan Beac': 'Sheepshead Bay-Gerritsen Beach-Manhattan Beach',
+	'Soundview-Castle Hill-Clason Point-Harding Pa': 'Soundview-Castle Hill-Clason Point',
+	'Georgetown-Marine Park-Bergen Beach-Mill Basi': 'Georgetown-Marine Park-Bergen Beach-Mill Basin',		
+}
 
 
 # converts dictionary values from strings to arrays; was useful with zip codes as strings
