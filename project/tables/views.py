@@ -94,7 +94,7 @@ class Login(View):
 			user = form.get_user()
 			login(request, user)
 			request.session.set_expiry(30000)
-			return JsonResponse({"username":username, "success": True})
+			return JsonResponse({"username":user.username, "success": True})
 		else:
 			return JsonResponse({'errors': form.errors})
 
@@ -114,11 +114,17 @@ class Search(View):
 		field_mappings = self.map_table_fields(form.fields, cd)
 		nb_list = get_results(field_mappings)
 		nb_list = [nb[0] for nb in nb_list]
-		nb_data = get_nb_data(nb_list)
-		print('just data', nb_list)
+
+		first_three = get_nb_data(nb_list[:3])
+		next_three = get_nb_data(nb_list[3:6])
+		last_three = get_nb_data(nb_list[6:9])
+		# print('0 to 3', first_three)
+		# print('3 to 6', next_three)
+		# print('6 to 9', last_three)
+
 		return JsonResponse({
 			"success": True,
-			'nb_list': nb_data,
+			'results': [first_three, next_three, last_three]
 		})
 
 	def map_table_fields(self, form_fields, cleaned_data):

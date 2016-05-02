@@ -6,6 +6,7 @@ $(document).ready(function(){
     $('.parallax').parallax();
     $('.carousel').carousel();
     $('.slider').slider();
+    var __cache = {};
 
 
 // window.onhashchange = function (e) {
@@ -42,7 +43,7 @@ $(document).ready(function(){
     if (data.success){
       ////// if they registered then display the Login ////////
             var template = $('#login-template').html();
-            var renderM = Mustache.render(template);
+            var renderM = Mustache.render(template, {});
             $('#answer_div').html(renderM);
             window.scrollTo(0, 0);
             // $('#answer_div').append(data.Message);
@@ -159,10 +160,19 @@ $(document).ready(function(){
 
     if (data.success){
       console.log(data)
+      __cache['results'] = data.results;
+      var results = data.results[0];
+
         ////// if submit form correctly ////////
         $('#ja_search').attr("class","hide");
+
+          // append the header to the page, once
+          var template = $('#results-header-template').html();
+          var renderM = Mustache.render(template);
+          $('#answer_div').append(renderM);
+
           var template = $('#results-template').html();
-          var renderM = Mustache.render(template, data);
+          var renderM = Mustache.render(template, {'result_set': results, 'next':0});
           // just append the new results to the page
           $('#answer_div').append(renderM);
           window.scrollTo(0, 0);
@@ -178,10 +188,25 @@ $(document).ready(function(){
         // show the previous search form
         $('#ja_search').attr("class","show");
         // get rid of previous results
-        $('#ja_results').remove();
+        $('.ja_results').remove();
         window.scrollTo(0, 0);
     });
 
+
+///// More Results Button /////
+    $('#answer_div').on('click', '#more_results_button',function(event){
+      event.preventDefault();  
+      var next = parseInt($(this).val()) + 1;
+      if (next >= __cache.results.length) return false;
+
+      var results = __cache.results[next];
+      // this hides all the buttons already on the page but the bottons will still be on the bottom becuase the last set of buttons has not loaded yet
+          $('.buttons').attr("class","hide");
+          var template = $('#results-template').html();
+          var renderM = Mustache.render(template, {'result_set': results, 'next': next});
+          // just append the new results to the page
+          $('#answer_div').append(renderM);
+    });
 
 
 ///// Form - Education toggle/////
