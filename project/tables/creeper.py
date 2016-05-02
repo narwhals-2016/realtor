@@ -16,12 +16,6 @@ def hasGraduated(user_dic):
 
 
 def parse_schools(lis):
-	# for key,value in ed_dic.items():
-	# 	if key == 'type' and value == 'High School':
-	# 		year_dic= ed_dic.get('year')
-	# 		year = year_dic.get('name')
-	# 		year = int(year)
-	##############################################
 	'''
 	Return True if Graduated or Graduating this year.
 	'''

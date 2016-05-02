@@ -149,3 +149,4 @@ SOCIALACCOUNT_PROVIDERS = {
         'VERIFIED_EMAIL': False,
     }
 }
+
