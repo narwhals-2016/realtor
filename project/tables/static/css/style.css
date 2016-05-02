@@ -101,8 +101,9 @@ footer.page-footer {
 	color:red;
 }
 
-
-
+#grey_hover:hover {
+	font-weight:bold;
+}
 
 
 
