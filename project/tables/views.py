@@ -149,14 +149,6 @@ class Search(View):
 
 
 
-class Results(View):
-	def post(self,request):
-		pass
-
-
-
-
-
 
 
 
