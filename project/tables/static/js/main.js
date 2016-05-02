@@ -43,7 +43,7 @@ $(document).ready(function(){
     if (data.success){
       ////// if they registered then display the Login ////////
             var template = $('#login-template').html();
-            var renderM = Mustache.render(template);
+            var renderM = Mustache.render(template, {});
             $('#answer_div').html(renderM);
             window.scrollTo(0, 0);
             // $('#answer_div').append(data.Message);
