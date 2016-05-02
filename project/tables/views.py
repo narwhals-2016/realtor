@@ -124,9 +124,7 @@ class Search(View):
 
 		return JsonResponse({
 			"success": True,
-			'first_three': first_three,
-			'next_three': next_three,
-			'last_three': last_three,
+			'results': [first_three, next_three, last_three]
 		})
 
 	def map_table_fields(self, form_fields, cleaned_data):
