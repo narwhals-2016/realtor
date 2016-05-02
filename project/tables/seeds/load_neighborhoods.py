@@ -31,7 +31,7 @@ def	load_neighborhood(dataframe):
 	else:
 		neigborhood_obj = Neighborhood.objects.create(
 			name=neighborhood,
-			display_name=neighborhood,
+			webdisplay=neighborhood,
 		)
 		print('nb created: ', neigborhood_obj.name)
 
