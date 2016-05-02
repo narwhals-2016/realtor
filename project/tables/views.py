@@ -28,10 +28,11 @@ class Index(View):
 			request.session['access_token'] = str(SocialToken.objects.get(account__user=request.user, account__provider='facebook'))
 			r = requests.get('https://graph.facebook.com/me?access_token='+request.session['access_token']+'&fields=education,birthday,gender')
 			print(r.json())
+			print(request.user.username)
 			gender = genderfind(r.json())
 			isgraduated = hasGraduated(r.json())
 			age = agefind(r.json())
-			print(age)
+			print(gender, age, isgraduated)
 
 
 			context = {}

@@ -28,18 +28,27 @@ def parse_schools(lis):
 	if len(lis) < 1:
 		return False 
 
+	school_type = [value for item in lis for key,value in item.items() if value == 'College' or value == 'High School'] 
+	
 	for item in lis:
 		for key,value in item.items():
-			if key == 'type' and value == 'College':
+			if value == 'College':
 				year_dic = item.get('year')
 				year = year_dic.get('name')
 				year = int(year)
 				if year <= 2016:
 					return "True"
-				if year > 2017:
+				if year > 2016:
 					return "college_student"
-				return False 
-
+			if value == 'High School' and 'College' not in school_type:
+				year_dic = item.get('year')
+				year = year_dic.get('name')
+				year = int(year)
+				if year > 2016:
+					return "hs_student"
+				elif year < 2016:
+					return "hs_grad"
+		
 def genderfind(user_dic):
 	if user_dic.get('gender') == "male":
 		return "male" 
