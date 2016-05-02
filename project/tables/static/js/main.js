@@ -2,22 +2,17 @@
 $(document).ready(function(){
 	console.log("Hi there!")
 
+// goes to top of page on reload
+$( window ).unload(function() {
+  window.scrollTo(0, 0);
+    console.log("again")
+});
+
     $('.button-collapse').sideNav();
     $('.parallax').parallax();
     $('.carousel').carousel();
     $('.slider').slider();
     var __cache = {};
-
-
-// window.onhashchange = function (e) {
-//     if (window.location.hash === "#" || window.location.hash === "") {
-//         calendar_view.show();
-//         event_form_view.hide();
-//     } else if (window.location.hash === "#form") {
-//         calendar_view.hide();
-//         event_form_view.show();
-//     }
-// };
 
 
 ///// Register /////
