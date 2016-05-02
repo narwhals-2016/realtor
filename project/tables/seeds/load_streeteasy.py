@@ -1,9 +1,9 @@
 from tables.models import Neighborhood, StreetEasy
-from tables.streeteasy import combo_map
+from tables.streeteasy import combo
 from tables.seeds.mappings.mappings import nb_zip
 
 # result from api comes as dictionary of zip_code:{api output}
-# use combo_map for api_mapping parameter
+# use combo for api_mapping parameter
 
 # use nb_zip as zip_mapping parameter
 # input nb:[zips] mapping as zip_mapping
@@ -29,6 +29,15 @@ def make_streeteasy_score(nb_obj, zip_list):
 
 		}
 	)
+	if street_tuple[1] == False:
+		street_tuple[0].rent_median = rent_median
+		street_tuple[0].rent_average = rent_average
+		street_tuple[0].squarefeet_median = squarefeet_median
+		street_tuple[0].squarefeet_average = squarefeet_average
+		street_tuple[0].save()
+		print('********UPDATED', nb_obj)
+	else:
+		print('created********', nb_obj)
 	print(street_tuple)
 	return street_tuple
 
@@ -47,7 +56,10 @@ def get_zip_code_scores(zip_list, api_mapping):
 	return result_holder
 
 
-def run(zip_mapping, api_mapping):
+def run():
+	# zip_mapping and api_mapping are imported at beginning of file
+	zip_mapping = nb_zip
+	api_mapping = combo
 	for nb in zip_mapping:
 		nb_filter = Neighborhood.objects.filter(name=nb)
 		if nb_filter:
@@ -59,5 +71,5 @@ def run(zip_mapping, api_mapping):
 		else:
 			print("didn't get nb_obj", nb)
 
-
+run()
 
