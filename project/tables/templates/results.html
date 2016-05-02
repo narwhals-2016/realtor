@@ -4,7 +4,8 @@
 
 <div id="ja_results">
 
-<!--
+ <!-- this is a loading icon -->
+ <!--
   <div class="preloader-wrapper big active">
     <div class="spinner-layer spinner-blue-grey-only">
       <div class="circle-clipper left">
@@ -42,19 +43,19 @@
 				<div class="col s4 m4 l4">
 
 					<div class="card-image">
-						<img src="{% static "images/brownstones.jpg" %}" id="image_height">
+
+						{% verbatim %}
+						<img src="{{ pic_link }}" id="image_height">
+						{% endverbatim %}
 						{% verbatim %}
 						<span class="card-title" id="bigger">{{ name }}</span>
 						{% endverbatim %}
 					</div>
-
 				</div>
 
 				<div class="col s8 m8 l8">
-
+				
 					<div class="card-content">
-					
-						<!-- this needs to be a loop -->
 					    <div class="details"> 
 					        <div class="entry" id="place"></div>
 					        {% verbatim %}
