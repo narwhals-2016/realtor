@@ -2,39 +2,11 @@
 
     <script id="results-template" type="x-tmpl-mustache/template">
 
-<div id="ja_results">
-
- <!-- this is a loading icon -->
- <!--
-  <div class="preloader-wrapper big active">
-    <div class="spinner-layer spinner-blue-grey-only">
-      <div class="circle-clipper left">
-        <div class="circle"></div>
-      </div><div class="gap-patch">
-        <div class="circle"></div>
-      </div><div class="circle-clipper right">
-        <div class="circle"></div>
-      </div>
-    </div>
-  </div>
-  -->
-
-	<div class="parallax-container" id="background_pic">
-
-		<div class="section no-pad-bot">
-			<div class="container">
-				<br><br>
-				<h1 class="header center white-text">Results</h1>
-					<div class="row center">
-						<h5 class="header col s12 white-text">Neighborhoods Custom Suited to You</h5>
-					</div>
-				<br><br>
-			</div>
-		</div>
-	</div>
+<div class="ja_results">
 	
+	 <!-- first set of 3 results -->
 	{% verbatim %}
-	{{#nb_list}}
+	{{#result_set}}
 	{% endverbatim %}			
 	<div class="row">
 		<div class="col s12 m12 l12">
@@ -57,16 +29,14 @@
 				
 					<div class="card-content">
 					    <div class="details"> 
-					        <div class="entry" id="place"></div>
+					        <div class="entry" id="neighborhood"></div>
 					        {% verbatim %}
-					        <div class="entry" id="address"><strong>Age Median: {{age_median}}</strong><br></div>
 					        <br>
-					        <div class="entry" id="notes"><strong>Rent Median: {{rent_median}}</strong> <br></div>
-					        <div class="entry" id="phone"><strong>Income Median: {{income_median}}</strong></div>
-					        <div class="entry" id="website"><strong>Website: </strong></div>
-					        <div class="entry" id="price"><strong>Price: </strong></div>
-					        <br>
-					        <div class="entry" id="parking"><strong>Parking options: </strong></div> 
+					        <div class="entry" id="ren"><strong>Rent Median: </strong>{{rent_median}} <br></div>
+					        <div class="entry" id="rooms"><strong>Average Number of Rooms: </strong>{{rooms_median}}</div><br>
+					        <div class="entry" id="age"><strong>Average Age: </strong>{{age_median}}<br></div>
+					        <div class="entry" id="income"><strong>Income Median: </strong>{{income_median}}</div>
+					        <div class="entry" id="commute"><strong>Average Commute Time <em>(To NYC in Min.):</em> </strong>{{commute_score}}</div>
 					    	{% endverbatim %}
 					    </div>
 					</div>
@@ -82,19 +52,20 @@
 		</div>
 	</div>
 	{% verbatim %}
-	{{/nb_list}}
-	{% endverbatim %}
+	{{/result_set}}
 
 
 
+ 
 
 
+<div class = "buttons">
 
 	<div class="row">
 		<div class="container">
 
 			<div class="col s4 center-align">
-				<button class="btn waves-effect waves-light blue-grey" type="submit" name="action">More Results
+				<button class="btn waves-effect waves-light blue-grey" type="submit" name="action" id="more_results_button" value="{{next}}">More Results
 				    <i class="material-icons right">list</i>
 			    </button>
 			    <br><br>
@@ -117,7 +88,9 @@
 		</div>
 	</div>
 </div>
+</div>
 
+{% endverbatim %}
     </script>
 
 

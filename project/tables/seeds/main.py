@@ -1,18 +1,35 @@
+import time
 from . import (
-	load_neighborhoods, housing_load, economic_load, 
+	load_neighborhoods, load_geocodes, load_missing_geocodes,
+	load_pic_urls, load_streetviews, housing_load, economic_load, 
 	demographic_load, schools_csv, social_csv,crime,
 	nightlife, noise, crime, google_distance_api
 )
 
+'''
+from tables.seeds import seed_db
+
+seed_db("tables/seeds/datasets/", "all")
+'''
+
+
 def seed_db(data_path, *seed_tables):
+# open a log file to capture prints as the data is loaded- this will be helpful to 
+# debug seeding problems
+	timestr = time.strftime("%Y%m%d-%H%M%S")
+	f = open(data_path+'log_file'+timestr+'.txt', 'w')
+
 	# creates neighborhoods
 	if "all" in seed_tables:
 		# waiting for GOOGLE_KEY to add "commute"
-		seed_tables = ["neighborhoods","housing","crime","economic","social", "demographic", "nightlife", "noise", "commute"]
+		seed_tables = ["neighborhoods","housing","crime","economic","social", "demographic", "nightlife", "schools", "noise", "commute"]
 
 	if "neighborhoods" in seed_tables:
 		load_neighborhoods.run(data_path, 'housing')
 		load_neighborhoods.run(data_path, 'housing_temp')
+		load_geocodes.run()
+		load_missing_geocodes.run()
+		load_streetviews.run()
 		print ("\n *** neighborhoods done *** \n")
 
 	# loads housing data
@@ -59,6 +76,7 @@ def seed_db(data_path, *seed_tables):
 		google_distance_api.run()
 		print ("\n *** commute done *** \n")
 
+	# loads crime data
 	if "crime" in seed_tables:
 		crime.run()
 		print ("\n *** crime done *** \n")
