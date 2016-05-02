@@ -120,6 +120,8 @@ nb_names = {
 	'Yorkville nyc': 'Yorkville',
 }
 # census names: display names
+
+# function to update names is seeds.load_neighborhoods.load_display_names
 name_mappings = {
 	'North Side-South Side': 'Williamsburg',
 	'Williamsburg': 'South Williamsburg',
