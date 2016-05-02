@@ -119,11 +119,18 @@ nb_names = {
 	'Stuyvesant Heights nyc': 'Stuyvesant Heights',
 	'Yorkville nyc': 'Yorkville',
 }
-
-
-def alt_name(my_dict):
-	pass
-
+# census names: display names
+name_mappings = {
+	'North Side-South Side': 'Williamsburg',
+	'Williamsburg': 'South Williamsburg',
+	'Clinton': "Hell's Kitchen",
+	'DUMBO-Vinegar Hill-Downtown Brooklyn-Boerum H': 'DUMBO-Boerum Hill',
+	'SoHo-TriBeCa-Civic Center-Little Italy': 'SoHo-TriBeCa-Little Italy',
+	'Midtown-Midtown South': 'Midtown',		
+	'Sheepshead Bay-Gerritsen Beach-Manhattan Beac': 'Sheepshead Bay-Gerritsen Beach-Manhattan Beach',
+	'Soundview-Castle Hill-Clason Point-Harding Pa': 'Soundview-Castle Hill-Clason Point',
+	'Georgetown-Marine Park-Bergen Beach-Mill Basi': 'Georgetown-Marine Park-Bergen Beach-Mill Basin',		
+}
 
 
 # converts dictionary values from strings to arrays; was useful with zip codes as strings

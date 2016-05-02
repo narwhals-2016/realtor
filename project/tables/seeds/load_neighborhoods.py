@@ -8,6 +8,7 @@ python commands to run in 'python3 manage.py shell'
 import os
 import pandas as pd
 from tables.models import Neighborhood
+from tables.seeds.mappings.mappings import name_mappings
 
 def parse_file(filename):
 	# use pandas to read excel file, and then create dataframe with first column as index
@@ -28,7 +29,10 @@ def	load_neighborhood(dataframe):
 	elif len(nb_filter) == 1:
 		print('nb already in db')
 	else:
-		neigborhood_obj = Neighborhood.objects.create(name=neighborhood)
+		neigborhood_obj = Neighborhood.objects.create(
+			name=neighborhood,
+			display_name=neighborhood,
+		)
 		print('nb created: ', neigborhood_obj.name)
 
 
@@ -36,3 +40,16 @@ def run(folder_path, folder):
 	file_list = os.listdir(folder_path + folder)
 	for filename in file_list:
 		parse_file(folder_path + folder + '/' + filename)
+
+
+# run only after neighborhoods loaded
+def load_display_names(name_mappings):
+	neighborhoods = Neighborhood.objects.all()
+	for neighborhood in name_mappings:
+		nb_filter = Neighborhood.objects.filter(name=neighborhood)
+		if nb_filter:
+			print('old display_name', nb_filter[0].webdisplay)
+			nb_filter[0].webdisplay = name_mappings[neighborhood]
+			nb_filter[0].save()
+			print('new display_name', nb_filter[0].webdisplay)
+	return True
