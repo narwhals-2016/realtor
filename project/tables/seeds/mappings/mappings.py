@@ -60,7 +60,7 @@ nb_zip ={
 	'Stuyvesant Town-Cooper Village': ['10009', '10010'], 'Springfield Gardens North': ['11413'], 
 	'Rego Park': ['11374'], 'New Springville-Bloomfield-Travis': ['10314'], 
 	'Hollis': ['11423'], 'Springfield Gardens South-Brookville': ['11413'], 
-	'Brooklyn Heights-Cobble Hill': ['11201'], 'Turtle Bay-East Midtown': ['10022'], 
+	'Brooklyn Heights-Cobble Hill': ['11201'], 'Turtle Bay-East Midtown': ['10022', '10017'], 
 	'Manhattanville': ['10027'], 'Lincoln Square': ['10023'], 'Murray Hill': ['10016'], 
 	'Flatlands': ['11234'], 'East Concourse-Concourse Village': ['10451'], 
 	'DUMBO-Vinegar Hill-Downtown Brooklyn-Boerum H': ['11201', '11217'], 
