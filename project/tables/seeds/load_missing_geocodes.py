@@ -3,7 +3,7 @@ from tables.models import Neighborhood
 missing_gecodes = {
 	'Allerton-Pelham Gardens': ['10312', '40.543117','-74.17628'],
 	"Annadale-Huguenot-Prince's Bay-Eltingville": ['10312','40.543117','-74.17628'],
-	# 'Arden Heights': 'MISSING', ---
+	'Arden Heights': ['10312','40.5446','-74.1795'],
 	# 'Astoria': '11103',---
 	# 'Auburndale': '11358',---
 	# 'Baisley Park': '11434',---
@@ -94,7 +94,7 @@ missing_gecodes = {
 	# 'Kew Gardens Hills': '11415',
 	# 'Kingsbridge Heights': '10463',
 	# 'Laurelton': '11413',
-	# 'Lenox Hill-Roosevelt Island': '10065',
+	'Lenox Hill-Roosevelt Island': ['10065','40.7656','-73.9624'],
 	# 'Lincoln Square': '10023',
 	# 'Lindenwood-Howard Beach': '11414',
 	# 'Longwood': '10455',
@@ -119,7 +119,7 @@ missing_gecodes = {
 	# 'New Springville-Bloomfield-Travis': '10314',
 	# 'North Corona': '11368',
 	# 'North Riverdale-Fieldston-Riverdale': '10471',
-	# 'North Side-South Side': 'MISSING',
+	'North Side-South Side': ['11211','40.7111','-73.9565'],
 	# 'Norwood': '10467',
 	# 'Oakland Gardens': '11364',
 	# 'Oakwood-Oakwood Beach': '10306',
