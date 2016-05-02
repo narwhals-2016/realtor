@@ -18,6 +18,14 @@
   filter: blur(3px);
 }
 
+#small_blur {
+	-webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+}
+
 .parallax {
 	height: 60vh;
 	margin-left: -3em; 
@@ -92,8 +100,6 @@ footer.page-footer {
 .error {
 	color:red;
 }
-
-
 
 
 
