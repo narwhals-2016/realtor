@@ -31,7 +31,7 @@ missing_gecodes = {
 	'Carroll Gardens-Columbia Street-Red Hook': ['11231', '40.6788','-74.00254'],
 	'Central Harlem North-Polo Grounds': ['10039', '40.826181', '-73.9371'],
 	'Central Harlem South': ['10026', '40.802853','-73.95471'],
-	# 'Charleston-Richmond Valley-Tottenville': '10307', ---
+	'Charleston-Richmond Valley-Tottenville': ['10307', '40.495929', '-74.210085'],
 	# 'Chinatown': '10013', ---
 	'Claremont-Bathgate': ['10457', '40.846745','-73.89861'],
 	# 'Clinton Hill': '11205', ---
@@ -42,7 +42,7 @@ missing_gecodes = {
 	# 'Crown Heights North': '11225', ---
 	# 'Crown Heights South': '11225', ---
 	# 'Cypress Hills-City Line': '11208', ---
-	# 'DUMBO-Vinegar Hill-Downtown Brooklyn-Boerum H': ['11201',"11217"], ---
+	'DUMBO-Vinegar Hill-Downtown Brooklyn-Boerum H': ['11201','40.699252', '-73.987822'],
 	# 'Douglas Manor-Douglaston-Little Neck': '11362', ---
 	# 'Dyker Heights': '11228', ---
 	'East Concourse-Concourse Village': ['10451', '40.819729','-73.9223'],
@@ -96,7 +96,7 @@ missing_gecodes = {
 	# 'Laurelton': '11413',
 	'Lenox Hill-Roosevelt Island': ['10065','40.7656','-73.9624'],
 	# 'Lincoln Square': '10023',
-	# 'Lindenwood-Howard Beach': '11414',
+	'Lindenwood-Howard Beach': ['11414','40.65054','-73.839715'],
 	# 'Longwood': '10455',
 	# 'Lower East Side': '10002',
 	# 'Madison brookl': '11229',
@@ -135,6 +135,7 @@ missing_gecodes = {
 	# 'Port Richmond': '10302',
 	# 'Prospect Heights': '11238',
 	'Prospect Lefferts Gardens-Wingate': ['11225','40.662892', '-73.95509'],
+	'Park Slope-Gowanus': ['11215', '40.66658', '-73.977418']
 	# 'Queens Village': '11428',
 	# 'Queensboro Hill queens': '11355',
 	'Queensbridge-Ravenswood-Long Island City': ['11106', '40.762012','-73.93147'], 
