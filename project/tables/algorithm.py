@@ -157,7 +157,23 @@ def find_n_most_common(nb_dict, n):
 	# n_neighborhoods = [nb[0] for nb in n_most_common]
 	return n_most_common
 
-def get_nb_data(nb_list):
+
+def get_nb_data(nb_list, count):
+	pics =[
+		"http://hometown-tourist.com/wp-content/uploads/2015/01/Manhattan-Neighborhood-Street-Scene.jpg",
+		"http://img.theepochtimes.com/n3/eet-content/uploads/2014/09/12/shutterstock_201591710-676x450.jpg",
+		"http://fc3d750e1b22019028ae-eb9d0534c31fede444754f378d638c42.r70.cf1.rackcdn.com/uploads/picture/source/1184/victorian_homes_BH.jpg",
+		"http://images.nymag.com/realestate/neighborhoods/2010/nabelivable100419_opener_560.jpg",
+		"http://farm5.static.flickr.com/4035/5134152910_2f64668299.jpg",
+		"http://www.arizonafoothillsmagazine.com/valleygirlblog/wp-content/uploads/9-tie-new-york-ny-10065-nycs-upper-east-side-neighborhood-from-60th-street-to-69th-street-had-six-home-sales-over-10-million.jpg",
+		"http://www.asliceofbrooklyn.com/wp-content/uploads/2015/02/street-view-brooklyn-slider.jpg",
+		"http://www.nychomes4u.com/wp-content/uploads/photo-gallery/brooklyn%204.png",
+		"http://www.arizonafoothillsmagazine.com/valleygirlblog/wp-content/uploads/9-tie-new-york-ny-10065-nycs-upper-east-side-neighborhood-from-60th-street-to-69th-street-had-six-home-sales-over-10-million.jpg",
+		"http://www.asliceofbrooklyn.com/wp-content/uploads/2015/02/street-view-brooklyn-slider.jpg",
+		"http://www.nychomes4u.com/wp-content/uploads/photo-gallery/brooklyn%204.png",
+		"http://fc3d750e1b22019028ae-eb9d0534c31fede444754f378d638c42.r70.cf1.rackcdn.com/uploads/picture/source/1184/victorian_homes_BH.jpg",
+		]
+
 	# get age_median, income_median, rent_median
 	data = []
 	for nb in nb_list:
@@ -169,6 +185,8 @@ def get_nb_data(nb_list):
 		nb_dict['rooms_median'] = str(UnitDescription.objects.get(neighborhood=nb).rooms_median)
 		nb_dict['commute_score'] = str(Score.objects.get(neighborhood=nb).commute_score)
 		nb_dict['pic_link'] = nb.pic_link
+		nb_dict["link"] = pics[count]
+		count +=1 
 		data.append(nb_dict)
 	return data
 
@@ -179,6 +197,6 @@ def get_results(form_dict):
 	# tally the neighborhoods in query results
 	nb_count = count_neighborhoods(query_results)
 	print('nb_count result', nb_count)
-	return find_n_most_common(nb_count, 10)
+	return find_n_most_common(nb_count, 9)
 
 

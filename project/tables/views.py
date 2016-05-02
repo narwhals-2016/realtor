@@ -53,13 +53,7 @@ class Index(View):
 		if request.user.is_authenticated(): 
 			# get their username  
 			username = request.user.username
-
 			context['username']= username
-	
-
-			context = {
-				'username': username,
-			}
 
 		user_form = UserForm()
 		login_form = AuthenticationForm()
@@ -105,7 +99,6 @@ class Logout(View):
 		logout(request) # django built in logout 
 		return JsonResponse ({"Message":"Logout Successful"})
 
-
 class Search(View):
 	def post(self,request):
 		form = SearchForm(request.POST)
@@ -115,16 +108,16 @@ class Search(View):
 		nb_list = get_results(field_mappings)
 		nb_list = [nb[0] for nb in nb_list]
 
-		first_three = get_nb_data(nb_list[:3])
-		next_three = get_nb_data(nb_list[3:6])
-		last_three = get_nb_data(nb_list[6:9])
+		first_three = get_nb_data(nb_list[:3], 0)
+		next_three = get_nb_data(nb_list[3:6], 3)
+		last_three = get_nb_data(nb_list[6:9], 6)
 		# print('0 to 3', first_three)
 		# print('3 to 6', next_three)
 		# print('6 to 9', last_three)
 
 		return JsonResponse({
 			"success": True,
-			'results': [first_three, next_three, last_three]
+			'results': [first_three, next_three, last_three],
 		})
 
 	def map_table_fields(self, form_fields, cleaned_data):
