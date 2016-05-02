@@ -9,7 +9,7 @@ All database seeding and data gathering (ie via API's) should eventually use the
 nb_zip ={
 	'Breezy Point-Belle Harbor-Rockaway Park-Broad': ['11697'], 'East New York': ['11207'], 
 	'Bushwick North': ['11237'], 'Elmhurst': ['11373'], 'South Ozone Park': ['11436'], 
-	'Arden Heights': ['MISSING'], 'Central Harlem North-Polo Grounds': ['10039'], 
+	'Arden Heights': ['10312'], 'Central Harlem North-Polo Grounds': ['10039'], 
 	'Westchester-Unionport': ['10461'], 'Rosedale': ['11422'], 
 	'Schuylerville-Throgs Neck-Edgewater Park': ['10465'], 'New Brighton-Silver Lake': ['10301'], 
 	'Crotona Park East': ['10460'], 'Prospect Heights': ['11238'], 'Morningside Heights': ['10027'], 
@@ -19,7 +19,7 @@ nb_zip ={
 	'Central Harlem South': ['10026'], 'Corona': ['11368'], 'West Village': ['10014', '10012'], 
 	'Douglas Manor-Douglaston-Little Neck': ['11362'], 'Dyker Heights': ['11228'], 'Astoria': ['11103'], 
 	'Belmont': ['10458'], 'East Harlem North': ['10037'], 'Spuyten Duyvil-Kingsbridge': ['10463'], 
-	'Longwood': ['10455'], 'Bensonhurst West': ['11214'], 'North Side-South Side': ['MISSING'], 
+	'Longwood': ['10455'], 'Bensonhurst West': ['11214'], 'North Side-South Side': ['11211'], 
 	'Sunset Park West': ['11220'], 
 	'Battery Park City-Lower Manhattan': ['10280', '10038', '10004', '10006', '10005'], 
 	"Annadale-Huguenot-Prince's Bay-Eltingville": ['10312'], 'Fort Greene': ['11205'], 
