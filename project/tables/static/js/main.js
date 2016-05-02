@@ -136,8 +136,15 @@ $( window ).unload(function() {
         var template = $('#form_template').html();
         var renderM = Mustache.render(template);
         $('#answer_div').html(renderM);
-        check_college();
-        check_gender();
+        if ($('.school').length){
+          check_college();
+        }
+        if ($('.gender').length){
+          check_gender();
+        }
+        if ($('.age').length){
+          check_age();
+        }  
         window.scrollTo(0, 0);
     });
 
