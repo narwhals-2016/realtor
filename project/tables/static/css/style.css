@@ -86,7 +86,7 @@ footer.page-footer {
 	height: 30vh;
 }
 
-#bold_hover:hover {
+.bold_hover:hover {
 	font-weight: bold;
 }
 
