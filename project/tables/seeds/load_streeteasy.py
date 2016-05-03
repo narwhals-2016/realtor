@@ -71,5 +71,4 @@ def run():
 		else:
 			print("didn't get nb_obj", nb)
 
-run()
 

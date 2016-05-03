@@ -153,7 +153,6 @@ def find_n_most_common(nb_dict, n):
 	# gets the last n, or the ones with the highest count
 	n_most_common = sorted_dict[:n]
 	# get list of neighborhood names
-	print('common', n_most_common)
 	# n_neighborhoods = [nb[0] for nb in n_most_common]
 	return n_most_common
 
@@ -177,6 +176,7 @@ def get_nb_data(nb_list, count):
 	# get age_median, income_median, rent_median
 	data = []
 	for nb in nb_list:
+		print(nb.name)
 		nb_dict = {}
 		nb_dict['name'] = nb.name
 		nb_dict['age_median'] = str(Ages.objects.get(neighborhood=nb).age_median)
@@ -193,10 +193,8 @@ def get_nb_data(nb_list, count):
 def get_results(form_dict):
 	# performs each query and gathers data
 	query_results = make_queries(form_dict)
-	print('query_results', query_results)
 	# tally the neighborhoods in query results
 	nb_count = count_neighborhoods(query_results)
-	print('nb_count result', nb_count)
 	return find_n_most_common(nb_count, 9)
 
 

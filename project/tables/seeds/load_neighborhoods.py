@@ -21,25 +21,34 @@ def	load_neighborhood(dataframe):
 	# neighborhood given in first row of indexes, must be parsed out
 	neighborhood_string = dataframe.index[0]
 	neighborhood = neighborhood_string[23:]
-	print('in get_neighborhood', neighborhood)
-	# options if neighborhood already in table:
-	nb_filter = Neighborhood.objects.filter(name=neighborhood)
-	if len(nb_filter) > 1:
-		print('nb listed more than once')
-	elif len(nb_filter) == 1:
-		print('nb already in db')
+	print('in load_neighborhood', neighborhood)
+
+	neighborhood_tuple = Neighborhood.objects.get_or_create(
+		name=neighborhood,
+		defaults={
+			'name': neighborhood,
+			# default webdisplay name is census neighborhood name:
+			'webdisplay': neighborhood,
+		}
+	)
+	
+	if neighborhood_tuple[1] == False:
+		neighborhood_tuple[0].name = neighborhood,
+		neighborhood_tuple[0].webdisplay = neighborhood,
+		neighborhood_tuple[0].save()
+		print('********UPDATED', neighborhood_tuple[0].name)
 	else:
-		neigborhood_obj = Neighborhood.objects.create(
-			name=neighborhood,
-			webdisplay=neighborhood,
-		)
-		print('nb created: ', neigborhood_obj.name)
+		print('nb_obj created********', neighborhood_tuple[0].name)
+	# options if neighborhood already in table:
 
 
 def run(folder_path, folder):
 	file_list = os.listdir(folder_path + folder)
 	for filename in file_list:
 		parse_file(folder_path + folder + '/' + filename)
+	load_display_names(name_mappings)
+	print('LOAD_NEIGHBORHOOD DONE')
+	return True
 
 
 # run only after neighborhoods loaded
