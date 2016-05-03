@@ -23,7 +23,11 @@ def seed_db(data_path, *seed_tables):
 	# creates neighborhoods
 	if "all" in seed_tables:
 		# waiting for GOOGLE_KEY to add "commute"
-		seed_tables = ["neighborhoods","housing","crime","economic","social", "demographic", "nightlife", "schools", "noise", "commute"]
+		seed_tables = [
+			"neighborhoods","housing","crime",
+			"economic","social", "demographic", "nightlife", 
+			"schools", "noise", "commute", "streeteasy"
+		]
 
 	if "neighborhoods" in seed_tables:
 		load_neighborhoods.run(data_path, 'housing')
