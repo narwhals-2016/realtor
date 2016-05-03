@@ -159,7 +159,6 @@ def find_n_most_common(nb_dict, n):
 
 def get_nb_data(nb_list, count):
 	pics =[
-		"http://hometown-tourist.com/wp-content/uploads/2015/01/Manhattan-Neighborhood-Street-Scene.jpg",
 		"http://img.theepochtimes.com/n3/eet-content/uploads/2014/09/12/shutterstock_201591710-676x450.jpg",
 		"http://fc3d750e1b22019028ae-eb9d0534c31fede444754f378d638c42.r70.cf1.rackcdn.com/uploads/picture/source/1184/victorian_homes_BH.jpg",
 		"http://images.nymag.com/realestate/neighborhoods/2010/nabelivable100419_opener_560.jpg",
@@ -169,6 +168,7 @@ def get_nb_data(nb_list, count):
 		"http://www.nychomes4u.com/wp-content/uploads/photo-gallery/brooklyn%204.png",
 		"http://www.arizonafoothillsmagazine.com/valleygirlblog/wp-content/uploads/9-tie-new-york-ny-10065-nycs-upper-east-side-neighborhood-from-60th-street-to-69th-street-had-six-home-sales-over-10-million.jpg",
 		"http://www.asliceofbrooklyn.com/wp-content/uploads/2015/02/street-view-brooklyn-slider.jpg",
+		"http://hometown-tourist.com/wp-content/uploads/2015/01/Manhattan-Neighborhood-Street-Scene.jpg",
 		"http://www.nychomes4u.com/wp-content/uploads/photo-gallery/brooklyn%204.png",
 		"http://fc3d750e1b22019028ae-eb9d0534c31fede444754f378d638c42.r70.cf1.rackcdn.com/uploads/picture/source/1184/victorian_homes_BH.jpg",
 		]

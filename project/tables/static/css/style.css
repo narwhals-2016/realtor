@@ -105,6 +105,9 @@ footer.page-footer {
 	font-weight:bold;
 }
 
+#chart_card {
+	display: none;
+}
 
 
 
