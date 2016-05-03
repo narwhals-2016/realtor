@@ -19,7 +19,7 @@ var buildResultChart = function(jsonData){
               },
               type: 'bar',
               types: {
-                  rooms_median: 'spline',
+                  rooms_median: 'line',
                   age_median: 'line',
                   commute_score: 'line',
               }
@@ -27,10 +27,10 @@ var buildResultChart = function(jsonData){
           axis: {
             x: {
               type: 'category',
-              categories: ['result1', 'result2', 'result3', 'result4', 'result5', 'result6', 'result7', 'result8', 'result9'],
+              categories: ['Result 1', 'Result 2', 'Result 3', 'Result 4', 'Result 5', 'Result 6', 'Result 7', 'Result 8', 'Result 9'],
             },
             y: {
-                  label: 'Rent (in thousands)'
+                  label: 'Rent (in tens)'
               },
           }
       });
