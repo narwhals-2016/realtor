@@ -76,7 +76,7 @@ nb_zip ={
 	'Hammels-Arverne-Edgemere': ['11692'], 'SoHo-TriBeCa-Civic Center-Little Italy': ['10013', '10007'], 
 	'Midtown-Midtown South': ['10019'], 'Sheepshead Bay-Gerritsen Beach-Manhattan Beac': ['11235'], 
 	'Soundview-Castle Hill-Clason Point-Harding Pa': ['10472'], 'East Tremont': ['10457'], 
-	'Laurelton': ['11413'], 'Murray Hill-Kips Bay': ['10016'], 'Rikers Island': ['MISSING'], 
+	'Laurelton': ['11413'], 'Murray Hill-Kips Bay': ['10016'], 
 	'Starrett City': ['11239'], 'Bayside-Bayside Hills': ['11361'], 'Ocean Parkway South': ['11230'], 
 	'Norwood': ['10467'], 'Claremont-Bathgate': ['10457'], 'Rugby-Remsen Village': ['11203'], 
 	'Prospect Lefferts Gardens-Wingate': ['11225'], 'Jamaica Estates-Holliswood': ['11423'], 
@@ -85,7 +85,9 @@ nb_zip ={
 	'East Village': ['10009'], 'Georgetown-Marine Park-Bergen Beach-Mill Basi': ['11234'], 
 	'East Flatbush-Farragut': ['11203'], 'Grasmere-Arrochar-Ft. Wadsworth': ['10304'], 
 	'Westerleigh': ['10314'], 'Williamsburg': ['11211'], 
-	'Upper East Side-Carnegie Hill': ['10128', '10028', '10075', '10021']
+	'Upper East Side-Carnegie Hill': ['10128', '10028', '10075', '10021'],
+	'Park Slope-Gowanus': ['11215'],
+	# 'Rikers Island': ['MISSING'], 
 }
 
 

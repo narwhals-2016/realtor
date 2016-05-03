@@ -167,6 +167,26 @@ class UnitValue(models.Model):
             "gross_rent_median": self.gross_rent_median,
         }
 
+class StreetEasy(models.Model):
+    neighborhood = models.ForeignKey(Neighborhood)
+    rent_median = models.DecimalField(max_digits=10, decimal_places=2)
+    rent_average = models.DecimalField(max_digits=10, decimal_places=2)
+    squarefeet_median = models.DecimalField(max_digits=10, decimal_places=2)
+    squarefeet_average = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.neighborhood.name
+
+
+    def to_json(self):
+        return {
+            "neighborhood": self.neighborhood.name,
+            "rent_median": self.rent_median,
+            "rent_average": self.rent_average,
+            "squarefeet_median": self.squarefeet_median,
+            "squarefeet_average": self.squarefeet_average,
+        }
+
 class UnitDescription(models.Model):
     neighborhood = models.ForeignKey(Neighborhood) # FK to the neighborhood table
     units_occupied = models.DecimalField(max_digits=10, decimal_places=2)
