@@ -5,7 +5,7 @@ from pprint import pprint
 import pandas as pd
 import numpy as np
 from tables.seeds.mappings.mappings import nb_zip
-from tables.models import SchoolEducation, School, Neighborhood
+from tables.models import School, Neighborhood
  
 
 def extract_transform_school_data(folder_path, fname, nb_zip, r):
@@ -159,16 +159,32 @@ def get_3_scores(detail_list, neighborhood):
 # each item(list) in detail_list has school, schoolType, score, address and zip
     lst = []
     k_school_score = ms_school_score = hs_school_score = 0
+    ms_school_count = hs_school_count = 0
     if len(detail_list) > 0:
         for i in range(0, len(detail_list)):
             if (detail_list[i][1] in ('Pre-K Only', 'DOE', 'CHARTER','NYCEEC')):
                 k_school_score = k_school_score + 1
             elif (detail_list[i][1]  in ('Elementary','Middle School')):
                 ms_school_score = ms_school_score + detail_list[i][2]
+                ms_school_count += 1
             elif (detail_list[i][1] in  ('K-12 School', 'Junior High School', 
                                          'Junior Senior School','Senior High')):
-                hs_school_score = hs_school_score + detail_list[i][2]  
-        lst = [k_school_score, ms_school_score, hs_school_score]       
+                hs_school_score = hs_school_score + detail_list[i][2]
+                hs_school_count += 1
+        
+        if ms_school_count == 0:
+            final_ms_school_score = ms_school_score
+        else:
+            final_ms_school_score = round(ms_school_score/ms_school_count, 2)      
+        
+        if hs_school_count == 0:
+            final_hs_school_score = hs_school_score
+        else:
+            final_hs_school_score = round(hs_school_score/hs_school_count, 2)      
+
+        lst = [k_school_score, final_ms_school_score, 
+            final_hs_school_score
+            ]       
     return(lst)
 
 def insert_into_db(r):
