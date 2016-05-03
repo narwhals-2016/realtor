@@ -48,6 +48,7 @@ def get(location, term):
 def run(nb_dict, term):
 	responses = {}
 	for nb in nb_dict:
+		# consider changing loc to only zip code
 		loc = nb + "," + nb_dict[nb]
 		response = get(location=loc,term=term)
 		responses[nb] = (
@@ -69,6 +70,7 @@ def run_list(nb_dict, terms):
 			zip_code_container = []
 			for zip_code in nb_dict[nb]:
 				print('in run_list: ', nb, ' - ', term)
+				# response = get(location=zip_code, term=term)
 				response = get(location=nb + "," + zip_code, term=term)
 				zip_code_container.append((
 					response['total'], 

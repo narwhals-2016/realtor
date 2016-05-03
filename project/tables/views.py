@@ -104,6 +104,7 @@ class Search(View):
 		form = SearchForm(request.POST)
 		form.is_valid()
 		cd = form.cleaned_data
+		print('CD', cd)
 		field_mappings = self.map_table_fields(form.fields, cd)
 		nb_list = get_results(field_mappings)
 		nb_list = [nb[0] for nb in nb_list]
@@ -127,19 +128,22 @@ class Search(View):
 			'commute_address',
 			'commute_time_range',
 			'night_life_importance',
+			# 'school_quality_importance',
 		]
 		field_choice_dict = {}
 		for field in form_fields:
 			if field in field_values_list:
-				print('FVL - field', field)
 				# the forms' choices don't match the table's fields, we want the raw form submission
-				field_choice_dict[field] = self.map_values(field, cleaned_data)
-				print('FVL - val', field_choice_dict[field])
+				field_choice_dict[field] = cleaned_data.get(field, 'empty')
+				# field_choice_dict[field] = self.map_values(field, cleaned_data)
 			else:
 				# get field name, not html form input name
 				field_choices = dict(form_fields[field].choices)
+				print('FIELD_CHOICES', field_choices)
 				cleaned_choice = cleaned_data.get(field, 'empty')
+				print('cleaned_choice', cleaned_choice)
 				choice = field_choices.get(cleaned_choice, 'empty')
+				print('choice', choice)
 				field_choice_dict[field] = choice
 		return field_choice_dict
 	

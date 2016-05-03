@@ -13,15 +13,17 @@
 		<div class="col s12 m12 l12">
 			<div class="card hoverable" id="results_card">
 			<div class="row">
-				<div class="col s4 m4 l4">
+				<div class="col s12 m4 l4">
 
 					<div class="card-image">
 
 						
 							<img src="{{ link }}" id="image_height">
-						
-						<span class="card-title" id="bigger">{{ name }}</span>
-						
+
+						{% endverbatim %}
+						{% verbatim %}
+						<span class="card-title" id="bigger">{{ webdisplay }}</span>
+						{% endverbatim %}
 					</div>
 				</div>
 
@@ -45,6 +47,9 @@
 				<div class="col s4 m4 l4">
 					<div class="card-action right-align map-div" data-lat="{{latitude}}" data-long="{{longitude}}"> 
 						<a class="blue-grey-text lighten-1-text bold_hover" href="#">View Map</a>
+					<div class="card-action right-align">
+						<a class="blue-grey-text lighten-1-text" id="bold_hover" href="http://www.google.com/search?!go&q=wikipedia+{% verbatim %}{{ webdisplay }}{% endverbatim %}+NY&btnI&sourceid=chrome&ie=UTF-8" target="_blank">Learn More</a>
+
 					</div>
 				</div>
 
@@ -58,7 +63,13 @@
 
 
 
- 
+	<div class="row">
+		<div class="col s12 m12 l12">
+			<div class="card-panel hoverable" id="chart_card">
+				<div id="chart"></div>
+			</div>
+		</div>
+	</div>
 
 
 <div class = "buttons">
@@ -66,23 +77,23 @@
 	<div class="row">
 		<div class="container">
 
-			<div class="col s4 center-align">
+			<div class="col s12 m4 l4 center-align">
 				<button class="btn waves-effect waves-light blue-grey" type="submit" name="action" id="more_results_button" value="{{next}}">More Results
 				    <i class="material-icons right">list</i>
 			    </button>
 			    <br><br>
 			</div>
 
-			<div class="col s4 center-align">
+			<div class="col s12 m4 l4 center-align">
 				<button class="btn waves-effect waves-light blue-grey" type="submit" name="action" id="edit_button">Edit search
 				    <i class="material-icons right">mode_edit</i>
 			    </button>
 			    <br><br>
 			</div>
 
-			<div class="col s4 center-align">	
-				<button class="btn waves-effect waves-light blue-grey" type="submit" name="action">Save Search
-				    <i class="material-icons right">grade</i>
+			<div class="col s12 m4 l4 center-align">
+				<button class="btn waves-effect waves-light blue-grey" id="chart_button" type="submit" name="action">Show Graph
+				    <i class="material-icons right">trending_up</i>
 			    </button>
 			    <br><br>
 			</div>

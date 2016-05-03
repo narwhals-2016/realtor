@@ -3,7 +3,8 @@ from . import (
 	load_neighborhoods, load_geocodes, load_missing_geocodes,
 	load_pic_urls, load_streetviews, housing_load, economic_load, 
 	demographic_load, schools_csv, social_csv,crime,
-	nightlife, noise, crime, google_distance_api
+	nightlife, noise, crime, google_distance_api,
+	load_streeteasy,
 )
 
 '''
@@ -22,7 +23,11 @@ def seed_db(data_path, *seed_tables):
 	# creates neighborhoods
 	if "all" in seed_tables:
 		# waiting for GOOGLE_KEY to add "commute"
-		seed_tables = ["neighborhoods","housing","crime","economic","social", "demographic", "nightlife", "schools", "noise", "commute"]
+		seed_tables = [
+			"neighborhoods","housing","crime",
+			"economic","social", "demographic", "nightlife", 
+			"schools", "noise", "commute", "streeteasy"
+		]
 
 	if "neighborhoods" in seed_tables:
 		load_neighborhoods.run(data_path, 'housing')
@@ -80,5 +85,9 @@ def seed_db(data_path, *seed_tables):
 	if "crime" in seed_tables:
 		crime.run()
 		print ("\n *** crime done *** \n")
+
+	if "streeteasy" in seed_tables:
+		load_streeteasy.run()
+		print ("\n *** streeteasy done *** \n")
 
 

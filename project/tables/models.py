@@ -10,6 +10,9 @@ class Neighborhood(models.Model):
     pic_link  = models.URLField(max_length=500, blank=True, default='')
     webdisplay = models.CharField(max_length=256, blank=True, default='')
 
+    def __str__(self):
+        return self.name
+
     # this create a dictionary from an object to use with ajax
     def to_json(self):
         return {
@@ -39,6 +42,10 @@ class Ages(models.Model):
     age_65_over = models.DecimalField(max_digits=10, decimal_places=2)
     age_median = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def __str__(self):
+        return self.neighborhood.name
+
+
     # this create a dictionary from an object to use with ajax
     def to_json(self):
         return {
@@ -62,6 +69,10 @@ class Economic(models.Model):
     income_200_plus = models.DecimalField(max_digits=10, decimal_places=2)
     median_income = models.DecimalField(max_digits=10, decimal_places=2)
     mean_income = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.neighborhood.name
+
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -88,6 +99,10 @@ class SchoolEducation(models.Model):
     education_highschool_over = models.DecimalField(max_digits=10, decimal_places=2)
     education_college_over = models.DecimalField(max_digits=10, decimal_places=2)
    
+    def __str__(self):
+        return self.neighborhood.name
+
+
     def to_json(self):
         return {
             "neighborhood": self.neighborhood.name,
@@ -106,6 +121,10 @@ class Building(models.Model):
     constucted_before_1970 = models.DecimalField(max_digits=10, decimal_places=2)
     constucted_1970_2000 = models.DecimalField(max_digits=10, decimal_places=2)
     constucted_after_2000 = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    def __str__(self):
+        return self.neighborhood.name
+
     # this create a dictionary from an object to use with ajax
     def to_json(self):
         return {
@@ -130,6 +149,10 @@ class Demographic(models.Model):
     gender_m = models.DecimalField(max_digits=10, decimal_places=2)
     gender_f = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def __str__(self):
+        return self.neighborhood.name
+
+
     def to_json(self):
         return {
             "neighborhood": self.neighborhood.name,
@@ -153,6 +176,9 @@ class UnitValue(models.Model):
     gross_rent_1500_plus = models.DecimalField(max_digits=10, decimal_places=2)
     gross_rent_median = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def __str__(self):
+        return self.neighborhood.name
+
     # this create a dictionary from an object to use with ajax
     def to_json(self):
         return {
@@ -165,6 +191,26 @@ class UnitValue(models.Model):
             "gross_rent_1000_1500": self.gross_rent_1000_1500,
             "gross_rent_1500_plus": self.gross_rent_1500_plus,
             "gross_rent_median": self.gross_rent_median,
+        }
+
+class StreetEasy(models.Model):
+    neighborhood = models.ForeignKey(Neighborhood)
+    rent_median = models.DecimalField(max_digits=10, decimal_places=2)
+    rent_average = models.DecimalField(max_digits=10, decimal_places=2)
+    squarefeet_median = models.DecimalField(max_digits=10, decimal_places=2)
+    squarefeet_average = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.neighborhood.name
+
+
+    def to_json(self):
+        return {
+            "neighborhood": self.neighborhood.name,
+            "rent_median": self.rent_median,
+            "rent_average": self.rent_average,
+            "squarefeet_median": self.squarefeet_median,
+            "squarefeet_average": self.squarefeet_average,
         }
 
 class UnitDescription(models.Model):
@@ -183,6 +229,9 @@ class UnitDescription(models.Model):
     length_residence_after_2010 = models.DecimalField(max_digits=10, decimal_places=2)
     vehicles_0 = models.DecimalField(max_digits=10, decimal_places=2)
     vehicles_1_plus = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.neighborhood.name
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):
@@ -209,10 +258,13 @@ class Score(models.Model):
     crime_score = models.DecimalField(max_digits=10, decimal_places=2)
     noise_score = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def __str__(self):
+        return self.neighborhood.name
+
     # this create a dictionary from an object to use with ajax
     def to_json(self):
         return {
-            "neighborhood": self.neighborhood,
+            "neighborhood": self.neighborhood.name,
             "night_life_score": self.night_life_score,
             "communte_score": self.communte_score,
             "crime_score": self.crime_score,
@@ -224,6 +276,9 @@ class School(models.Model):
     k_school_score = models.DecimalField(max_digits=10, decimal_places=2)
     elem_school_score = models.DecimalField(max_digits=10, decimal_places=2)
     hs_school_score = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.neighborhood.name
 
     # this create a dictionary from an object to use with ajax
     def to_json(self):

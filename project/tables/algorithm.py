@@ -9,17 +9,8 @@ from numpy import repeat
 # with fields in the database. if not can make a dictionary here
 # with those mappings, like the tables_map
 
-# f is a mock form.clean_data
-f = {
-	'age': 'age_25_34', 'gender': 'gender_m', 
-	'number_of_units': 'number_of_units_2_less',
-	'ownership_type': 'resident_type_owner',
-	'number_of_rooms': 'rooms_per_unit_over_4',
-	'building_age': 'constructed_after_2000',
-	'night_life_importance': 'night_life_score',
-}
 
-# 
+# which tables to query for given form input 
 tables_map = {
 	'age': Ages,
 	'gender': Demographic,
@@ -36,7 +27,8 @@ tables_map = {
 	'marital_status_checkbox': Demographic,
 	'number_of_vehicles': UnitDescription,
 	# 'number_of_children': ??,
-	# 'price_range': UnitValue,
+	# 'school_quality_importance': SchoolEducation,
+	'school_level': School,
 }
 
 range_list = [
@@ -153,14 +145,12 @@ def find_n_most_common(nb_dict, n):
 	# gets the last n, or the ones with the highest count
 	n_most_common = sorted_dict[:n]
 	# get list of neighborhood names
-	print('common', n_most_common)
 	# n_neighborhoods = [nb[0] for nb in n_most_common]
 	return n_most_common
 
 
 def get_nb_data(nb_list, count):
 	pics =[
-		"http://hometown-tourist.com/wp-content/uploads/2015/01/Manhattan-Neighborhood-Street-Scene.jpg",
 		"http://img.theepochtimes.com/n3/eet-content/uploads/2014/09/12/shutterstock_201591710-676x450.jpg",
 		"http://fc3d750e1b22019028ae-eb9d0534c31fede444754f378d638c42.r70.cf1.rackcdn.com/uploads/picture/source/1184/victorian_homes_BH.jpg",
 		"http://images.nymag.com/realestate/neighborhoods/2010/nabelivable100419_opener_560.jpg",
@@ -170,6 +160,7 @@ def get_nb_data(nb_list, count):
 		"http://www.nychomes4u.com/wp-content/uploads/photo-gallery/brooklyn%204.png",
 		"http://www.arizonafoothillsmagazine.com/valleygirlblog/wp-content/uploads/9-tie-new-york-ny-10065-nycs-upper-east-side-neighborhood-from-60th-street-to-69th-street-had-six-home-sales-over-10-million.jpg",
 		"http://www.asliceofbrooklyn.com/wp-content/uploads/2015/02/street-view-brooklyn-slider.jpg",
+		"http://hometown-tourist.com/wp-content/uploads/2015/01/Manhattan-Neighborhood-Street-Scene.jpg",
 		"http://www.nychomes4u.com/wp-content/uploads/photo-gallery/brooklyn%204.png",
 		"http://fc3d750e1b22019028ae-eb9d0534c31fede444754f378d638c42.r70.cf1.rackcdn.com/uploads/picture/source/1184/victorian_homes_BH.jpg",
 		]
@@ -177,8 +168,9 @@ def get_nb_data(nb_list, count):
 	# get age_median, income_median, rent_median
 	data = []
 	for nb in nb_list:
+		print(nb.webdisplay)
 		nb_dict = {}
-		nb_dict['name'] = nb.name
+		nb_dict['webdisplay'] = nb.webdisplay
 		nb_dict['age_median'] = str(Ages.objects.get(neighborhood=nb).age_median)
 		nb_dict['income_median'] = str(Economic.objects.get(neighborhood=nb).median_income)
 		nb_dict['rent_median'] = str(UnitValue.objects.get(neighborhood=nb).gross_rent_median)
@@ -198,10 +190,8 @@ def get_nb_data(nb_list, count):
 def get_results(form_dict):
 	# performs each query and gathers data
 	query_results = make_queries(form_dict)
-	print('query_results', query_results)
 	# tally the neighborhoods in query results
 	nb_count = count_neighborhoods(query_results)
-	print('nb_count result', nb_count)
 	return find_n_most_common(nb_count, 9)
 
 

@@ -43,7 +43,10 @@ NUMBER_OF_VEHICLES_CHOICES = [('off','vehicles_0'), ('on','vehicles_1'), ('on','
 # there is no commute types field in the db 
 COMMUTE_TYPE_CHOICES = [('walk','walk'), ('transit','transit'), ('drive','drive')]
 # these two feilds go into the school score table
-SCHOOL_LEVEL_CHOICES = [('school_k-','k_school_score'), ('school_1-8','elem_school_score'), ('school_hs','hs_school_score'), ('school_none','none')]
+SCHOOL_LEVEL_CHOICES = [
+    ('school_k-','k_school_score'), ('school_1-8','elem_school_score'), ('school_hs','hs_school_score'), 
+    # ('school_none','none')
+]
 SCHOOL_QUALITY_CHOICES = [('not_high','not_high'), ('high','high'), ('very_high','very_high')]
 NIGHT_LIFE_CHOICES = [('not_high','night_life_score'), ('high','night_life_score'), ('very_high','night_life_score')]
 NOISE_LEVEL_CHOICES = [('off','noise_score'), ('on','noise_score')]

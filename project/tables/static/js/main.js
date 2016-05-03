@@ -1,6 +1,46 @@
+var calcChartData = function(data){
+    var new_data = data[0].concat(data[1]);
+    var chart_data = new_data.concat(data[2]);
+
+    for (i = 0; i < chart_data.length; i++) { 
+        rent = ((chart_data[i]["rent_median"])/10)
+        chart_data[i]["rent_median"] = rent
+    };
+    // console.log(chart_data);
+    return chart_data;
+};
+
+var buildResultChart = function(jsonData){
+        var chart = c3.generate({
+          data: {
+              json: jsonData,
+              keys: {
+                  value: ['rent_median', 'rooms_median', 'age_median', 'commute_score'],
+              },
+              type: 'bar',
+              types: {
+                  rooms_median: 'line',
+                  age_median: 'line',
+                  commute_score: 'line',
+              }
+          },
+          axis: {
+            x: {
+              type: 'category',
+              categories: ['Result 1', 'Result 2', 'Result 3', 'Result 4', 'Result 5', 'Result 6', 'Result 7', 'Result 8', 'Result 9'],
+            },
+            y: {
+                  label: 'Rent (in tens)'
+              },
+          }
+      });
+    // return chart;
+};
 
 $(document).ready(function(){
-	console.log("Hi there!")
+console.log("Hi there!")
+var chart_data;
+var count = 0;
 
 // goes to top of page on reload
 $( window ).unload(function() {
@@ -8,9 +48,12 @@ $( window ).unload(function() {
     console.log("again")
 });
 
-    $('.button-collapse').sideNav();
+  $('.button-collapse').sideNav({
+      edge: 'right', // Choose the horizontal origin
+      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    }
+  );
     $('.parallax').parallax();
-    $('.carousel').carousel();
     $('.slider').slider();
     var __cache = {};
 
@@ -204,6 +247,8 @@ $( window ).unload(function() {
       var results = __cache.results[next];
       // this hides all the buttons already on the page but the bottons will still be on the bottom becuase the last set of buttons has not loaded yet
           $('.buttons').attr("class","hide");
+          $('#chart_card').remove();
+          
           var template = $('#results-template').html();
           var renderM = Mustache.render(template, {'result_set': results, 'next': next});
           // just append the new results to the page
@@ -250,4 +295,24 @@ $( window ).unload(function() {
         };
     });
 
+
+///// Chart /////
+    $("#answer_div").on('click', '#chart_button',function(event){
+    event.preventDefault();
+    $("#chart_card").css("display", "block");
+
+    if (count<1) {
+        var data = __cache["results"];
+        chart_data = calcChartData (data);
+        count ++;
+    }
+    buildResultChart(chart_data)
+    });
+
+
+
 });
+
+
+
+

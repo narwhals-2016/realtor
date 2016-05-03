@@ -24,6 +24,7 @@ def load_geocodes():
 	for i in range(0, len(objects)):
 		nb_lst.append(objects[i].name)
 		item = objects[i].name+', NY'
+		print('getting geocode', item)
 		location = geolocator.geocode(item)
 		update_db(objects[i].name, location)
 
@@ -37,6 +38,7 @@ def update_db(nb, location):
 		temp.latitude  = 'None'
 		temp.longitude = 'None'
 	temp.save()
+	print('lat and long updated', temp.name)
 
 def run():
 	load_geocodes()

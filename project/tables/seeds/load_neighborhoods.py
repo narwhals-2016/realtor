@@ -15,31 +15,50 @@ def parse_file(filename):
 	housing_file = pd.read_excel(filename, skiprows=[2,3], sheetname=0)
 
 	indexed = housing_file.set_index('2009-2013 ACS Housing Profile')
-	return load_neighborhood(indexed)
+	return indexed
 
-def	load_neighborhood(dataframe):
+def get_neighborhood_name(dataframe):
 	# neighborhood given in first row of indexes, must be parsed out
 	neighborhood_string = dataframe.index[0]
-	neighborhood = neighborhood_string[23:]
-	print('in get_neighborhood', neighborhood)
-	# options if neighborhood already in table:
-	nb_filter = Neighborhood.objects.filter(name=neighborhood)
-	if len(nb_filter) > 1:
-		print('nb listed more than once')
-	elif len(nb_filter) == 1:
-		print('nb already in db')
+	return neighborhood_string[23:]
+
+def	load_neighborhood(neighborhood):
+	print('in load_neighborhood', neighborhood)
+	nb, created = Neighborhood.objects.get_or_create(
+		name=neighborhood,
+		defaults={
+			'name': neighborhood,
+			# default webdisplay name is census neighborhood name:
+			'webdisplay': neighborhood,
+		}
+	)
+	print('object check', type(nb))
+	if created == False:
+		print('object name before update', nb.name)
+		print('neighborhood string name', neighborhood)
+		nb.name = neighborhood
+		nb.webdisplay = neighborhood
+		nb.save()
+		print('********UPDATED', nb.name)
 	else:
-		neigborhood_obj = Neighborhood.objects.create(
-			name=neighborhood,
-			webdisplay=neighborhood,
-		)
-		print('nb created: ', neigborhood_obj.name)
+		print('nb_obj created********', nb.name)
+	return True
 
 
 def run(folder_path, folder):
 	file_list = os.listdir(folder_path + folder)
 	for filename in file_list:
-		parse_file(folder_path + folder + '/' + filename)
+		dataframe = parse_file(folder_path + folder + '/' + filename)
+		neighborhood = get_neighborhood_name(dataframe)
+		if neighborhood != "Rikers Island":
+			load_neighborhood(neighborhood)
+		else:
+			print('RIKERS -- PASS ****************')
+			continue
+
+	load_display_names(name_mappings)
+	print('LOAD_NEIGHBORHOOD DONE')
+	return True
 
 
 # run only after neighborhoods loaded
