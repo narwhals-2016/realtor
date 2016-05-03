@@ -88,6 +88,6 @@ def seed_db(data_path, *seed_tables):
 
 	if "streeteasy" in seed_tables:
 		load_streeteasy.run()
-		print ("\n *** crime done *** \n")
+		print ("\n *** streeteasy done *** \n")
 
 

@@ -43,6 +43,7 @@ def update_db():
             street_url = urls_for_streetview(geostr)
             temp.pic_link  = street_url
             temp.save()
+            print('streetview saved', items[i].name)
         else:
             print('without lat and long: ',items[i].name)
 

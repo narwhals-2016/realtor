@@ -16,15 +16,15 @@ def parse_file(filename):
 	indexed = housing_file.set_index('2009-2013 ACS Demographic Profile')
 	return indexed
 
-def	get_neighborhood(dataframe):
+def get_neighborhood_name(dataframe):
 	# neighborhood given in first row of indexes, must be parsed out
 	neighborhood_string = dataframe.index[0]
-	neighborhood = neighborhood_string[23:]
-	# option if neighborhood already in table:
-	print('in get_neighborhood', neighborhood)
-	neigborhood_obj = Neighborhood.objects.get(name=neighborhood)
-	return neigborhood_obj
+	return neighborhood_string[23:]
 	
+def get_neighborhood_obj(neighborhood):	
+	# option if neighborhood already in table:
+	print('in get_neighborhood_obj', neighborhood)
+	return Neighborhood.objects.get(name=neighborhood)
 
 
 def make_ages_row(indexed, neighborhood):
@@ -80,15 +80,28 @@ def make_ages_row(indexed, neighborhood):
 
 	age_dict = dict(zip(age_keys, age_values))
 
-	age_obj = Ages.objects.create(
+	age_tuple = Ages.objects.get_or_create(
 		neighborhood=neighborhood,
-		age_0_19=age_dict["under_nineteen"],
-        age_20_24=age_dict["twenty_to_twentyfour"],
-        age_25_34=age_dict["twentyfive_to_thirtyfour"],
-        age_35_64=age_dict["thirtyfive_to_sixtyfour"],
-        age_65_over=age_dict["over_sixtyfive"],
-        age_median=age_dict["age_median"], 
+		defaults={
+			'age_0_19': age_dict["under_nineteen"],
+	        'age_20_24': age_dict["twenty_to_twentyfour"],
+	        'age_25_34': age_dict["twentyfive_to_thirtyfour"],
+	        'age_35_64': age_dict["thirtyfive_to_sixtyfour"],
+	        'age_65_over': age_dict["over_sixtyfive"],
+	        'age_median': age_dict["age_median"], 
+		}
 	)
+	if age_tuple[1] == False:
+		age_tuple[0].age_0_19 = age_dict["under_nineteen"],
+		age_tuple[0].age_20_24 = age_dict["twenty_to_twentyfour"],
+		age_tuple[0].age_25_34 = age_dict["twentyfive_to_thirtyfour"],
+		age_tuple[0].age_35_64 = age_dict["thirtyfive_to_sixtyfour"],
+		age_tuple[0].age_65_over = age_dict["over_sixtyfive"],
+		age_tuple[0].age_median = age_dict["age_median"],
+		print('********UPDATED', age_tuple[0].neighborhood.name)
+	else:
+		print('age_obj created********', age_tuple[0].neighborhood.name)
+	return True
 	
 # GENDER
 # not complete
@@ -129,16 +142,17 @@ def run(folder_path, folder, table):
 		# use pandas to get dataframe from xlsx file
 		dataframe = parse_file(folder_path + folder + '/' + filename)
 		# identify neighborhood
-		neighborhood = get_neighborhood(dataframe)
-		# which table tree
-		# if rikers don't add to table
-		if neighborhood.name == "Rikers Island":
-			print('Rikers Island blank and pass')
-		elif table == "ages":
-			make_ages_row(dataframe, neighborhood)
-		elif table == "demo_gender":
-			add_gender_to_demographic_row(dataframe, neighborhood)
-		elif table == "all":
-			make_ages_row(dataframe, neighborhood)
-			add_gender_to_demographic_row(dataframe, neighborhood)
+		neighborhood = get_neighborhood_name(dataframe)
+		if neighborhood == "Rikers Island":
+			print('Rikers Island blank and pass **********')
+			continue
+		else:
+			neighborhood = get_neighborhood_obj(neighborhood)
+			if table == "ages":
+				make_ages_row(dataframe, neighborhood)
+			elif table == "demo_gender":
+				add_gender_to_demographic_row(dataframe, neighborhood)
+			elif table == "all":
+				make_ages_row(dataframe, neighborhood)
+				add_gender_to_demographic_row(dataframe, neighborhood)
 	print('DONE')
