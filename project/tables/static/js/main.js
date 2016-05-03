@@ -10,7 +10,6 @@ $( window ).unload(function() {
 
     $('.button-collapse').sideNav();
     $('.parallax').parallax();
-    $('.carousel').carousel();
     $('.slider').slider();
     var __cache = {};
 
