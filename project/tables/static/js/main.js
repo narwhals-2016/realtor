@@ -47,7 +47,11 @@ $( window ).unload(function() {
     console.log("again")
 });
 
-    $('.button-collapse').sideNav();
+  $('.button-collapse').sideNav({
+      edge: 'right', // Choose the horizontal origin
+      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    }
+  );
     $('.parallax').parallax();
     $('.slider').slider();
     var __cache = {};

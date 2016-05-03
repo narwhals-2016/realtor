@@ -58,14 +58,20 @@
 					{% endif %}
 			</ul>
 
-<!-- 			<ul id="nav-mobile" class="side-nav">
-				<li><a id="search" class="black-text text-lighten-1 form_button" href="#">Find Neighborhood</a></li>
+      <a href="#" data-activates="mobile-demo" class="button-collapse black-text right"><i class="material-icons">menu</i></a>
+
+		<!-- mobile nav bar -->
+      <ul class="side-nav" id="mobile-demo">
+		<li><a id="search" class="black-text text-lighten-1 form_button" href="#">Find Neighborhood</a></li>
+			{% if user.username %}
+				<li><a id="username" class="dropdown-button black-text text-lighten-1" href="#" data-activates='dropdown1'> {{ user.username }}</a></li>
+			{% else %}
 				<li><a id="register" class="black-text text-lighten-1" href="#">Register</a></li>
 				<li><a id="login" class="black-text text-lighten-1" href="#">Login</a></li>
-			</ul>
+			{% endif %}
+      </ul>
 
-		<a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
- -->	</div>
+	</div>
 </nav>
 
 
