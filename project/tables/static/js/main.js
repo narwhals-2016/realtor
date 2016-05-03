@@ -40,6 +40,7 @@ var buildResultChart = function(jsonData){
 $(document).ready(function(){
 console.log("Hi there!")
 var chart_data;
+var count = 0;
 
 // goes to top of page on reload
 $( window ).unload(function() {
@@ -47,7 +48,11 @@ $( window ).unload(function() {
     console.log("again")
 });
 
-    $('.button-collapse').sideNav();
+  $('.button-collapse').sideNav({
+      edge: 'right', // Choose the horizontal origin
+      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    }
+  );
     $('.parallax').parallax();
     $('.slider').slider();
     var __cache = {};
@@ -202,8 +207,6 @@ $( window ).unload(function() {
       console.log(data)
       __cache['results'] = data.results;
       var results = data.results[0];
-      var data = __cache["results"];
-      chart_data = calcChartData (data);
 
         ////// if submit form correctly ////////
         $('#ja_search').attr("class","hide");
@@ -298,6 +301,11 @@ $( window ).unload(function() {
     event.preventDefault();
     $("#chart_card").css("display", "block");
 
+    if (count<1) {
+        var data = __cache["results"];
+        chart_data = calcChartData (data);
+        count ++;
+    }
     buildResultChart(chart_data)
     });
 

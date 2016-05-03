@@ -3,7 +3,6 @@
 .parallax-container {
 	height: 60vh;
 	margin-left: -3em; 
-	margin-right: -3em;
 }
 
 .tall {
@@ -29,7 +28,6 @@
 .parallax {
 	height: 60vh;
 	margin-left: -3em; 
-	margin-right: -3em;
 }
 
 #form_button:hover {
@@ -107,6 +105,23 @@ footer.page-footer {
 
 #chart_card {
 	display: none;
+}
+
+@media only screen and (max-width: 700px) {
+    .parallax {
+		height: 60vh;
+}    
+	.parallax-container{
+		height: 60vh;
+}
+	#shift{
+		margin-left: 1em;
+}
+	#smaller{
+		font-size: 3.5em;
+		margin-left: 1em;
+}
+
 }
 
 

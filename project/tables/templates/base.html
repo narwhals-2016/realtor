@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Realtor</title>
+	<title>Mapper.NYC - Neighborhood Recommendations for the Modern New Yorker</title>
 
 <!-- 	<link rel="icon" href="https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwiaxfuq2K_MAhUBFz4KHYmTDfsQjRwIBw&url=http%3A%2F%2Fwww.freefavicon.com%2Ffreefavicons%2Fnetwork%2Falpha.php%3Falpha%3Dh&bvm=bv.120551593,d.cWw&psig=AFQjCNGoP3ZDpXVFqERe6EZflllqcCYCOA&ust=1461876441219764" type="image/gif" sizes="16x16">
  -->
@@ -47,7 +47,7 @@
 
 <nav class="white" role="navigation">
 	<div id="nav" class="nav-wrapper container">
-		<a id="logo-container" class="black-text text-lighten-1" href="/" class="brand-logo">Realtor</a>
+		<a id="logo-container" class="black-text text-lighten-1" href="/" class="brand-logo">Mapper</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a id="search" class="black-text text-lighten-1 form_button" href="#">Find Neighborhood</a></li>
 					{% if user.username %}
@@ -58,14 +58,20 @@
 					{% endif %}
 			</ul>
 
-<!-- 			<ul id="nav-mobile" class="side-nav">
-				<li><a id="search" class="black-text text-lighten-1 form_button" href="#">Find Neighborhood</a></li>
+      <a href="#" data-activates="mobile-demo" class="button-collapse black-text right"><i class="material-icons">menu</i></a>
+
+		<!-- mobile nav bar -->
+      <ul class="side-nav" id="mobile-demo">
+		<li><a id="search" class="black-text text-lighten-1 form_button" href="#">Find Neighborhood</a></li>
+			{% if user.username %}
+				<li><a id="username" class="dropdown-button black-text text-lighten-1" href="#" data-activates='dropdown1'> {{ user.username }}</a></li>
+			{% else %}
 				<li><a id="register" class="black-text text-lighten-1" href="#">Register</a></li>
 				<li><a id="login" class="black-text text-lighten-1" href="#">Login</a></li>
-			</ul>
+			{% endif %}
+      </ul>
 
-		<a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
- -->	</div>
+	</div>
 </nav>
 
 

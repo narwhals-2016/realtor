@@ -9,9 +9,9 @@
 		<div class="section no-pad-bot">
 			<div class="container">
 				<br><br>
-				<h1 class="header center white-text">Neighborhood Search</h1>
+				<h1 id="smaller" class="header center white-text">Neighborhood Search</h1>
 					<div class="row center">
-						<h5 class="header col s12 white-text">Help Us Find You The Perfect Place to Live</h5>
+						<h5 id="shift" class="header col s12 white-text">Help Us Find You The Perfect Place to Live</h5>
 					</div>
 				<br><br>
 			</div>
@@ -30,27 +30,27 @@
 		    	<div class="col s4">
 			      	<p>Age:</p>
 			      	<p>
-					  <input type="checkbox" id="0_19" name="age" value="0_19" />
+					  <input type="radio" class="with-gap" id="0_19" name="age" value="0_19" />
 					  <label for="0_19">0-19</label>
 					</p>
 			      	<p>
-					  <input type="checkbox" id="20_24" name="age" value="20_24" />
+					  <input type="radio" class="with-gap" id="20_24" name="age" value="20_24" />
 					  <label for="20_24">20-24</label>
 					</p>
 			      	<p>
-					  <input type="checkbox" id="25_34" name="age" value="25_34" />
+					  <input type="radio" class="with-gap" id="25_34" name="age" value="25_34" />
 					  <label for="25_34">25-34</label>
 					</p>
 			      	<p>
-					  <input type="checkbox" id="35_54" name="age" value="35_54" />
+					  <input type="radio" class="with-gap" id="35_54" name="age" value="35_54" />
 					  <label for="35_54">35-54</label>
 					</p>
 					<p>
-					  <input type="checkbox" id="55_64" name="age" value="55_64" />
+					  <input type="radio" class="with-gap" id="55_64" name="age" value="55_64" />
 					  <label for="55_64">55-64</label>
 					</p>
 			      	<p>
-					  <input type="checkbox" id="65+" name="age" value="65+" />
+					  <input type="radio" class="with-gap" id="65+" name="age" value="65+" />
 					  <label for="65+">65+</label>
 					</p><br>
 		    	</div>
@@ -58,11 +58,11 @@
 				<div class="col s4">
 					<p>Gender</p>
 					<p>
-					<input type="checkbox" name="gender" value="male" id="male" />
+					<input type="radio" class="with-gap" name="gender" value="male" id="male" />
 					<label for="male">Male</label>
 					</p>
 					<p>
-					<input type="checkbox" name="gender" value="female" id="female" />
+					<input type="radio" class="with-gap" name="gender" value="female" id="female" />
 					<label for="female">Female</label>
 					</p><br>
 
@@ -133,7 +133,7 @@
 				</div>
 
 				<div class="col s11">
-					<p>Income Level (in thousands)</p>
+					<p>Household Income Level (in thousands)</p>
 				    <p class="range-field">
 				      <input name="income_level_range" type="range" id="income" min="20" max="250" />
 				    </p><br>
@@ -180,19 +180,19 @@
 				<div class="col s4">
 					<p>Number of Rooms</p>
 					<p>
-					<input type="checkbox" name="number_of_rooms" value="3_minus" id="1_room" />
+					<input type="radio" class="with-gap" name="number_of_rooms" value="3_minus" id="1_room" />
 					<label for="1_room">1</label>
 					</p>
 					<p>
-					<input type="checkbox" name="number_of_rooms" value="3_minus" id="2_room" />
+					<input type="radio" class="with-gap" name="number_of_rooms" value="3_minus" id="2_room" />
 					<label for="2_room">2</label>
 					</p>
 					<p>
-					<input type="checkbox" name="number_of_rooms" value="3_minus" id="3_5_room" />
+					<input type="radio" class="with-gap" name="number_of_rooms" value="3_minus" id="3_5_room" />
 					<label for="3_5_room">3 to 5</label>
 					</p>
 					<p>
-					<input type="checkbox" name="number_of_rooms" value="3_minus" id="6_more" />
+					<input type="radio" class="with-gap" name="number_of_rooms" value="3_minus" id="6_more" />
 					<label for="6_more">6 or more</label>
 					</p><br><br><br>
 
@@ -206,15 +206,15 @@
 				<div class="col s4">
 			      	<p>Building Age:</p>
 			      	<p>
-					  <input type="checkbox" name="building_age" value="pre_1970" id="pre_1970" />
+					  <input type="radio" class="with-gap" name="building_age" value="pre_1970" id="pre_1970" />
 					  <label for="pre_1970">Before 1970</label>
 					</p>
 			      	<p>
-					  <input type="checkbox" name="building_age" value="post_1970" id="post_1970" />
+					  <input type="radio" class="with-gap" name="building_age" value="post_1970" id="post_1970" />
 					  <label for="post_1970">Between 1970-2000</label>
 					</p>
 			      	<p>
-					  <input type="checkbox" name="building_age" value="2000+" id="2000+" />
+					  <input type="radio" class="with-gap" name="building_age" value="2000+" id="2000+" />
 					  <label for="2000+">After 2000</label>
 					</p><br>
 
@@ -267,7 +267,7 @@
 		    	</div>
 
 				<div class="col s4">
-					<p>School Level:</p>
+					<p>Interested School Level:</p>
 			      	<p>
 					  <input type="checkbox" name="school_level" value="school_k-" id="school_k-" />
 					  <label for="school_k-">Early Childhood</label>
