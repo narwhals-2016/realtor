@@ -24,9 +24,11 @@ def seed_db(data_path, *seed_tables):
 	if "all" in seed_tables:
 		# waiting for GOOGLE_KEY to add "commute"
 		seed_tables = [
-			"neighborhoods","housing","crime",
-			"economic","social", "demographic", "nightlife", 
+			"neighborhoods",
+			"housing","crime",
+			"economic","social", "demographic", 
 			"schools", "noise", "commute", "streeteasy"
+			"nightlife", 
 		]
 
 	if "neighborhoods" in seed_tables:
