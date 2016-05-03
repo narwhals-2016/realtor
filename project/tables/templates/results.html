@@ -32,33 +32,31 @@
 					<div class="card-content">
 					    <div class="details"> 
 					        <div class="entry" id="neighborhood"></div>
-					        
+					 {% verbatim %}       
 					        <br>
 					        <div class="entry" id="ren"><strong>Rent Median: </strong>{{rent_median}} <br></div>
 					        <div class="entry" id="rooms"><strong>Average Number of Rooms: </strong>{{rooms_median}}</div><br>
 					        <div class="entry" id="age"><strong>Average Age: </strong>{{age_median}}</div><br>
 					        <div class="entry" id="income"><strong>Income Median: </strong>{{income_median}}</div>
 					        <div class="entry" id="commute"><strong>Average Commute Time <em>(To NYC in Min.):</em></strong>{{commute_score}}</div>	
-					    	
+					    {% endverbatim %}	
 					    </div>
 					</div>
 				</div>	
 
 				<div class="col s4 m4 l4">
+				{% verbatim %}
 					<div class="card-action right-align map-div" data-lat="{{latitude}}" data-long="{{longitude}}"> 
+				{% endverbatim %}
 						<a class="blue-grey-text lighten-1-text bold_hover" href="#">View Map</a>
-					<div class="card-action right-align">
 						<a class="blue-grey-text lighten-1-text" id="bold_hover" href="http://www.google.com/search?!go&q=wikipedia+{% verbatim %}{{ webdisplay }}{% endverbatim %}+NY&btnI&sourceid=chrome&ie=UTF-8" target="_blank">Learn More</a>
-
 					</div>
-				</div>
-
-				
+				</div>	
 			</div>
-
 			</div>
 		</div>
 	</div>
+	{% verbatim %}
 	{{/result_set}}
 
 
