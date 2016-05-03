@@ -42,6 +42,9 @@
 					</div>
 
 					<div class="card-action right-align">
+						<a class="blue-grey-text lighten-1-text" id="bold_hover" href="http://www.google.com/search?!go&q=wikipedia+{% verbatim %}{{ name }}{% endverbatim %}+NY&btnI&sourceid=chrome&ie=UTF-8" target="_blank">Learn More</a>
+
+						<a class="blue-grey-text lighten-1-text" id="bold_hover" href="#"></a>
 						<a class="blue-grey-text lighten-1-text" id="bold_hover" href="#">View Map</a>
 					</div>
 
@@ -56,7 +59,13 @@
 
 
 
- 
+	<div class="row">
+		<div class="col s12 m12 l12">
+			<div class="card-panel hoverable" id="chart_card">
+				<div id="chart"></div>
+			</div>
+		</div>
+	</div>
 
 
 <div class = "buttons">
@@ -78,9 +87,9 @@
 			    <br><br>
 			</div>
 
-			<div class="col s4 center-align">	
-				<button class="btn waves-effect waves-light blue-grey" type="submit" name="action">Save Search
-				    <i class="material-icons right">grade</i>
+			<div class="col s4 center-align">
+				<button class="btn waves-effect waves-light blue-grey" id="chart_button" type="submit" name="action">Show Chart
+				    <i class="material-icons right">trending_up</i>
 			    </button>
 			    <br><br>
 			</div>
