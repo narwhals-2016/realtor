@@ -80,15 +80,28 @@ def make_ages_row(indexed, neighborhood):
 
 	age_dict = dict(zip(age_keys, age_values))
 
-	age_obj = Ages.objects.create(
+	age_tuple = Ages.objects.get_or_create(
 		neighborhood=neighborhood,
-		age_0_19=age_dict["under_nineteen"],
-        age_20_24=age_dict["twenty_to_twentyfour"],
-        age_25_34=age_dict["twentyfive_to_thirtyfour"],
-        age_35_64=age_dict["thirtyfive_to_sixtyfour"],
-        age_65_over=age_dict["over_sixtyfive"],
-        age_median=age_dict["age_median"], 
+		defaults={
+			'age_0_19': age_dict["under_nineteen"],
+	        'age_20_24': age_dict["twenty_to_twentyfour"],
+	        'age_25_34': age_dict["twentyfive_to_thirtyfour"],
+	        'age_35_64': age_dict["thirtyfive_to_sixtyfour"],
+	        'age_65_over': age_dict["over_sixtyfive"],
+	        'age_median': age_dict["age_median"], 
+		}
 	)
+	if age_tuple[1] == False:
+		age_tuple[0].age_0_19 = age_dict["under_nineteen"],
+		age_tuple[0].age_20_24 = age_dict["twenty_to_twentyfour"],
+		age_tuple[0].age_25_34 = age_dict["twentyfive_to_thirtyfour"],
+		age_tuple[0].age_35_64 = age_dict["thirtyfive_to_sixtyfour"],
+		age_tuple[0].age_65_over = age_dict["over_sixtyfive"],
+		age_tuple[0].age_median = age_dict["age_median"],
+		print('********UPDATED', age_tuple[0].neighborhood.name)
+	else:
+		print('age_obj created********', age_tuple[0].neighborhood.name)
+	return True
 	
 # GENDER
 # not complete
@@ -133,7 +146,7 @@ def run(folder_path, folder, table):
 		# which table tree
 		# if rikers don't add to table
 		if neighborhood.name == "Rikers Island":
-			print('Rikers Island blank and pass')
+			print('Rikers Island blank and pass **********')
 		elif table == "ages":
 			make_ages_row(dataframe, neighborhood)
 		elif table == "demo_gender":
