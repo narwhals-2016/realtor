@@ -3,6 +3,8 @@ db.sqlite3
 yelp_config_secret.json
 local_settings.py
 
+project/tables/seeds/datasets/*.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

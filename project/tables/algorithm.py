@@ -1,6 +1,7 @@
 from tables.models import (
 	Ages, Demographic, Economic, UnitDescription, 
-	SchoolEducation, Building, Score, UnitValue, Neighborhood
+	SchoolEducation, Building, Score, UnitValue, Neighborhood,
+	School,
 )
 from pprint import pprint
 from numpy import repeat
@@ -9,17 +10,8 @@ from numpy import repeat
 # with fields in the database. if not can make a dictionary here
 # with those mappings, like the tables_map
 
-# f is a mock form.clean_data
-f = {
-	'age': 'age_25_34', 'gender': 'gender_m', 
-	'number_of_units': 'number_of_units_2_less',
-	'ownership_type': 'resident_type_owner',
-	'number_of_rooms': 'rooms_per_unit_over_4',
-	'building_age': 'constructed_after_2000',
-	'night_life_importance': 'night_life_score',
-}
 
-# 
+# which tables to query for given form input 
 tables_map = {
 	'age': Ages,
 	'gender': Demographic,
@@ -36,7 +28,8 @@ tables_map = {
 	'marital_status_checkbox': Demographic,
 	'number_of_vehicles': UnitDescription,
 	# 'number_of_children': ??,
-	# 'price_range': UnitValue,
+	# 'school_quality_importance': SchoolEducation,
+	'school_level': School,
 }
 
 range_list = [
@@ -176,9 +169,9 @@ def get_nb_data(nb_list, count):
 	# get age_median, income_median, rent_median
 	data = []
 	for nb in nb_list:
-		print(nb.name)
+		print(nb.webdisplay)
 		nb_dict = {}
-		nb_dict['name'] = nb.name
+		nb_dict['webdisplay'] = nb.webdisplay
 		nb_dict['age_median'] = str(Ages.objects.get(neighborhood=nb).age_median)
 		nb_dict['income_median'] = str(Economic.objects.get(neighborhood=nb).median_income)
 		nb_dict['rent_median'] = str(UnitValue.objects.get(neighborhood=nb).gross_rent_median)
