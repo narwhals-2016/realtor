@@ -48,6 +48,7 @@ def get(location, term):
 def run(nb_dict, term):
 	responses = {}
 	for nb in nb_dict:
+		# consider changing loc to only
 		loc = nb + "," + nb_dict[nb]
 		response = get(location=loc,term=term)
 		responses[nb] = (
