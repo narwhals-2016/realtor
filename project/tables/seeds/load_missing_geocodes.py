@@ -198,10 +198,11 @@ def load_geos(nb_dict):
 	# in the above missing_geocodes dictionary which is a subset of best_matches dictionary,
 	# as the realtor project is based on neighborhood as the primary key for all information
 	for k, val in nb_dict.items():
+		print('loading missing geocodes', k)
 		temp = Neighborhood.objects.get(name=k)
 		temp.latitude  = val[1]
 		temp.longitude = val[2] 
 		temp.save()
-
+		print('missing geocode saved', k)
 def run():
 	load_geos(missing_gecodes)

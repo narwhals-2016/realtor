@@ -24,7 +24,7 @@ def get_neighborhood_name(dataframe):
 
 def	load_neighborhood(neighborhood):
 	print('in load_neighborhood', neighborhood)
-	neighborhood_tuple = Neighborhood.objects.get_or_create(
+	nb, created = Neighborhood.objects.get_or_create(
 		name=neighborhood,
 		defaults={
 			'name': neighborhood,
@@ -32,13 +32,16 @@ def	load_neighborhood(neighborhood):
 			'webdisplay': neighborhood,
 		}
 	)
-	if neighborhood_tuple[1] == False:
-		neighborhood_tuple[0].name = neighborhood,
-		neighborhood_tuple[0].webdisplay = neighborhood,
-		neighborhood_tuple[0].save()
-		print('********UPDATED', neighborhood_tuple[0].name)
+	print('object check', type(nb))
+	if created == False:
+		print('object name before update', nb.name)
+		print('neighborhood string name', neighborhood)
+		nb.name = neighborhood
+		nb.webdisplay = neighborhood
+		nb.save()
+		print('********UPDATED', nb.name)
 	else:
-		print('nb_obj created********', neighborhood_tuple[0].name)
+		print('nb_obj created********', nb.name)
 	return True
 
 
