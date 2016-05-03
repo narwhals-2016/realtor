@@ -16,15 +16,15 @@ def parse_file(filename):
 	indexed = housing_file.set_index('2009-2013 ACS Demographic Profile')
 	return indexed
 
-def	get_neighborhood(dataframe):
+def get_neighborhood_name(dataframe):
 	# neighborhood given in first row of indexes, must be parsed out
 	neighborhood_string = dataframe.index[0]
-	neighborhood = neighborhood_string[23:]
-	# option if neighborhood already in table:
-	print('in get_neighborhood', neighborhood)
-	neigborhood_obj = Neighborhood.objects.get(name=neighborhood)
-	return neigborhood_obj
+	return neighborhood_string[23:]
 	
+def get_neighborhood_obj(neighborhood):	
+	# option if neighborhood already in table:
+	print('in get_neighborhood_obj', neighborhood)
+	return Neighborhood.objects.get(name=neighborhood)
 
 
 def make_ages_row(indexed, neighborhood):
@@ -142,16 +142,17 @@ def run(folder_path, folder, table):
 		# use pandas to get dataframe from xlsx file
 		dataframe = parse_file(folder_path + folder + '/' + filename)
 		# identify neighborhood
-		neighborhood = get_neighborhood(dataframe)
-		# which table tree
-		# if rikers don't add to table
-		if neighborhood.name == "Rikers Island":
+		neighborhood = get_neighborhood_name(dataframe)
+		if neighborhood == "Rikers Island":
 			print('Rikers Island blank and pass **********')
-		elif table == "ages":
-			make_ages_row(dataframe, neighborhood)
-		elif table == "demo_gender":
-			add_gender_to_demographic_row(dataframe, neighborhood)
-		elif table == "all":
-			make_ages_row(dataframe, neighborhood)
-			add_gender_to_demographic_row(dataframe, neighborhood)
+			continue
+		else:
+			neighborhood = get_neighborhood_obj(neighborhood)
+			if table == "ages":
+				make_ages_row(dataframe, neighborhood)
+			elif table == "demo_gender":
+				add_gender_to_demographic_row(dataframe, neighborhood)
+			elif table == "all":
+				make_ages_row(dataframe, neighborhood)
+				add_gender_to_demographic_row(dataframe, neighborhood)
 	print('DONE')
