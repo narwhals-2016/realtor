@@ -1,6 +1,45 @@
+var calcChartData = function(data){
+    var new_data = data[0].concat(data[1]);
+    var chart_data = new_data.concat(data[2]);
+
+    for (i = 0; i < chart_data.length; i++) { 
+        rent = ((chart_data[i]["rent_median"])/10)
+        chart_data[i]["rent_median"] = rent
+    };
+    // console.log(chart_data);
+    return chart_data;
+};
+
+var buildResultChart = function(jsonData){
+        var chart = c3.generate({
+          data: {
+              json: jsonData,
+              keys: {
+                  value: ['rent_median', 'rooms_median', 'age_median', 'commute_score'],
+              },
+              type: 'bar',
+              types: {
+                  rooms_median: 'spline',
+                  age_median: 'line',
+                  commute_score: 'line',
+              }
+          },
+          axis: {
+            x: {
+              type: 'category',
+              categories: ['result1', 'result2', 'result3', 'result4', 'result5', 'result6', 'result7', 'result8', 'result9'],
+            },
+            y: {
+                  label: 'Rent (in thousands)'
+              },
+          }
+      });
+    // return chart;
+};
 
 $(document).ready(function(){
-	console.log("Hi there!")
+console.log("Hi there!")
+var chart_data;
 
 // goes to top of page on reload
 $( window ).unload(function() {
@@ -163,6 +202,8 @@ $( window ).unload(function() {
       console.log(data)
       __cache['results'] = data.results;
       var results = data.results[0];
+      var data = __cache["results"];
+      chart_data = calcChartData (data);
 
         ////// if submit form correctly ////////
         $('#ja_search').attr("class","hide");
@@ -254,33 +295,10 @@ $( window ).unload(function() {
 
 ///// Chart /////
     $("#answer_div").on('click', '#chart_button',function(event){
-        $("#chart_card").css("display", "block");
+    event.preventDefault();
+    $("#chart_card").css("display", "block");
 
-      var chart = c3.generate({
-          data: {
-              columns: [
-                  ['rent', 30, 20, 50, 40, 60, 50],
-                  ['rooms', 2, 1.3, 5, 3, 3.2, 2.2],
-                  ['age', 30, 40, 42, 24, 54, 18],
-                  ['commute', 35, 12, 80, 45, 61, 100],
-              ],
-              type: 'bar',
-              types: {
-                  rooms: 'spline',
-                  age: 'line',
-                  commute: 'line',
-            axis: {
-              x: {
-                type: 'category',
-                categories: ['result1', 'result2', 'result3', 'result4', 'result5', 'result6', 'result7', 'result8', 'result9'],
-                },
-                y: {
-                    label: 'Rent (in thousands)'
-                },
-            }
-          }
-        }
-      });
+    buildResultChart(chart_data)
     });
 
 
