@@ -87,8 +87,12 @@ footer.page-footer {
 	margin-top: .75em;
 	height: 30vh;
 }
+.map_div {
+	margin-top: .75em;
+	height: 30vh;
+}
 
-#bold_hover:hover {
+.bold_hover:hover {
 	font-weight: bold;
 }
 

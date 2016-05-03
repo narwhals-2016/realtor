@@ -1,6 +1,6 @@
 from tables.models import (
 	Ages, Demographic, Economic, UnitDescription, 
-	SchoolEducation, Building, Score, UnitValue, Neighborhood
+	SchoolEducation, Building, Score, UnitValue, Neighborhood, School
 )
 from pprint import pprint
 from numpy import repeat
@@ -186,6 +186,11 @@ def get_nb_data(nb_list, count):
 		nb_dict['commute_score'] = str(Score.objects.get(neighborhood=nb).commute_score)
 		nb_dict['pic_link'] = nb.pic_link
 		nb_dict["link"] = pics[count]
+		nb_dict['latitude'] = nb.latitude
+		nb_dict['longitude'] = nb.longitude
+		# nb_dict['k_school_score'] = str(School.objects.get(neighborhood=nb).k_school_score)
+		# nb_dict['elem_school_score'] = str(School.objects.get(neighborhood=nb).elem_school_score)
+		# nb_dict['hs_school_score'] = str(School.objects.get(neighborhood=nb).hs_school_score)
 		count +=1 
 		data.append(nb_dict)
 	return data
