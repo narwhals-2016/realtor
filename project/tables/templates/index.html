@@ -255,6 +255,9 @@ cool paralax stuff - look at politipic
 	{% include "results.html"%}
 	{% include "results_header.html"%}
 
+{% endblock templates %}
+
+{% block code %}
 
 	{% if user.is_authenticated and isgraduated == "True" %}
 	<script type="text/javascript" class="school">
@@ -322,9 +325,8 @@ cool paralax stuff - look at politipic
 	}</script>
 	{% endif %}
 
-	
 
-{% endblock templates %}
+{% endblock code %}
 
 
 
