@@ -203,6 +203,8 @@ $( window ).unload(function() {
       var results = __cache.results[next];
       // this hides all the buttons already on the page but the bottons will still be on the bottom becuase the last set of buttons has not loaded yet
           $('.buttons').attr("class","hide");
+          $('#chart_card').remove();
+          
           var template = $('#results-template').html();
           var renderM = Mustache.render(template, {'result_set': results, 'next': next});
           // just append the new results to the page
@@ -249,4 +251,25 @@ $( window ).unload(function() {
         };
     });
 
+
+///// Chart /////
+    $("#answer_div").on('click', '#chart_button',function(event){
+        $("#chart_card").css("display", "block");
+        var chart = c3.generate({
+            bindto: '#chart',
+            data: {
+              columns: [
+                ['data1', 30, 200, 100, 400, 150, 250],
+                ['data2', 50, 20, 10, 40, 15, 25]
+              ]
+            }
+        });
+    });
+
+
+
 });
+
+
+
+
