@@ -255,15 +255,32 @@ $( window ).unload(function() {
 ///// Chart /////
     $("#answer_div").on('click', '#chart_button',function(event){
         $("#chart_card").css("display", "block");
-        var chart = c3.generate({
-            bindto: '#chart',
-            data: {
+
+      var chart = c3.generate({
+          data: {
               columns: [
-                ['data1', 30, 200, 100, 400, 150, 250],
-                ['data2', 50, 20, 10, 40, 15, 25]
-              ]
+                  ['rent', 30, 20, 50, 40, 60, 50],
+                  ['rooms', 2, 1.3, 5, 3, 3.2, 2.2],
+                  ['age', 30, 40, 42, 24, 54, 18],
+                  ['commute', 35, 12, 80, 45, 61, 100],
+              ],
+              type: 'bar',
+              types: {
+                  rooms: 'spline',
+                  age: 'line',
+                  commute: 'line',
+            axis: {
+              x: {
+                type: 'category',
+                categories: ['result1', 'result2', 'result3', 'result4', 'result5', 'result6', 'result7', 'result8', 'result9'],
+                },
+                y: {
+                    label: 'Rent (in thousands)'
+                },
             }
-        });
+          }
+        }
+      });
     });
 
 
