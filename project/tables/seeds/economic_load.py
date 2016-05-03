@@ -14,14 +14,15 @@ def parse_file(filename):
 	indexed = housing_file.set_index('2009-2013 ACS Economic Profile')
 	return indexed
 
-def	get_neighborhood(dataframe):
+def get_neighborhood_name(dataframe):
 	# neighborhood given in first row of indexes, must be parsed out
 	neighborhood_string = dataframe.index[0]
-	neighborhood = neighborhood_string[23:]
+	return neighborhood_string[23:]
+	
+def get_neighborhood_obj(neighborhood):	
 	# option if neighborhood already in table:
-	print('in get_neighborhood', neighborhood)
-	neigborhood_obj = Neighborhood.objects.get(name=neighborhood)
-	return neigborhood_obj
+	print('in get_neighborhood_obj', neighborhood)
+	return Neighborhood.objects.get(name=neighborhood)
 
 def make_economic_row(indexed, neighborhood):
 	print('nb: ', neighborhood.name)
@@ -104,10 +105,11 @@ def run(folder_path, folder):
 		# use pandas to get dataframe from xlsx file
 		dataframe = parse_file(folder_path + folder + '/' + filename)
 		# identify neighborhood
-		neighborhood = get_neighborhood(dataframe)
-		# if rikers don't add to table
-		if neighborhood.name == "Rikers Island":
-			print('Rikers Island blank and pass')
+		neighborhood = get_neighborhood_name(dataframe)
+		if neighborhood == "Rikers Island":
+			print('Rikers Island blank and pass **********')
+			continue
 		else:
+			neighborhood = get_neighborhood_obj(neighborhood)
 			make_economic_row(dataframe, neighborhood)
 	print('DONE')

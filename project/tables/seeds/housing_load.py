@@ -10,22 +10,23 @@ import os
 import pandas as pd
 from tables.models import Neighborhood, Building, UnitValue, UnitDescription
 
-
 def parse_file(filename):
 	# use pandas to read excel file, and then create dataframe with first column as index
 	housing_file = pd.read_excel(filename, skiprows=[2,3], sheetname=0)
 	indexed = housing_file.set_index('2009-2013 ACS Housing Profile')
 	return indexed
 
-def	get_neighborhood(dataframe):
+def get_neighborhood_name(dataframe):
 	# neighborhood given in first row of indexes, must be parsed out
 	neighborhood_string = dataframe.index[0]
-	neighborhood = neighborhood_string[23:]
-	# option if neighborhood already in table:
-	print('in get_neighborhood', neighborhood)
-	neigborhood_obj = Neighborhood.objects.get(name=neighborhood)
-	return neigborhood_obj
+	return neighborhood_string[23:]
 	
+def get_neighborhood_obj(neighborhood):	
+	# option if neighborhood already in table:
+	print('in get_neighborhood_obj', neighborhood)
+	return Neighborhood.objects.get(name=neighborhood)
+	
+
 def make_building_row(dataframe, neighborhood):
 	# make building object in table
 	total_housing_units_df = dataframe.loc['Total housing units'] 
@@ -250,21 +251,22 @@ def run(folder_path, folder, table):
 		# use pandas to get dataframe from xlsx file
 		dataframe = parse_file(folder_path + folder + '/' + filename)
 		# identify neighborhood
-		neighborhood = get_neighborhood(dataframe)
-		# which table tree
-		# if rikers don't add to table
-		if neighborhood.name == "Rikers Island":
-			print('Rikers Island blank and pass')
-		elif table == "building":
-			make_building_row(dataframe, neighborhood)
-		elif table == "unit_value":
-			make_unit_value_row(dataframe, neighborhood)
-		elif table == "unit_description":
-			make_unit_description_row(dataframe, neighborhood)
-		elif table == "all":
-			make_building_row(dataframe, neighborhood)
-			make_unit_value_row(dataframe, neighborhood)
-			make_unit_description_row(dataframe, neighborhood)
+		neighborhood = get_neighborhood_name(dataframe)
+		if neighborhood == "Rikers Island":
+			print('Rikers Island blank and pass **********')
+			continue
+		else:
+			neighborhood = get_neighborhood_obj(neighborhood)
+			if table == "building":
+				make_building_row(dataframe, neighborhood)
+			elif table == "unit_value":
+				make_unit_value_row(dataframe, neighborhood)
+			elif table == "unit_description":
+				make_unit_description_row(dataframe, neighborhood)
+			elif table == "all":
+				make_building_row(dataframe, neighborhood)
+				make_unit_value_row(dataframe, neighborhood)
+				make_unit_description_row(dataframe, neighborhood)
 	print('DONE')
 
 
