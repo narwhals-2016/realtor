@@ -88,7 +88,7 @@ class Login(View):
 			user = form.get_user()
 			login(request, user)
 			request.session.set_expiry(30000)
-			return JsonResponse({"username":user.username, "success": True})
+			return JsonResponse({"username":user.username, "success": True, "fb_user": True})
 		else:
 			return JsonResponse({'errors': form.errors})
 
