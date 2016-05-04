@@ -41,18 +41,8 @@ function init_map(map_div,latitude, longitude) {
 		position: var_location,
 		map: var_map,
 	});
-
-  	// var panorama = new google.maps.StreetViewPanorama(
-   //    map_div, {
-   //      position: var_location,
-   //      pov: {
-   //        heading: 34,
-   //        pitch: 10
-   //      }
-    // });
-  	// var_map.setStreetView(panorama);
+	
 	var_marker.setMap(var_map); 
-
 }
 
 
@@ -61,12 +51,14 @@ $(document).ready(function(){
 	// street view 
 	$(".street_view").on("click", function(event){
 		event.preventDefault();
-		// console.log('inside bold_hover clicked')
-        var $map = $(this).parent();
+        var $map = $(this).parent().prev().children('.map-div');
+        console.log("map", $map)
+
         var cards = $map.parents('.row').children();
         var $image_card = cards.first();
-
 		$map.css('height',$image_card.css('height'));
+		$map.addClass('image_height');
+
 		var latitude = $map.data('lat');
 		var longitude = $map.data('long');
 		init_street_view($map[0], latitude, longitude);
@@ -76,12 +68,13 @@ $(document).ready(function(){
 	// map view
 	$(".map_view").on("click", function(event){
 		event.preventDefault();
-		// console.log('inside bold_hover clicked')
-        var $map = $(this).parent();
+        var $map = $(this).parent().prev().children('.map-div');
+
         var cards = $map.parents('.row').children();
         var $image_card = cards.first();
-
 		$map.css('height',$image_card.css('height'));
+		$map.addClass('image_height');
+
 		var latitude = $map.data('lat');
 		var longitude = $map.data('long');
 		init_map($map[0], latitude, longitude);

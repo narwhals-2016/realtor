@@ -81,7 +81,7 @@ footer.page-footer {
 	margin-top: 1em;
 }
 
-#image_height {
+.image_height {
 	margin-top: .75em;
 	margin-bottom: .75em;
 	height: 30vh;
