@@ -32,16 +32,19 @@
 					<div class="card-content">
 					    <div class="details"> 
 					        <div class="entry" id="neighborhood"></div>
-					 {% verbatim %}       
+					 	{% verbatim %}       
 					        <br>
 					        <div class="entry" id="ren"><strong>Rent Median: </strong>{{rent_median}} <br></div>
 					        <div class="entry" id="rooms"><strong>Average Number of Rooms: </strong>{{rooms_median}}</div>
 					        <div class="entry" id="age"><strong>Average Age: </strong>{{age_median}}</div>
 					        <div class="entry" id="income"><strong>Income Median: </strong>{{income_median}}</div>
 					        <div class="entry" id="commute"><strong>Average Commute Time <em>(To NYC in Min.):</em></strong>{{commute_score}}</div>	
+				        {% endverbatim %}
+				        {#school_score}
+				        {% verbatim %}
 					    	<div class="entry" id="school_score"><strong>School Score: </strong>{{school_score}}</div>
-
-					    {% endverbatim %}	
+				        {% endverbatim %}
+				    	{/school_score}
 					    </div>
 					</div>
 				</div>	
