@@ -91,31 +91,24 @@ def make_queries(form):
 		if key in tables_map:
 			print('in tables_map', key)
 			if key in range_list:
-				print('IN RANGE_LIST', form[key])
 				print('ownership_type', form['ownership_type'])
 				field = put_value_in_group(form['ownership_type'], key, int(form[key]))
-				print('field result', field)
 				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=field)
 			elif key in importance_fields_two_levels:
-				print('INSIDE IMPORTANCE TWO FIELDS', key)
 				ten_results[key] = sort_by_smallest_to_largest(table=tables_map[key], field=form[key])
 			elif key in importance_fields_three_levels:
-				print('INSIDE IMPORTANCE THREE FIELDS', key)
 				if form[key] == 'high':
-					print('INSIDE IMPORTANCE HIGH', key) 
 					ten_results[key] = sort_by_smallest_to_largest(
 						table=tables_map[key], field=importance_fields_three_levels[key]
 					)
 				elif form[key] == 'very_high':
 					# increase count for top neighborhoods in very important categories
-					print('INSIDE IMPORTANCE VERY HIGH', key)
 					nb_list = sort_by_smallest_to_largest(
 						table=tables_map[key], field=importance_fields_three_levels[key]
 					)
 					new_list = repeat(nb_list, 2)
 					ten_results[key] = new_list
 			else:
-				print('in ten results part', key)
 				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=form[key])
 	return ten_results
 
@@ -141,13 +134,6 @@ def count_neighborhoods(results_dict):
 	# sorts least to greatest, returns array of tuples of neighborhood and count
 	return nb_counter
 
-def find_n_most_common(nb_dict, n):
-	sorted_dict = sorted(nb_dict.items(), key = lambda x:x[1], reverse=True)
-	# gets the last n, or the ones with the highest count
-	n_most_common = sorted_dict[:n]
-	# get list of neighborhood names
-	# n_neighborhoods = [nb[0] for nb in n_most_common]
-	return n_most_common
 
 
 def get_nb_data(nb_list, count):
@@ -164,7 +150,7 @@ def get_nb_data(nb_list, count):
 		"http://hometown-tourist.com/wp-content/uploads/2015/01/Manhattan-Neighborhood-Street-Scene.jpg",
 		"http://www.nychomes4u.com/wp-content/uploads/photo-gallery/brooklyn%204.png",
 		"http://fc3d750e1b22019028ae-eb9d0534c31fede444754f378d638c42.r70.cf1.rackcdn.com/uploads/picture/source/1184/victorian_homes_BH.jpg",
-		]
+	]
 
 	# get age_median, income_median, rent_median
 	data = []
@@ -188,11 +174,34 @@ def get_nb_data(nb_list, count):
 		data.append(nb_dict)
 	return data
 
+def find_n_most_common(nb_dict, n):
+	sorted_dict = sorted(nb_dict.items(), key = lambda x:x[1], reverse=True)
+	# gets the last n, or the ones with the highest count
+	n_most_common = sorted_dict[:n]
+	return [n_most_common, sorted_dict]
+
+def filter_commute(nb_list, sorted_neighborhoods, commute_cap):
+	print('IN FILTERED COMMUTE')
+	print('CAP', commute_cap)
+	i = 0
+	nb_list_length = len(nb_list)
+	for nb in nb_list:
+		if Score.objects.get(neighborhood=nb).commute_score > commute_cap:
+			print('removing', nb)
+			nb_list.remove(nb)
+			nb_list.append(sorted_neighborhoods[nb_list_length + i][0])
+			i += 1
+	return nb_list
+
+
 def get_results(form_dict):
+	commute_cap = int(form_dict.get('commute_time_range', '100'))
 	# performs each query and gathers data
 	query_results = make_queries(form_dict)
 	# tally the neighborhoods in query results
 	nb_count = count_neighborhoods(query_results)
-	return find_n_most_common(nb_count, 9)
-
+	n_most_common, sorted_dict = find_n_most_common(nb_count, 9)
+	n_most_common = [nb[0] for nb in n_most_common]
+	n_most_common = filter_commute(n_most_common, sorted_dict, commute_cap)
+	return n_most_common
 

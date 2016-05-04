@@ -107,7 +107,6 @@ class Search(View):
 		print('CD', cd)
 		field_mappings = self.map_table_fields(form.fields, cd)
 		nb_list = get_results(field_mappings)
-		nb_list = [nb[0] for nb in nb_list]
 
 		first_three = get_nb_data(nb_list[:3], 0)
 		next_three = get_nb_data(nb_list[3:6], 3)
@@ -139,11 +138,8 @@ class Search(View):
 			else:
 				# get field name, not html form input name
 				field_choices = dict(form_fields[field].choices)
-				print('FIELD_CHOICES', field_choices)
 				cleaned_choice = cleaned_data.get(field, 'empty')
-				print('cleaned_choice', cleaned_choice)
 				choice = field_choices.get(cleaned_choice, 'empty')
-				print('choice', choice)
 				field_choice_dict[field] = choice
 		return field_choice_dict
 	
