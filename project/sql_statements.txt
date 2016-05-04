@@ -1,0 +1,5 @@
+select tables_neighborhood.name, tables_streeteasy.squarefeet_average from tables_neighborhood join tables_streeteasy where tables_neighborhood.id=tables_streeteasy.neighborhood_id order by tables_streeteasy.squarefeet_average;
+
+select tables_neighborhood.name, tables_streeteasy.rent_average from tables_neighborhood join tables_streeteasy where tables_neighborhood.id=tables_streeteasy.neighborhood_id order by tables_streeteasy.rent_average;
+
+select name, webdisplay from tables_neighborhood order by name;
