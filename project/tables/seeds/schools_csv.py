@@ -45,7 +45,7 @@ def extract_transform_school_data(folder_path, fname, nb_zip, r):
         except:
             enrol = 0
             unsuccess + unsuccess + 1
-            print('obj:', obj[school])
+            # print('obj:', obj[school])
             print('***********&&&&&&&&&**************************')
         rt = "Rigorous Instruction Rating"
         try:
@@ -68,7 +68,7 @@ def extract_transform_school_data(folder_path, fname, nb_zip, r):
                         str(zipcode)]
                 r[nb].append(temp)
 
-    print('success: ', number_success, 'unsuccess: ',unsuccess)
+    # print('success: ', number_success, 'unsuccess: ',unsuccess)
     return(c)
     
 def calculate_score(n1, n2, n3):
@@ -203,6 +203,13 @@ def insert_into_db(r):
                 print(score_list)
                 print(school_scores)
                 print(type(e),e.args)
+        else:
+            print('!!!NO SCHOOLS!!!', neighborhood)
+            item = Neighborhood.objects.get(name=neighborhood)
+            School.objects.create(neighborhood=item,
+                                  k_school_score = 1,
+                                  elem_school_score = 1,
+                                  hs_school_score = 1)
 
 def extract_Pre_K_school_directory(fname, nb_zip, r):
 # fname is the file with preK schools(public,private etc)
