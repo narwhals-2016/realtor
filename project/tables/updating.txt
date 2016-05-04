@@ -1,0 +1,27 @@
+Updating:
+
+
+1. ssh into box:
+ssh projects@byteprojects.co -p 14022
+2. sudo su into root user
+sudo su 
+3. nav to directory
+cd /var/www/realtor/project/
+4. source env/bin/activate
+also optional: 
+6. apt-get update
+7. apt-get upgrade
+8. git pull origin master
+optional:
+5. pip3 install -r requirements.txt
+9. if necessary, migrate
+10. python3 manage.py collectstatic
+(overwrite collectstatic)
+11. manual steps like seed (if necessary)
+12. 
+
+view errors: /var/log/apache2/error.log
+
+
+if we want to link to a domain..
+$ dig byteprojects.co
