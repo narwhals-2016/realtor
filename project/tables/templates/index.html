@@ -124,9 +124,31 @@ cool paralax stuff - look at politipic
 			<div class="col s12 center">
 				<h3><i class="mdi-content-send blue-grey-text"></i></h3>
 				<h4>How We Did It</h4>
-					<p class="left-align light">
-					First we needed to collect data. And before we did that we had to know what data was available (ie free and accessible at scale). This led us to census data, data collected at the state and city level, and various API's, Google Maps, Yelp, and Streeteasy. <br> One key requirement, apparent from the outset, was to reference any data we collected to a particular NYC neighborhood. That meant storing data categorized at the neighborhood level, like census data, or more frequently, gather data collected by geographical coordinates or zip code and mapping it to the appropriate neighborhood. <br> Having all our data reference a particular neighborhood simplified the database and algorithm design processes. By having a star schema design with our neighborhoods at the center, it allowed us to add, remove, and modify how we used our data to analyze each neighborhood. <br> Our algorithm identifies neighborhoods whose characteristics most closely match what a user inputs. The algorithm weights more heavily what is important to users, to ensure suitable responses. </p>
+					<p class="center-align">
+					 Before we were able to collect all our data, we first had to know what data was available, accessible and scalable. This led us to census data, data collected at the state and city level, as well as various API'sincluding Google Maps, Yelp, and Streeteasy. One key requirement, apparent from the outset, was to reference any data we collected to a particular NYC neighborhood. That meant storing data categorized at the neighborhood level. However, more often than not, data available was by geographical coordinates or zip code, leading us to create a mapping to the appropriate neighborhood. <br> Having all our data reference a particular neighborhood simplified the database and algorithm design processes. We stored our data in a star schema design with our neighborhoods at the center, this enabled quick quering as well as the ability to add, remove, and update our data seamlessly. Our algorithm uses this data to identify neighborhoods whose characteristics most closely match what a user inputs inputs in our form, finding the best suited neighborhoods across NY. The algorithm weights more heavily what is important to users, to ensure suitable responses. <br> Lastly, we were able to add other features like map and street view, learn more and the ability to graph all results from a query to find trends. Along with Facebook login, these features help create a conprehensive and user friendly site for anyone to use. </p>
 			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="parallax-container valign-wrapper">
+		<div class="container">
+			<div class="row left">
+				<h5 id="shift" class="header col s12 white-text right-align">We have done the research for you</h5>
+			</div>
+		</div>
+
+	<div class="parallax">
+		<img src="{% static "images/paralax.jpg" %}">
+	</div>
+</div>
+
+
+<div id-"about" class="container">
+	<div class="section">
+		<div class="row">
+			<div class="col s12 center">
 				<h4 class="center">Technologies Used</h4>
 				<div class="col s12 m4">
 					<div class="icon-block">
@@ -146,7 +168,7 @@ cool paralax stuff - look at politipic
 						<p class="light center">Google Distance Matrix API, Google Maps API, Yelp API, StreetEasy API, NYC Open Data, Cencus Data</p>
 					</div>
 				</div>
-
+			</div>
 		</div>
 	</div>
 </div>
@@ -189,21 +211,21 @@ cool paralax stuff - look at politipic
 					</div>
 				</div>
 
-				<div class="col s12 m2 l2">
-					<div class="icon-block">
-						<br>	
-						<h5 class="center"><span class="blue-grey-text">Rob</span><br>Swallow</h5>
-
-						<p class="light">Is a soon to be grad of Rutgers University. When he's not playing around with python, pandas, or any other deadly animal, you can find him either watching his beloved Red Bulls, Man Utd, or lifting things up and putting them down.</p>
-					</div>
-				</div>
-
 				<div class="col s12 m3 l3">
 					<div class="icon-block">
 						<br>	
 						<h5 class="center"><span class="blue-grey-text">Sulekha</span><br>Cheruvu</h5>
 
 						<p class="light">A Stevens institute of Technology graduate, Sulekha worked in Insurance and telecom companies for many years, during which time she grew from junior developer to a project leader as well as working as an operations manager and a business analyst. Her passion towards coding and developing brought her to Byte Academy in order to bridge the gap in my technical skills.</p>
+					</div>
+				</div>
+
+				<div class="col s12 m2 l2">
+					<div class="icon-block">
+						<br>	
+						<h5 class="center"><span class="blue-grey-text">Rob</span><br>Swallow</h5>
+
+						<p class="light">Is a soon to be grad of Rutgers University. When he's not playing around with python, pandas, or any other deadly animal, you can find him either watching his beloved Red Bulls, Man Utd, or lifting things up and putting them down.</p>
 					</div>
 				</div>
 
