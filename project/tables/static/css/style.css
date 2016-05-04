@@ -81,16 +81,26 @@ footer.page-footer {
 	margin-top: 1em;
 }
 
-#image_height {
+.image_height {
 	margin-top: .75em;
+	margin-bottom: .75em;
 	height: 30vh;
 }
 .map_div {
 	margin-top: .75em;
 	height: 30vh;
+	padding-top: 10px;
 }
 
 .bold_hover:hover {
+	font-weight: bold;
+}
+
+#bold_hover {
+	padding-bottom: 20px;
+}
+
+#bold_hover:hover {
 	font-weight: bold;
 }
 
@@ -132,3 +142,169 @@ footer.page-footer {
 
 
 
+@import "compass/css3";
+
+@import url(http://fonts.googleapis.com/css?family=Merriweather+Sans);
+ div.social-wrap button {
+    padding-right: 45px;
+    height: 35px;
+    background: none;
+    border: none;
+    display: block;
+    background-size: 35px 35px;
+    background-position: right center;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    color: white;
+    font-family:"Merriweather Sans", sans-serif;
+    font-size: 14px;
+    margin-bottom: 15px;
+    width: 205px;
+    border-bottom: 2px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    
+    text-shadow: rgba(0, 0, 0, .5) -1px -1px 0;
+}
+button#facebook {
+    border-color: #2d5073;
+    background-color: #3b5998;
+    background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
+}
+button#twitter {
+    border-color: #007aa6;
+    background-color: #008cbf;
+    background-image: url(https://twitter.com/images/resources/twitter-bird-white-on-blue.png);
+}
+button#googleplus {
+    border-color: #111;
+    background-color: #222;
+    text-shadow: #333 -1px -1px 0;
+    background-image:url(http://i.tinyuploads.com/KBZc6n.png);
+}
+div.social-wrap button:active {
+    background-color: #222;
+}
+div.social-wrap.b button {
+    padding-right: 45px;
+    height: 35px;
+    background: none;
+    border: none;
+    display: block;
+    background-size: 25px 25px, cover;
+    background-position: 170px center, center center;
+    background-repeat: no-repeat, repeat;
+    border-radius: 4px;
+    color: white;
+    font-family:"Merriweather Sans", sans-serif;
+    font-size: 14px;
+    margin-bottom: 15px;
+    width: 205px;
+    border-bottom: 2px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    box-shadow: 0 4px 2px -2px gray;
+    text-shadow: rgba(0, 0, 0, .4) -1px -1px 0;
+}
+div.social-wrap.b {
+}
+div.social-wrap.b > .googleplus {
+    background-size: 30px 30px, cover;
+    background-image: url(http://dl.dropbox.com/u/109135764/gplus.png), -webkit-gradient(linear, left top, left bottom, color-stop(1%, #353233), color-stop(100%, #1d1b1c));
+    ;
+}
+div.social-wrap.b > .facebook {
+    background: url(http://dl.dropbox.com/u/109135764/facebookf.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4c74c4), color-stop(100%, #3b5998));
+    background-size: 25px 25px, cover;
+    background-position: 170px center, center center;
+    background-repeat: no-repeat, repeat;
+}
+div.social-wrap.b > .twitter {
+    background-image: url(http://dl.dropbox.com/u/109135764/twitterbird.png), -webkit-gradient(linear, left top, left bottom, color-stop(1%, #00aced), color-stop(99%, #00a9ff));
+    ;
+}
+div.social-wrap.b button em {
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-family:"Times New Roman";
+    margin-right: 4px;
+    margin-left: 4px;
+}
+div.social-wrap.c button {
+    padding-left: 35px;
+    padding-right: 0px;
+    height: 35px;
+    background: none;
+    border: none;
+    display: block;
+    background-size: 25px 25px, cover;
+    background-position: 10px center, center center;
+    background-repeat: no-repeat, repeat;
+    border-radius: 4px;
+    color: white;
+    font-family:"Merriweather Sans", sans-serif;
+    font-size: 14px;
+    margin-bottom: 15px;
+    width: 205px;
+    border-bottom: 2px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    text-shadow: rgba(0, 0, 0, .4) -1px -1px 0;
+}
+div.social-wrap.c {
+	display: inline-block; 
+}
+div.social-wrap.c:hover {
+	-webkit-filter: brightness(110%);
+}
+
+div.social-wrap.c > .googleplus {
+    background-size: 30px 30px, cover;
+    background-image: url(http://dl.dropbox.com/u/109135764/gplus.png), -webkit-gradient(linear, left top, left bottom, color-stop(1%, #353233), color-stop(100%, #1d1b1c));
+    ;
+}
+div.social-wrap.c > .facebook {
+    background: url(http://dl.dropbox.com/u/109135764/facebookf.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4c74c4), color-stop(100%, #3b5998));
+    background-size: 25px 25px, cover;
+    background-position: 10px center, center center;
+    background-repeat: no-repeat, repeat;
+}
+div.social-wrap.c > .twitter {
+    background-image: url(http://dl.dropbox.com/u/109135764/twitterbird.png), -webkit-gradient(linear, left top, left bottom, color-stop(1%, #00aced), color-stop(99%, #00a9ff));
+    ;
+}
+div.social-wrap.c button em {
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-family:"Times New Roman";
+    margin-right: 4px;
+    margin-left: 4px;
+}
+ul.sm-wrap {
+    list-style-type: none;
+    padding: 0px;
+}
+ul.sm-wrap li {
+    font-family:"Helvetica", sans-serif;
+    font-size: 11px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+}
+ul.sm-wrap li#facebook-sm {
+    background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
+}
+ul.sm-wrap li#twitter-sm {
+    background-image:url(https://twitter.com/images/resources/twitter-bird-white-on-blue.png);
+}
+ul.sm-wrap li#gplus-sm {
+    background-image: url(http://i.tinyuploads.com/KBZc6n.png);
+}
+
+ul.sm-wrap a{
+    text-decoration: none;    
+}
+a {
+	color:white;
+}

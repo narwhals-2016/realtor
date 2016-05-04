@@ -18,7 +18,7 @@
 					<div class="card-image">
 
 						
-							<img src="{{ link }}" id="image_height">
+							<img src="{{ link }}" class="image_height">
 
 						{% endverbatim %}
 						{% verbatim %}
@@ -27,7 +27,7 @@
 					</div>
 				</div>
 
-				<div class="col s4 m4 l4">
+				<div class="col s12 m4 l4">
 				
 					<div class="card-content">
 					    <div class="details"> 
@@ -46,12 +46,18 @@
 					</div>
 				</div>	
 
-				<div class="col s4 m4 l4">
+				<div class="col s12 m4 l4">
 				{% verbatim %}
-					<div class="card-action right-align map-div" data-lat="{{latitude}}" data-long="{{longitude}}"> 
+					<div class="right-align map-div" data-lat="{{latitude}}" data-long="{{longitude}}"> 
 				{% endverbatim %}
-						<a class="blue-grey-text lighten-1-text bold_hover" href="#">View Map</a>
+					</div>	
+				</div>	
+
+				<div class="card-action col s12 m12 l12">
 						<a class="blue-grey-text lighten-1-text" id="bold_hover" href="http://www.google.com/search?!go&q=wikipedia+{% verbatim %}{{ webdisplay }}{% endverbatim %}+NY&btnI&sourceid=chrome&ie=UTF-8" target="_blank">Learn More</a>
+
+						<a class="blue-grey-text lighten-1-text bold_hover map_view right" href="#">View Map</a>
+						<a class="blue-grey-text lighten-1-text bold_hover street_view right" href="#">Street View</a>
 					</div>
 				</div>	
 			</div>
@@ -92,7 +98,7 @@
 			</div>
 
 			<div class="col s12 m4 l4 center-align">
-				<button class="btn waves-effect waves-light blue-grey" id="chart_button" type="submit" name="action">Show Graph
+				<button class="btn waves-effect waves-light blue-grey" id="chart_button" type="submit" name="action">Graph Results
 				    <i class="material-icons right">trending_up</i>
 			    </button>
 			    <br><br>
