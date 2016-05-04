@@ -27,7 +27,7 @@ def seed_db(data_path, *seed_tables):
 			"neighborhoods",
 			"housing","crime",
 			"economic","social", "demographic", 
-			"schools", "noise", "commute", "streeteasy"
+			"schools", "noise", "commute", "streeteasy",
 			"nightlife", 
 		]
 
