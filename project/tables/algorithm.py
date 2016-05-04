@@ -187,15 +187,44 @@ def filter_commute(nb_list, sorted_neighborhoods, commute_cap):
 	nb_list_length = len(nb_list)
 	for nb in nb_list:
 		if Score.objects.get(neighborhood=nb).commute_score > commute_cap:
-			print('removing', nb)
+			print('removing bc commute', nb)
 			nb_list.remove(nb)
 			nb_list.append(sorted_neighborhoods[nb_list_length + i][0])
 			i += 1
 	return nb_list
 
+def filter_price(nb_list, sorted_neighborhoods, price_cap, ownership_type):
+	# ownership_map = {
+	# 	'rent': 'gross_rent_median',
+	# 	'purchase': 'value_of_unit_median',
+	# }
+	# ownership_field = ownership_map.get(ownership_type, 'gross_rent_median')
+	print('IN FILTERED PRICE')
+	print('CAP', price_cap + 200)
+	print(ownership_type)
+	i = 0
+	nb_list_length = len(nb_list)
+	for nb in nb_list:
+		uv_obj = UnitValue.objects.get(neighborhood=nb)
+		if ownership_type == 'resident_type_renter':		
+			if UnitValue.objects.get(neighborhood=nb).gross_rent_median > price_cap + 200:
+				print('removing bc price', nb)
+				nb_list.remove(nb)
+				nb_list.append(sorted_neighborhoods[nb_list_length + i][0])
+				i += 1
+		elif ownership_type == 'resident_type_owner':
+			if UnitValue.objects.get(neighborhood=nb).value_of_unit_median > price_cap + 200:
+				print('removing bc price', nb)
+				nb_list.remove(nb)
+				nb_list.append(sorted_neighborhoods[nb_list_length + i][0])
+				i += 1
+	return nb_list
+
 
 def get_results(form_dict):
-	commute_cap = int(form_dict.get('commute_time_range', '100'))
+	commute_cap = int(form_dict.get('commute_time_range', '1000'))
+	price_cap = int(form_dict.get('price_range', '20000'))
+	ownership_type = form_dict.get('ownership_type', 'empty')
 	# performs each query and gathers data
 	query_results = make_queries(form_dict)
 	# tally the neighborhoods in query results
@@ -203,5 +232,6 @@ def get_results(form_dict):
 	n_most_common, sorted_dict = find_n_most_common(nb_count, 9)
 	n_most_common = [nb[0] for nb in n_most_common]
 	n_most_common = filter_commute(n_most_common, sorted_dict, commute_cap)
+	n_most_common = filter_price(n_most_common, sorted_dict, price_cap, ownership_type)
 	return n_most_common
 
