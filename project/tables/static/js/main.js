@@ -234,6 +234,7 @@ $( window ).unload(function() {
         $('#ja_search').attr("class","show");
         // get rid of previous results
         $('.ja_results').remove();
+        console.log("Gone")
         window.scrollTo(0, 0);
     });
 
