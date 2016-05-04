@@ -40,11 +40,12 @@
 					        <div class="entry" id="income"><strong>Income Median: </strong>{{income_median}}</div>
 					        <div class="entry" id="commute"><strong>Average Commute Time <em>(To NYC in Min.):</em></strong>{{commute_score}}</div>	
 				        {% endverbatim %}
-				        {#school_score}
+
 				        {% verbatim %}
+				        {{#school_score}}
 					    	<div class="entry" id="school_score"><strong>School Score: </strong>{{school_score}}</div>
+				    	{{/school_score}}
 				        {% endverbatim %}
-				    	{/school_score}
 					    </div>
 					</div>
 				</div>	
