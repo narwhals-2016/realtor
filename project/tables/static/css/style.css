@@ -83,14 +83,24 @@ footer.page-footer {
 
 #image_height {
 	margin-top: .75em;
+	margin-bottom: .75em;
 	height: 30vh;
 }
 .map_div {
 	margin-top: .75em;
 	height: 30vh;
+	padding-top: 10px;
 }
 
 .bold_hover:hover {
+	font-weight: bold;
+}
+
+#bold_hover {
+	padding-bottom: 20px;
+}
+
+#bold_hover:hover {
 	font-weight: bold;
 }
 

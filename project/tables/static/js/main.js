@@ -15,13 +15,13 @@ var buildResultChart = function(jsonData){
           data: {
               json: jsonData,
               keys: {
-                  value: ['rent_median', 'rooms_median', 'age_median', 'commute_score'],
+                  value: ['rent_median', 'commute_score', "age_median", "rooms_median"],
               },
               type: 'bar',
               types: {
-                  rooms_median: 'line',
-                  age_median: 'line',
-                  commute_score: 'line',
+                  age_median: 'bar',
+                  commute_score: 'bar',
+                  rooms_median: 'bar',
               }
           },
           axis: {

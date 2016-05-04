@@ -32,8 +32,7 @@ $(document).ready(function(){
 
 	$(".bold_hover").on("click", function(event){
 		event.preventDefault();
-		console.log('inside bold_hover clicked')
-		// $("#map_div").css("height", $("#image_height").css("height"))
+		// console.log('inside bold_hover clicked')
         var $map = $(this).parent();
         var cards = $map.parents('.row').children();
         var $image_card = cards.first();
