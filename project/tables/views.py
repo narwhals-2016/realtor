@@ -79,8 +79,6 @@ class Register(View):
 		else:
 			return JsonResponse ({"response":"Invalid information", 'success' : False, 'errors': user_form.errors })
 
-
-
 class Login(View):
 	def post(self, request):
 		form = AuthenticationForm(request, data=request.POST)
@@ -91,7 +89,6 @@ class Login(View):
 			return JsonResponse({"username":user.username, "success": True})
 		else:
 			return JsonResponse({'errors': form.errors})
-
 
 class Logout(View):
 	def post(self, request):
