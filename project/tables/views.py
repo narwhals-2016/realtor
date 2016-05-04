@@ -106,11 +106,11 @@ class Search(View):
 		cd = form.cleaned_data
 		print('CD', cd)
 		field_mappings = self.map_table_fields(form.fields, cd)
-		nb_list = get_results(field_mappings)
+		nb_list, school_level = get_results(field_mappings)
 
-		first_three = get_nb_data(nb_list[:3], 0)
-		next_three = get_nb_data(nb_list[3:6], 3)
-		last_three = get_nb_data(nb_list[6:9], 6)
+		first_three = get_nb_data(nb_list[:3], 0, school_level)
+		next_three = get_nb_data(nb_list[3:6], 3, school_level)
+		last_three = get_nb_data(nb_list[6:9], 6, school_level)
 		# print('0 to 3', first_three)
 		# print('3 to 6', next_three)
 		# print('6 to 9', last_three)

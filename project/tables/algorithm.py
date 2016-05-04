@@ -136,7 +136,7 @@ def count_neighborhoods(results_dict):
 
 
 
-def get_nb_data(nb_list, count):
+def get_nb_data(nb_list, count, school_level):
 	pics =[
 		"http://img.theepochtimes.com/n3/eet-content/uploads/2014/09/12/shutterstock_201591710-676x450.jpg",
 		"http://fc3d750e1b22019028ae-eb9d0534c31fede444754f378d638c42.r70.cf1.rackcdn.com/uploads/picture/source/1184/victorian_homes_BH.jpg",
@@ -167,9 +167,9 @@ def get_nb_data(nb_list, count):
 		nb_dict["link"] = pics[count]
 		nb_dict['latitude'] = nb.latitude
 		nb_dict['longitude'] = nb.longitude
-		# nb_dict['k_school_score'] = str(School.objects.get(neighborhood=nb).k_school_score)
-		# nb_dict['elem_school_score'] = str(School.objects.get(neighborhood=nb).elem_school_score)
-		# nb_dict['hs_school_score'] = str(School.objects.get(neighborhood=nb).hs_school_score)
+		school_score = getattr(School.objects.get(neighborhood=nb), school_level)		
+		nb_dict['school_score'] = str(school_score)
+		
 		count +=1 
 		data.append(nb_dict)
 	return data
@@ -183,26 +183,42 @@ def find_n_most_common(nb_dict, n):
 def filter_commute(nb_list, sorted_neighborhoods, commute_cap):
 	print('IN FILTERED COMMUTE')
 	print('CAP', commute_cap)
-	i = 0
 	nb_list_length = len(nb_list)
 	for nb in nb_list:
 		if Score.objects.get(neighborhood=nb).commute_score > commute_cap:
 			print('removing bc commute', nb)
 			nb_list.remove(nb)
-			nb_list.append(sorted_neighborhoods[nb_list_length + i][0])
-			i += 1
+			nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
 	return nb_list
 
+def filter_school(nb_list, sorted_neighborhoods, school_quality, school_level):
+	print('IN FILTERED SCHOOL')
+	print('IMPORTANCE CHOICE', school_quality)
+	print(school_level)
+	nb_list_length = len(nb_list)
+	if school_quality == 'high':
+		for nb in nb_list:
+			school_obj = School.objects.get(neighborhood=nb)
+			level = getattr(school_obj, school_level, 10)
+			if level < 3:
+				print('removing bc school', nb)
+				nb_list.remove(nb)
+				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
+	elif school_quality == 'very_high':
+		for nb in nb_list:
+			school_obj = School.objects.get(neighborhood=nb)
+			level = getattr(school_obj, school_level, 10)
+			if level < 4:
+				print('removing bc school', nb)
+				nb_list.remove(nb)
+				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
+	return nb_list
+
+
 def filter_price(nb_list, sorted_neighborhoods, price_cap, ownership_type):
-	# ownership_map = {
-	# 	'rent': 'gross_rent_median',
-	# 	'purchase': 'value_of_unit_median',
-	# }
-	# ownership_field = ownership_map.get(ownership_type, 'gross_rent_median')
 	print('IN FILTERED PRICE')
 	print('CAP', price_cap + 200)
 	print(ownership_type)
-	i = 0
 	nb_list_length = len(nb_list)
 	for nb in nb_list:
 		uv_obj = UnitValue.objects.get(neighborhood=nb)
@@ -210,14 +226,12 @@ def filter_price(nb_list, sorted_neighborhoods, price_cap, ownership_type):
 			if UnitValue.objects.get(neighborhood=nb).gross_rent_median > price_cap + 200:
 				print('removing bc price', nb)
 				nb_list.remove(nb)
-				nb_list.append(sorted_neighborhoods[nb_list_length + i][0])
-				i += 1
+				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
 		elif ownership_type == 'resident_type_owner':
 			if UnitValue.objects.get(neighborhood=nb).value_of_unit_median > price_cap + 200:
 				print('removing bc price', nb)
 				nb_list.remove(nb)
-				nb_list.append(sorted_neighborhoods[nb_list_length + i][0])
-				i += 1
+				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
 	return nb_list
 
 
@@ -225,13 +239,17 @@ def get_results(form_dict):
 	commute_cap = int(form_dict.get('commute_time_range', '1000'))
 	price_cap = int(form_dict.get('price_range', '20000'))
 	ownership_type = form_dict.get('ownership_type', 'empty')
+	school_quality = form_dict.get('school_quality_importance', 'empty')
+	school_level = form_dict.get('school_level', 'empty')
 	# performs each query and gathers data
 	query_results = make_queries(form_dict)
 	# tally the neighborhoods in query results
 	nb_count = count_neighborhoods(query_results)
 	n_most_common, sorted_dict = find_n_most_common(nb_count, 9)
 	n_most_common = [nb[0] for nb in n_most_common]
+
 	n_most_common = filter_commute(n_most_common, sorted_dict, commute_cap)
 	n_most_common = filter_price(n_most_common, sorted_dict, price_cap, ownership_type)
-	return n_most_common
+	n_most_common = filter_school(n_most_common, sorted_dict, school_quality, school_level)
+	return (n_most_common, school_level)
 
