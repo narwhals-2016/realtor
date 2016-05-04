@@ -52,8 +52,10 @@
 				<li><a id="search" class="black-text text-lighten-1 form_button" href="#">Find Neighborhood</a></li>
 					{% if user.username %}
 						<li><a id="username" class="dropdown-button black-text text-lighten-1" href="#" data-activates='dropdown1'> {{ user.username }}</a></li>
+						<li><a id="logout" class="black-text text-lighten-1" href="#">Logout</a></li>
 					{% elif fb_user %}
 						<li><a id="username" class="dropdown-button black-text text-lighten-1" href="#" data-activates='dropdown1'> {{ user.username }}</a></li>
+						<li><a id="logout" class="black-text text-lighten-1" href="#">Logout</a></li>
 					{% else %}
 						<li><a id="register" class="black-text text-lighten-1" href="#">Register</a></li>
 						<li><a id="login" class="black-text text-lighten-1" href="#">Login</a></li>
