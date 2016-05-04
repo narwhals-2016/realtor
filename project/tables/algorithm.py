@@ -167,8 +167,9 @@ def get_nb_data(nb_list, count, school_level):
 		nb_dict["link"] = pics[count]
 		nb_dict['latitude'] = nb.latitude
 		nb_dict['longitude'] = nb.longitude
-		school_score = getattr(School.objects.get(neighborhood=nb), school_level)		
-		nb_dict['school_score'] = str(school_score)
+		school_score = getattr(School.objects.get(neighborhood=nb), school_level, None)		
+		if school_score:
+			nb_dict['school_score'] = str(school_score)
 		
 		count +=1 
 		data.append(nb_dict)
