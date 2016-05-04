@@ -133,6 +133,7 @@ def count_neighborhoods(results_dict):
 		for result in results_dict[key]:
 			# if that neighborhood already in nb_counter, increment by one
 			if result.neighborhood in nb_counter:
+				print(result.neighborhood)
 				nb_counter[result.neighborhood] += 1
 			else:
 				# if not in nb_counter, add to nb_counter
