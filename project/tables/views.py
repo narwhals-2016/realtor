@@ -25,28 +25,28 @@ from .creeper import hasGraduated, genderfind, agefind
 
 class Index(View):
 	def get(self, request):
-		# if request.user.is_authenticated() and not request.session.get('access_token'):
-		# 	request.session['access_token'] = str(SocialToken.objects.get(account__user=request.user, account__provider='facebook'))
-		# 	r = requests.get('https://graph.facebook.com/me?access_token='+request.session['access_token']+'&fields=education,birthday,gender')
-		# 	print(r.json())
-		# 	gender = genderfind(r.json())
-		# 	isgraduated = hasGraduated(r.json())
-		# 	age = agefind(r.json())
+		if request.user.is_authenticated() and not request.session.get('access_token'):
+			request.session['access_token'] = str(SocialToken.objects.get(account__user=request.user, account__provider='facebook'))
+			r = requests.get('https://graph.facebook.com/me?access_token='+request.session['access_token']+'&fields=education,birthday,gender')
+			print(r.json())
+			gender = genderfind(r.json())
+			isgraduated = hasGraduated(r.json())
+			age = agefind(r.json())
 
 
-		# 	context = {}
-		# 	username = request.user.username
-		# 	context['username']= username
+			context = {}
+			username = request.user.username
+			context['username']= username
 	
-		# 	user_form = UserForm()
-		# 	login_form = LoginForm()
+			user_form = UserForm()
+			login_form = LoginForm()
 
-		# 	context ["user_form"] = user_form
-		# 	context ["login_form"] = login_form
-		# 	context["isgraduated"] = isgraduated
-		# 	context["gender"] = gender
+			context ["user_form"] = user_form
+			context ["login_form"] = login_form
+			context["isgraduated"] = isgraduated
+			context["gender"] = gender
 
-		# 	return render(request, "index.html", context)
+			return render(request, "index.html", context)
 
 		context = {}
 		# check to see if someone is already logged in
