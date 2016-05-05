@@ -51,7 +51,7 @@ SCHOOL_QUALITY_CHOICES = [('not_high','not_high'), ('high','high'), ('very_high'
 NIGHT_LIFE_CHOICES = [('not_high','night_life_score'), ('high','night_life_score'), ('very_high','night_life_score')]
 NOISE_LEVEL_CHOICES = [('off','noise_score'), ('on','noise_score')]
 CRIME_LEVEL_CHOICES = [('off','crime_score'), ('on','crime_score')]
-BOROUGH_CHOICES = [('Brooklyn','Brooklyn'),('Bronx','Bronx'),('Manhattan','Manhattan'),('Queens','Queens'),('Staten Island','Staten Island'),]
+BOROUGH_CHOICES = [('Brooklyn','Brooklyn'),('Bronx','Bronx'),('Manhattan','Manhattan'),('Queens','Queens'),('Staten_Island','Staten Island'),]
 
 class SearchForm(forms.Form):
     age = forms.ChoiceField(

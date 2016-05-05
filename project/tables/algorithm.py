@@ -121,6 +121,8 @@ def sort_by_largest_to_smallest(table, field, borough_set):
 	if borough_set == 'empty':
 		borough_set = ['Brooklyn', 'Bronx', 'Manhattan' 'Queens', 'Staten Island']
 	for borough in borough_set:
+		if borough == 'Staten_Island':
+			borough = 'Staten Island'
 		query = query | Q(neighborhood__borough=borough)
 	# print('bqs list', borough_query_string)
 	# borough_query_string = "".join(borough_query_string)
@@ -137,6 +139,8 @@ def sort_by_smallest_to_largest(table, field, borough_set):
 		borough_set = ['Brooklyn', 'Bronx', 'Manhattan' 'Queens', 'Staten Island']
 	print(borough_set)
 	for borough in borough_set:
+		if borough == 'Staten_Island':
+			borough = 'Staten Island'
 		query = query | Q(neighborhood__borough=borough)
 	# print('bqs list', borough_query_string)
 	# borough_query_string = "".join(borough_query_string)
@@ -214,11 +218,13 @@ def filter_commute(nb_list, sorted_neighborhoods, commute_cap):
 	print('IN FILTERED COMMUTE')
 	print('CAP', commute_cap)
 	nb_list_length = len(nb_list)
-	for nb in nb_list:
-		if Score.objects.get(neighborhood=nb).commute_score > commute_cap:
-			print('removing bc commute', nb)
-			nb_list.remove(nb)
+	i = 0
+	while i < nb_list_length - 1 and len(sorted_neighborhoods) > nb_list_length:
+		if Score.objects.get(neighborhood=nb_list[i]).commute_score > commute_cap:
+			print('removing bc commute', nb_list[i])
+			nb_list.remove(nb_list[i])
 			nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
+		i += 1
 	return nb_list
 
 def filter_school(nb_list, sorted_neighborhoods, school_quality, school_level):
@@ -226,22 +232,25 @@ def filter_school(nb_list, sorted_neighborhoods, school_quality, school_level):
 	print('IMPORTANCE CHOICE', school_quality)
 	print(school_level)
 	nb_list_length = len(nb_list)
+	i = 0
 	if school_quality == 'high':
-		for nb in nb_list:
-			school_obj = School.objects.get(neighborhood=nb)
+		while i < nb_list_length - 1 and len(sorted_neighborhoods) > nb_list_length:
+			school_obj = School.objects.get(neighborhood=nb_list[i])
 			level = getattr(school_obj, school_level, 10)
 			if level < 3:
-				print('removing bc school', nb)
-				nb_list.remove(nb)
+				print('removing bc school', nb_list[i])
+				nb_list.remove(nb_list[i])
 				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
+			i += 1
 	elif school_quality == 'very_high':
-		for nb in nb_list:
-			school_obj = School.objects.get(neighborhood=nb)
+		while i < nb_list_length - 1 and len(sorted_neighborhoods) > nb_list_length:
+			school_obj = School.objects.get(neighborhood=nb_list[i]) 
 			level = getattr(school_obj, school_level, 10)
 			if level < 4:
-				print('removing bc school', nb)
-				nb_list.remove(nb)
+				print('removing bc school', nb_list[i])
+				nb_list.remove(nb_list[i])
 				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
+			i += 1
 	return nb_list
 
 
@@ -250,18 +259,20 @@ def filter_price(nb_list, sorted_neighborhoods, price_cap, ownership_type):
 	print('CAP', price_cap + 200)
 	print(ownership_type)
 	nb_list_length = len(nb_list)
-	for nb in nb_list:
-		uv_obj = UnitValue.objects.get(neighborhood=nb)
+	i = 0
+	while i < nb_list_length - 1 and len(sorted_neighborhoods) > nb_list_length:
+		uv_obj = UnitValue.objects.get(neighborhood=nb_list[i])
 		if ownership_type == 'resident_type_renter':		
-			if UnitValue.objects.get(neighborhood=nb).gross_rent_median > price_cap + 200:
-				print('removing bc price', nb)
-				nb_list.remove(nb)
+			if UnitValue.objects.get(neighborhood=nb_list[i]).gross_rent_median > price_cap + 200:
+				print('removing bc price', nb_list[i])
+				nb_list.remove(nb_list[i])
 				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
 		elif ownership_type == 'resident_type_owner':
-			if UnitValue.objects.get(neighborhood=nb).value_of_unit_median > price_cap + 200:
-				print('removing bc price', nb)
-				nb_list.remove(nb)
+			if UnitValue.objects.get(neighborhood=nb_list[i]).value_of_unit_median > price_cap + 200:
+				print('removing bc price', nb_list[i])
+				nb_list.remove(nb_list[i])
 				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
+		i += 1
 	return nb_list
 
 # def filter_borough(nb_list, sorted_neighborhoods, borough_set):
@@ -294,9 +305,10 @@ def get_results(form_dict):
 	query_results = make_queries(form_dict)
 	# tally the neighborhoods in query results
 	nb_count = count_neighborhoods(query_results)
+	
+	# sort results and find n most common
 	n_most_common, sorted_dict = find_n_most_common(nb_count, 9)
 	n_most_common = [nb[0] for nb in n_most_common]
-
 	n_most_common = filter_commute(n_most_common, sorted_dict, commute_cap)
 	n_most_common = filter_price(n_most_common, sorted_dict, price_cap, ownership_type)
 	n_most_common = filter_school(n_most_common, sorted_dict, school_quality, school_level)
