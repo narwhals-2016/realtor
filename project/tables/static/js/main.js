@@ -10,19 +10,20 @@ var calcChartData = function(data){
     return chart_data;
 };
 
+
 var buildResultChart = function(jsonData){
         var chart = c3.generate({
           data: {
               json: jsonData,
               keys: {
-                  value: ['rent_median', 'commute_score', "age_median", "rooms_median"],
+                  value: ['rent_median','commute_score', "age_median", "rooms_median"],
               },
               type: 'bar',
               types: {
                   age_median: 'bar',
                   commute_score: 'bar',
                   rooms_median: 'bar',
-              }
+              },
           },
           axis: {
             x: {
@@ -30,8 +31,13 @@ var buildResultChart = function(jsonData){
               categories: ['Result 1', 'Result 2', 'Result 3', 'Result 4', 'Result 5', 'Result 6', 'Result 7', 'Result 8', 'Result 9'],
             },
             y: {
-                  label: 'Rent (in tens)'
+                label: 'Rent'
               },
+            y2: {
+                max: 100,
+                min: 0,
+                show: true
+            }
           }
       });
     // return chart;
@@ -55,6 +61,7 @@ $( window ).unload(function() {
   );
     $('.parallax').parallax();
     $('.slider').slider();
+    $('select').material_select();
     var __cache = {};
 
 
