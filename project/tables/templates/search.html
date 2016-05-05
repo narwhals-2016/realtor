@@ -28,7 +28,7 @@
 		    <div class="col s12">
 
 		    	<div class="col s4">
-			      	<p>Age:</p>
+			      	<p>Age: <span class="directions"> How old are you?</span> </p>
 			      	<p>
 					  <input type="radio" class="with-gap" id="0_19" name="age" value="0_19" />
 					  <label for="0_19">0-19</label>
@@ -66,7 +66,7 @@
 					<label for="female">Female</label>
 					</p><br>
 
-					<p>Children</p>			
+			      	<p>Children: <span class="directions"> How many kids in your home?</span> </p>
 					<p>
 				      <input class="with-gap" name="number_of_children" value="none" type="radio" id="children_none"  />
 				      <label for="children_none">None</label>
@@ -94,7 +94,7 @@
 					  </div><br>
 
 					<div id="current_edu_level" style="display:none">
-						<p>Current Education Level</p>
+			      		<p>Current Education Level: <span class="directions"> Where are you currecntly enrolled in classed?</span> </p>				
 						<p>
 					      <input class="with-gap" name="current_edu_level" value="elementary" type="radio" id="elementary"  />
 					      <label for="elementary">Elementary School Student</label>
@@ -110,7 +110,7 @@
 					</div>
 
 					<div id="highest_edu_level">
-					   <p>Highest Education Level Achieved</p>
+			      		<p>Highest Education Level Achieved: <span class="directions"> What degrees do you have?</span> </p>				
 						<p>
 					      <input class="with-gap" name="highest_edu_level" value="hs_plus" type="radio" id="hs_plus"  />
 					      <label for="hs_plus">High School and over</label>
@@ -142,7 +142,14 @@
 			</div>
 		</div>
 
-	<div class="parallax-container" id="background_color"></div>
+	<div class="parallax-container" id="background_color">
+		<div class="container">
+			<div class="row center">
+				<br><br><br><br>
+				<h5 id="shift" class="header col s12 m12 l12 white-text">Keep Going to Choose a Type of Home ...</h5>
+			</div>
+		</div>
+	</div>
 
 	<div class="section white">
 	  <div class="row">
@@ -152,7 +159,7 @@
 		    <div class="col s12">
 
 		    	<div class="col s4">
-			      	<p>Type:</p>
+			      	<p>Type: <span class="directions"> What kind of building or home?</span> </p>				
 			      	<p>
 					  <input type="checkbox" name="number_of_units" value="0_2" id="0_2" />
 					  <label for="0_2">Single Unit</label>
@@ -178,7 +185,7 @@
 		    	</div>
 
 				<div class="col s4">
-					<p>Number of Rooms</p>
+			      	<p>Number of Rooms: <span class="directions"> How many rooms would you like? (Rooms not Bedrooms)</span> </p>				
 					<p>
 					<input type="radio" class="with-gap" name="number_of_rooms" value="3_minus" id="1_room" />
 					<label for="1_room">1</label>
@@ -194,7 +201,7 @@
 					<p>
 					<input type="radio" class="with-gap" name="number_of_rooms" value="3_minus" id="6_more" />
 					<label for="6_more">6 or more</label>
-					</p><br><br><br>
+					</p><br>
 
 					<p id="price_range_title">Price Range</p>
 					<!-- also want this to be able to change scales depending on buy or rent choice -->
@@ -204,7 +211,7 @@
 				</div>
 
 				<div class="col s4">
-			      	<p>Building Age:</p>
+			      	<p>Building Age: <span class="directions"> Do you mind older buildings?</span> </p>				
 			      	<p>
 					  <input type="radio" class="with-gap" name="building_age" value="pre_1970" id="pre_1970" />
 					  <label for="pre_1970">Before 1970</label>
@@ -219,7 +226,7 @@
 					</p><br>
 
 					<!-- want this to be conditional, if the switch is off you show education levels, if it is on you show options for current education -->
-				    <p>Vehicles</p>
+				    <p>Vehicles: <span class="directions"> Do you or your family drive?</span> </p>				
 					  <div class="switch">
 					    <label>
 					      None
@@ -233,7 +240,14 @@
 			</div>
 		</div>
 
-	<div class="parallax-container" id="background_color"></div>
+	<div class="parallax-container" id="background_color">
+		<div class="container">
+			<div class="row center">
+				<br><br><br><br>
+				<h5 id="shift" class="header col s12 m12 l12 white-text">Almost There! Just Tell Us What is Important to You</h5>
+			</div>
+		</div>
+	</div>
 
 	<div class="section white">
 	  <div class="row">
@@ -243,49 +257,20 @@
 		    <div class="col s12">
 
 		    	<div class="col s4">
-			      	<p>Commute:</p>
-			      	<p>
-			          <input name="commute_address" placeholder="Work Address" id="work_address" type="text" class="validate">
-					</p>
-					<p>
-				      <input class="with-gap" name="commute_type" value="walk" type="radio" id="walk"  />
-				      <label for="walk">Walk/Bike</label>
-				    </p>
-					<p>
-				      <input class="with-gap" name="commute_type" value="transit" type="radio" id="transit"  />
-				      <label for="transit">Public Transit</label>
-				    </p>
-				    <p>
-				      <input class="with-gap" name="commute_type" value="drive" type="radio" id="drive"  />
-				      <label for="drive">Drive</label>
-				    </p><br>
+					<!--
+					<p>Borough Choice</p>
+					<div class="input-field">
+						<select class="browser-default">
+							<option name"borough" value="brooklyn" id="brooklyn" >Brooklyn</option>
+							<option name"borough" value="bronx" id="bronx" >Bronx</option>
+							<option name"borough" value="manhattan" id="manhattan" >Manhattan</option>
+							<option name"borough" value="queens" id="queens" >Queens</option>
+							<option name"borough" value="staten_island" id="staten_island">Staten Island</option>
+						</select>
+					</div>
+					-->
 
-					<p>Commute Time (Minutes)</p>
-				    <p class="range-field">
-				      <input name="commute_time_range" type="range" id="income" min="5" max="100" />
-				    </p><br>
-		    	</div>
-
-				<div class="col s4">
-					<p>Interested School Level:</p>
-			      	<p>
-					  <input type="checkbox" name="school_level" value="school_k-" id="school_k-" />
-					  <label for="school_k-">Early Childhood</label>
-					</p>
-			      	<p>
-					  <input type="checkbox" name="school_level" value="school_1-8" id="school_1-8" />
-					  <label for="school_1-8">Grades 1-8</label>
-					</p>
-					<p>
-					  <input type="checkbox" name="school_level" value="school_hs" id="school_hs" />
-					  <label for="school_hs">High School</label>
-					</p>
-			      	<p>
-					  <input type="checkbox" name="school_level" value="school_none" id="school_none" />
-					  <label for="school_none">None</label>
-					</p><br>
-
-					<p>Boroughs:</p>
+					<p>Borough Choice:</p>
 			      	<p>
 					  <input type="checkbox" name="boroughs" value="Brooklyn" id="Brooklyn" />
 					  <label for="Brooklyn">Brooklyn</label>
@@ -295,32 +280,19 @@
 					  <label for="Bronx">Bronx</label>
 					</p>
 					<p>
+					  <input type="checkbox" name="boroughs" value="Manhattan" id="Manhattan" />
+					  <label for="Manhattan">Manhattan</label>
+					</p>
+			      	<p>
 					  <input type="checkbox" name="boroughs" value="Queens" id="Queens" />
 					  <label for="Queens">Queens</label>
 					</p>
 			      	<p>
-					  <input type="checkbox" name="boroughs" value="Manhattan" id="Manhattan" />
-					  <label for="Manhattan">Manhattan</label>
-					</p><br>
+					  <input type="checkbox" name="boroughs" value="Staten_Island" id="Staten_Island" />
+					  <label for="Staten_Island">Staten Island</label>
+					</p> <br>
 
-
-			      	<p>Schools Quality:</p>
-			      	<p>
-				      <input class="with-gap" name="school_quality_importance" value="not_high" type="radio" id="school_not_high"  />
-					  <label for="school_not_high">Not Important</label>
-				    </p>
-					<p>
-				      <input class="with-gap" name="school_quality_importance" value="high" type="radio" id="school_high"  />
-					  <label for="school_high">Important</label>
-				    </p>
-				    <p>
-				      <input class="with-gap" name="school_quality_importance" value="very_high" type="radio" id="school_very_hihg"  />
-					  <label for="school_very_hihg">Extremely Important</label>
-				    </p><br>
-				</div>
-
-				<div class="col s4">
-					<p>Night Life:</p>
+			      	<p>Night Life Score: <span class="directions"> How important is having a local party scene?</span> </p>				
 			      	<p>
 				      <input class="with-gap" name="night_life_importance" value="not_high" type="radio" id="night_life_not_high"  />
 					  <label for="night_life_not_high">Not Important</label>
@@ -333,8 +305,10 @@
 				      <input class="with-gap" name="night_life_importance" value="very_high" type="radio" id="night_life_very_hihg"  />
 					  <label for="night_life_very_hihg">Extremely Important</label>
 				    </p><br>
+		    	</div>
 
-				    <p>Noise Level</p>
+				<div class="col s4">
+			      	<p>Noise Level: <span class="directions"> Like peace and quiet?</span> </p>				
 					  <div class="switch">
 					    <label>
 					      Less Important
@@ -353,6 +327,69 @@
 					      More Important
 					    </label>
 					  </div><br>
+
+		    		<!--
+			      	<p>Commute Address:</p>
+			      	<p>
+			          <input name="commute_address" placeholder="Work Address" id="work_address" type="text" class="validate">
+					</p>
+					-->
+
+			      	<p>Commute Type: <span class="directions"> How do you usually get to work?</span> </p>				
+					<p>
+				      <input class="with-gap" name="commute_type" value="walk" type="radio" id="walk"  />
+				      <label for="walk">Walk/Bike</label>
+				    </p>
+					<p>
+				      <input class="with-gap" name="commute_type" value="transit" type="radio" id="transit"  />
+				      <label for="transit">Public Transit</label>
+				    </p>
+				    <p>
+				      <input class="with-gap" name="commute_type" value="drive" type="radio" id="drive"  />
+				      <label for="drive">Drive</label>
+				    </p><br>
+
+					<p>Commute Time (Minutes)</p>
+				    <p class="range-field">
+				      <input name="commute_time_range" type="range" id="income" min="5" max="100" />
+				    </p>
+				</div>
+
+				<div class="col s4">
+					<p>Interested School Level: <span class="directions"> Do you have children in these grades?</span> </p>				
+			      	<p>
+					  <input type="checkbox" name="school_level" value="school_k-" id="school_k-" />
+					  <label for="school_k-">Early Childhood</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" name="school_level" value="school_1-8" id="school_1-8" />
+					  <label for="school_1-8">Grades 1-8</label>
+					</p>
+					<p>
+					  <input type="checkbox" name="school_level" value="school_hs" id="school_hs" />
+					  <label for="school_hs">High School</label>
+					</p>
+			      	<p>
+					  <input type="checkbox" name="school_level" value="school_none" id="school_none" />
+					  <label for="school_none">None</label>
+					</p><br>
+
+
+
+					<p>School Quality: <span class="directions"> Are school districts important?</span> </p>
+			      	<p>
+				      <input class="with-gap" name="school_quality_importance" value="not_high" type="radio" id="school_not_high"  />
+					  <label for="school_not_high">Not Important</label>
+				    </p>
+					<p>
+				      <input class="with-gap" name="school_quality_importance" value="high" type="radio" id="school_high"  />
+					  <label for="school_high">Important</label>
+				    </p>
+				    <p>
+				      <input class="with-gap" name="school_quality_importance" value="very_high" type="radio" id="school_very_hihg"  />
+					  <label for="school_very_hihg">Extremely Important</label>
+				    </p><br>
+
 				</div>
 			</div>
 			</div>
