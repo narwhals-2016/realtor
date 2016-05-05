@@ -9,7 +9,8 @@ class Neighborhood(models.Model):
     longitude = models.CharField(max_length = 25, blank=True, default='')
     pic_link  = models.URLField(max_length=500, blank=True, default='')
     webdisplay = models.CharField(max_length=256, blank=True, default='')
-
+    borough = models.CharField(max_length=256, blank=True, default='')
+    
     def __str__(self):
         return self.name
 

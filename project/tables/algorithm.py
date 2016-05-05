@@ -157,7 +157,7 @@ def get_nb_data(nb_list, count, school_level):
 	for nb in nb_list:
 		print(nb.webdisplay)
 		nb_dict = {}
-		nb_dict['webdisplay'] = nb.webdisplay
+		nb_dict['webdisplay'] = nb.webdisplay + ", " + nb.borough
 		nb_dict['age_median'] = str(Ages.objects.get(neighborhood=nb).age_median)
 		nb_dict['income_median'] = str(Economic.objects.get(neighborhood=nb).median_income)
 		nb_dict['rent_median'] = str(UnitValue.objects.get(neighborhood=nb).gross_rent_median)
