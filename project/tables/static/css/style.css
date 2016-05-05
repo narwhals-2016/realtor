@@ -121,6 +121,29 @@ footer.page-footer {
 	display: none;
 }
 
+.background_shaddow {
+	background-color:white;
+	opacity: .6;
+	margin-right: -20em;
+	margin-left: -20em;
+	margin-top: -2em;
+	margin-bottom: -2em;
+
+}
+
+.background_shaddow h2{
+	color:black;
+	opacity: 2.0;
+}
+
+.background_shaddow h5{
+	color:black;
+	opacity: 2.0;
+}
+
+
+
+
 
 @media only screen and (max-width: 700px) {
     .parallax {
