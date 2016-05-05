@@ -3,6 +3,7 @@ from tables.models import (
 	SchoolEducation, Building, Score, UnitValue, 
 	Neighborhood, School, StreetEasy,
 )
+from django.db.models import Q
 from pprint import pprint
 from numpy import repeat
 # expecting that Jack's tuples 
@@ -94,28 +95,30 @@ def make_queries(form):
 			if key in range_list:
 				print('ownership_type', form['ownership_type'])
 				field = put_value_in_group(form['ownership_type'], key, int(form[key]))
-				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=field)
+				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=field, borough_set=)
 			elif key in importance_fields_two_levels:
-				ten_results[key] = sort_by_smallest_to_largest(table=tables_map[key], field=form[key])
+				ten_results[key] = sort_by_smallest_to_largest(table=tables_map[key], field=form[key], borough_set=)
 			elif key in importance_fields_three_levels:
 				if form[key] == 'high':
 					ten_results[key] = sort_by_smallest_to_largest(
-						table=tables_map[key], field=importance_fields_three_levels[key]
+						table=tables_map[key], field=importance_fields_three_levels[key], borough_set=
 					)
 				elif form[key] == 'very_high':
 					# increase count for top neighborhoods in very important categories
 					nb_list = sort_by_smallest_to_largest(
-						table=tables_map[key], field=importance_fields_three_levels[key]
+						table=tables_map[key], field=importance_fields_three_levels[key], borough_set=
 					)
 					new_list = repeat(nb_list, 2)
 					ten_results[key] = new_list
 			else:
-				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=form[key])
+				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=form[key], borough_set=)
 	return ten_results
 
-def sort_by_largest_to_smallest(table, field):
+def sort_by_largest_to_smallest(table, field, borough_set):
 	# '-' orders by descending
-	return table.objects.order_by('-' + field)[:10]
+	borough_query_string = ['Q(neighborhood__borough=|'+borough+')' for borough in borough_set]
+	borough_query_string = borough_query_string[:-1]
+	return table.objects.filter(borough_query_string)order_by('-' + field)[:10]
 
 def sort_by_smallest_to_largest(table, field):
 	return table.objects.order_by(field)[:10]
@@ -241,6 +244,25 @@ def filter_price(nb_list, sorted_neighborhoods, price_cap, ownership_type):
 				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
 	return nb_list
 
+def filter_borough(nb_list, sorted_neighborhoods, borough_set):
+	print('IN FILTERED BOROUGH')
+	print('BOROUGHS', borough_set)
+	print(ownership_type)
+	nb_list_length = len(nb_list)
+	for nb in nb_list:
+		uv_obj = UnitValue.objects.get(neighborhood=nb)
+		if ownership_type == 'resident_type_renter':		
+			if UnitValue.objects.get(neighborhood=nb).gross_rent_median > price_cap + 200:
+				print('removing bc price', nb)
+				nb_list.remove(nb)
+				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
+		elif ownership_type == 'resident_type_owner':
+			if UnitValue.objects.get(neighborhood=nb).value_of_unit_median > price_cap + 200:
+				print('removing bc price', nb)
+				nb_list.remove(nb)
+				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
+	return nb_list
+
 
 def get_results(form_dict):
 	commute_cap = int(form_dict.get('commute_time_range', '1000'))
@@ -258,5 +280,6 @@ def get_results(form_dict):
 	n_most_common = filter_commute(n_most_common, sorted_dict, commute_cap)
 	n_most_common = filter_price(n_most_common, sorted_dict, price_cap, ownership_type)
 	n_most_common = filter_school(n_most_common, sorted_dict, school_quality, school_level)
+	n_most_common = filter_borough(n_most_common, sorted_dict, borough_set)
 	return (n_most_common, school_level)
 
