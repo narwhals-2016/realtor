@@ -82,8 +82,32 @@ def load_boroughs(borough_mappings):
 		nb_filter = Neighborhood.objects.filter(name=neighborhood)
 		if nb_filter:
 			print('old display_name', nb_filter[0].borough)
-			nb_filter[0].borough = borough_mappings[neighborhood]
+			borough = translate_borough(borough_mappings[neighborhood])
+			nb_filter[0].borough = borough
 			nb_filter[0].save()
 			print('new display_name', nb_filter[0].borough)
 	return True
+
+def translate_borough(borough_abbreviation):
+	borough_translater = {
+		'BK': 'Brooklyn',
+		'BX': 'Bronx',
+		'MN': 'Manhattan',
+		'QN': 'Queens',
+		'SI': 'Staten Island',		
+	}
+	return borough_translater[borough_abbreviation]
+
+
+
+
+
+
+
+
+
+
+
+
+
 
