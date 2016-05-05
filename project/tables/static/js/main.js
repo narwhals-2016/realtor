@@ -243,8 +243,11 @@ $( window ).unload(function() {
     $('#answer_div').on('click', '#more_results_button',function(event){
       event.preventDefault();  
       var next = parseInt($(this).val()) + 1;
-      if (next >= __cache.results.length) return false;
-
+      if (next >= __cache.results.length){
+        $(".delete-me").addClass("disabled");
+        return false;
+      }
+      
       var results = __cache.results[next];
       // this hides all the buttons already on the page but the bottons will still be on the bottom becuase the last set of buttons has not loaded yet
           $('.buttons').attr("class","hide");
