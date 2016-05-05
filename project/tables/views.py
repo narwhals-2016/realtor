@@ -19,7 +19,7 @@ from .algorithm import get_results, get_nb_data
 
 import requests 
 from allauth.socialaccount.models import SocialToken
-from .creeper import hasGraduated, genderfind, agefind
+from .parse_facebook import hasGraduated, genderfind, agefind
 
 
 
