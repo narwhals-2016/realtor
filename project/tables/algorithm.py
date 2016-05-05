@@ -1,6 +1,7 @@
 from tables.models import (
 	Ages, Demographic, Economic, UnitDescription, 
-	SchoolEducation, Building, Score, UnitValue, Neighborhood, School
+	SchoolEducation, Building, Score, UnitValue, 
+	Neighborhood, School, StreetEasy,
 )
 from pprint import pprint
 from numpy import repeat
@@ -167,6 +168,11 @@ def get_nb_data(nb_list, count, school_level):
 		nb_dict["link"] = pics[count]
 		nb_dict['latitude'] = nb.latitude
 		nb_dict['longitude'] = nb.longitude
+		nb_dict['sqft_median'] = str(StreetEasy.objects.get(neighborhood=nb).squarefeet_median)
+		if nb_dict['sqft_median'] == '0.00':
+			print('sqft equals 0.00')
+			nb_dict['sqft_median'] = 'Information not Available'
+		print(nb_dict['sqft_median'])
 		school_score = getattr(School.objects.get(neighborhood=nb), school_level, None)		
 		if school_score:
 			nb_dict['school_score'] = str(school_score)
