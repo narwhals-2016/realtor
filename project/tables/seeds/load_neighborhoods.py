@@ -8,7 +8,7 @@ python commands to run in 'python3 manage.py shell'
 import os
 import pandas as pd
 from tables.models import Neighborhood
-from tables.seeds.mappings.mappings import name_mappings
+from tables.seeds.mappings.mappings import name_mappings, borough_mappings
 
 def parse_file(filename):
 	# use pandas to read excel file, and then create dataframe with first column as index
@@ -57,6 +57,7 @@ def run(folder_path, folder):
 			continue
 
 	load_display_names(name_mappings)
+	load_boroughs(borough_mappings)
 	print('LOAD_NEIGHBORHOOD DONE')
 	return True
 
