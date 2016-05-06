@@ -112,6 +112,7 @@ def make_queries(form):
 					ten_results[key] = new_list
 			else:
 				ten_results[key] = sort_by_largest_to_smallest(table=tables_map[key], field=form[key], borough_set=borough_set)
+	print('tr',ten_results)
 	return ten_results
 
 def sort_by_largest_to_smallest(table, field, borough_set):
