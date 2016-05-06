@@ -124,6 +124,7 @@ class Search(View):
 			'commute_address',
 			'commute_time_range',
 			'night_life_importance',
+			'boroughs',
 			# 'school_quality_importance',
 		]
 		field_choice_dict = {}

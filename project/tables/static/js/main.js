@@ -3,10 +3,10 @@ var calcChartData = function(data){
     var chart_data = new_data.concat(data[2]);
 
     for (i = 0; i < chart_data.length; i++) { 
-        rent = ((chart_data[i]["rent_median"])/10)
+        rent = (chart_data[i]["rent_median"])
         chart_data[i]["rent_median"] = rent
     };
-    // console.log(chart_data);
+    console.log(chart_data);
     return chart_data;
 };
 
@@ -35,18 +35,43 @@ var buildResultChart = function(jsonData){
                   commute_score: 'bar',
                   rooms_median: 'bar',
               },
+              axes: {
+                rent_median: "y",
+                commute_score: "y2",
+                age_median: "y2",
+                rooms_median: "y2",
+              },
+              names: {
+                age_median: 'Avg. Age',
+                commute_score: 'Commute Time',
+                rent_median: 'Rent Median',
+                rooms_median: 'Median Rooms',
+              },
           },
+
+          legend: {
+            inset: {
+              anchor: "top-left",
+              x:50,
+              y:5,
+              step: 1,
+            },
+            position: "inset",
+          },
+
           axis: {
             x: {
               type: 'category',
-              categories: ['Result 1', 'Result 2', 'Result 3', 'Result 4', 'Result 5', 'Result 6', 'Result 7', 'Result 8', 'Result 9'],
+              categories: 
+                $.map(jsonData, function(val, idx){
+                return val.webdisplay;
+              }),
             },
             y: {
                 label: 'Rent'
               },
             y2: {
-                max: 100,
-                min: 0,
+                label: 'Commute, Age, Rooms',
                 show: true
             }
           }
