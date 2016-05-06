@@ -10,6 +10,17 @@ var calcChartData = function(data){
     return chart_data;
 };
 
+function deleteAllCookies() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i];
+      var eqPos = cookie.indexOf("=");
+      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+};
+
 
 var buildResultChart = function(jsonData){
         var chart = c3.generate({
@@ -42,9 +53,47 @@ var buildResultChart = function(jsonData){
       });
     // return chart;
 };
+var FBLoginMenu = function(response){
+  var template = $('#fbnav').html();
+  // var name = {"name":response.name};
+  // var list = [name];
+  var rendered = Mustache.render(template);
+  $('#nav').html(rendered);
+  $('#username').html(response.name);
+  var search = $('#form_template').html();
+  $('#answer_div').html(search);
+  
+  
+};
+
+
+function fbLogoutUser() {
+    FB.getLoginStatus(function(response) {
+        if (response && response.status === 'connected') {
+            FB.logout(function(response) {
+                document.location.reload();
+            });
+        }
+    });
+}
 
 $(document).ready(function(){
+
+
 console.log("Hi there!")
+// $('#fblog').hide();
+$('#answer_div').on('click','#wrapper',function(event){
+  console.log("fb login clicked");
+  // $('#fblog').trigger('click');
+  // FB.login();
+  FB.login(function(response){
+    checkLoginState();
+    // change page
+    // get user data
+  }, {scope: 'public_profile,user_education_history,user_birthday'});
+});
+
+
 var chart_data;
 var count = 0;
 
@@ -178,6 +227,10 @@ $( window ).unload(function() {
 
     });
 });
+
+    $('#nav').on('click','#fblogout',function(event){
+      FB.logout();
+    });
 
 
 ///// Form /////

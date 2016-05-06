@@ -251,6 +251,7 @@
 			<div class="col l6 s12">
 				<h5 class="white-text">Company Bio</h5>
 				<p class="grey-text text-lighten-4">We are a team of bootcamp students who created this site as our final project, in under a month. We had a blast building and developing it. We appreciate your support and feedback and hope you enjoy our product!</p>
+				<div class="fb-like" data-href="http://neighborhoodgps.nyc/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 				</div>
 
 					<div class="col l1 m0 s0">
@@ -298,7 +299,8 @@
 
 
 {% block templates %}
-
+	
+	{% include "fbmenu.html"%}
 	{% include "search.html"%}
 	{% include "register.html"%}
 	{% include "login.html"%}
