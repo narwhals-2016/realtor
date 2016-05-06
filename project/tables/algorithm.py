@@ -189,6 +189,7 @@ def get_nb_data(nb_list, count, school_level):
 		nb_dict['age_median'] = str(Ages.objects.get(neighborhood=nb).age_median)
 		nb_dict['income_median'] = str(Economic.objects.get(neighborhood=nb).median_income)
 		nb_dict['rent_median'] = str(UnitValue.objects.get(neighborhood=nb).gross_rent_median)
+		nb_dict['unit_value_median'] = str(UnitValue.objects.get(neighborhood=nb).value_of_unit_median)
 		nb_dict['rooms_median'] = str(UnitDescription.objects.get(neighborhood=nb).rooms_median)
 		nb_dict['commute_score'] = str(Score.objects.get(neighborhood=nb).commute_score)
 		nb_dict['pic_link'] = nb.pic_link
