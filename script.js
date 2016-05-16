@@ -1,3 +1,11 @@
+/*
+Script to automatically download neighborhood census excel files from maps.nyc.gov/census/ for all NYC neighborhoods
+Type of file to download is set in the variable currentWidgetId. Types: Housing, Demographic, Economic, Social
+Run script in devtools console to download files.
+*/
+
+
+
 // Collect All the Neighborhoods from the Map SVG
 var neighborhood = $("svg.V_DCP_NEIGHBORHOOD").children;
 
