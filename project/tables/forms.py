@@ -53,6 +53,57 @@ NOISE_LEVEL_CHOICES = [('off','noise_score'), ('on','noise_score')]
 CRIME_LEVEL_CHOICES = [('off','crime_score'), ('on','crime_score')]
 BOROUGH_CHOICES = [('Brooklyn','Brooklyn'),('Bronx','Bronx'),('Manhattan','Manhattan'),('Queens','Queens'),('Staten_Island','Staten Island'),]
 
+"""
+add table prefix to field choices
+"""
+
+table_choices_map = {
+    'AGE_CHOICES' : 'ages', 
+    'GENDER_CHOICES' : 'demographic', 
+    # 'NUMBER_OF_CHILDREN_CHOICES' : '', 
+    'CURRENT_EDU_LEVEL_CHOICES' : 'schooleducation', 
+    'HIGHEST_EDU_LEVEL_CHOICES' : 'schooleducation', 
+    'MARITAL_STATUS_CHOICES' : 'demographic', 
+    'NUMBER_OF_UNITS_CHOICES' : 'building', 
+    'OWNERSHIP_TYPE_CHOICES' : 'unitdescription', 
+    'NUMBER_OF_ROOMS_CHOICES' : 'unitdescription', 
+    'BUILDING_AGE_CHOICES' : 'building', 
+    'NUMBER_OF_VEHICLES_CHOICES' : 'unitdescription', 
+    # 'COMMUTE_TYPE_CHOICES' : '', 
+    'SCHOOL_LEVEL_CHOICES' : 'school', 
+    'SCHOOL_QUALITY_CHOICES' : 'school', 
+    'NIGHT_LIFE_CHOICES' : 'score', 
+    'NOISE_LEVEL_CHOICES' : 'score', 
+    'CRIME_LEVEL_CHOICES' : 'score', 
+    # 'BOROUGH_CHOICES' : '', 
+}
+
+table_prefix_map = {
+    'age': 'ages',
+    'gender': 'demographic',
+    'current_edu_level': 'schooleducation', 
+    'number_of_units': 'building', 
+    'building_age': 'building', 
+    'ownership_type': 'unitdescription',
+    'number_of_rooms': 'unitdescription',
+    'night_life_importance': 'score', 
+    'noise_level_checkbox': 'score', 
+    'crime_level_checkbox': 'score', 
+    'income_level_range': 'economic',
+    'price_range': 'unitvalue',
+    'marital_status_checkbox': 'demographic',
+    'number_of_vehicles': 'unitdescription',
+    # 'number_of_children': ??,
+    # 'school_quality_importance': SchoolEducation,
+    'school_level': 'school',
+}
+
+
+
+
+
+
+
 class SearchForm(forms.Form):
     age = forms.ChoiceField(
         choices = AGE_CHOICES,

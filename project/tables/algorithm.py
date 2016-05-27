@@ -51,7 +51,6 @@ importance_fields_two_levels = [
 
 def put_value_in_group(ownership_type, key, value):
 	if key == 'income_level_range':
-		print('INCOME GROUP')
 		if 0 <= value < 50:
 			result = 'income_0_50'
 		elif 50 <= value < 100:
@@ -63,7 +62,6 @@ def put_value_in_group(ownership_type, key, value):
 	elif key == 'price_range':
 		# assume a renter if left ownership type left blank
 		if ownership_type == 'resident_type_renter' or ownership_type == 'empty':
-			print('RENT GROUP')
 			if 0 <= value < 1000:
 				result = 'gross_rent_1000_less'
 			elif 1000 <= value < 1500:
@@ -71,7 +69,6 @@ def put_value_in_group(ownership_type, key, value):
 			elif value >= 1500:
 				result = 'gross_rent_1500_plus'
 		elif ownership_type == 'resident_type_owner':
-			print('PURCHASE GROUP')
 			if 0 <= value < 500:
 				result = 'value_of_unit_500_less'
 			elif 500 <= value < 1000:
@@ -126,7 +123,6 @@ def sort_by_largest_to_smallest(table, field, borough_set):
 		query = query | Q(neighborhood__borough=borough)
 	# print('bqs list', borough_query_string)
 	# borough_query_string = "".join(borough_query_string)
-	print('query', query)
 	# borough_query_string = borough_query_string[:-1]
 	# print('bqs sliced', borough_query_string)
 	return table.objects.filter(query).order_by('-' + field)[:10]
@@ -137,14 +133,12 @@ def sort_by_smallest_to_largest(table, field, borough_set):
 	print(borough_set)
 	if borough_set == 'empty':
 		borough_set = ['Brooklyn', 'Bronx', 'Manhattan' 'Queens', 'Staten Island']
-	print(borough_set)
 	for borough in borough_set:
 		if borough == 'Staten_Island':
 			borough = 'Staten Island'
 		query = query | Q(neighborhood__borough=borough)
 	# print('bqs list', borough_query_string)
 	# borough_query_string = "".join(borough_query_string)
-	print('query', query)
 	# borough_query_string = borough_query_string[:-1]
 	# print('bqs sliced', borough_query_string)
 	return table.objects.filter(query).order_by(field)[:10]
@@ -183,7 +177,6 @@ def get_nb_data(nb_list, count, school_level):
 	# get age_median, income_median, rent_median
 	data = []
 	for nb in nb_list:
-		print(nb.webdisplay)
 		nb_dict = {}
 		nb_dict['webdisplay'] = nb.webdisplay + ", " + nb.borough
 		nb_dict['age_median'] = str(Ages.objects.get(neighborhood=nb).age_median)
@@ -198,9 +191,7 @@ def get_nb_data(nb_list, count, school_level):
 		nb_dict['longitude'] = nb.longitude
 		nb_dict['sqft_median'] = str(StreetEasy.objects.get(neighborhood=nb).squarefeet_median)
 		if nb_dict['sqft_median'] == '0.00':
-			print('sqft equals 0.00')
 			nb_dict['sqft_median'] = 'Information not Available'
-		print(nb_dict['sqft_median'])
 		school_score = getattr(School.objects.get(neighborhood=nb), school_level, None)		
 		if school_score:
 			nb_dict['school_score'] = str(school_score)
@@ -216,8 +207,6 @@ def find_n_most_common(nb_dict, n):
 	return [n_most_common, sorted_dict]
 
 def filter_commute(nb_list, sorted_neighborhoods, commute_cap):
-	print('IN FILTERED COMMUTE')
-	print('CAP', commute_cap)
 	nb_list_length = len(nb_list)
 	i = 0
 	while i < nb_list_length - 1 and len(sorted_neighborhoods) > nb_list_length:
@@ -229,9 +218,6 @@ def filter_commute(nb_list, sorted_neighborhoods, commute_cap):
 	return nb_list
 
 def filter_school(nb_list, sorted_neighborhoods, school_quality, school_level):
-	print('IN FILTERED SCHOOL')
-	print('IMPORTANCE CHOICE', school_quality)
-	print(school_level)
 	nb_list_length = len(nb_list)
 	i = 0
 	if school_quality == 'high':
@@ -248,7 +234,6 @@ def filter_school(nb_list, sorted_neighborhoods, school_quality, school_level):
 			school_obj = School.objects.get(neighborhood=nb_list[i]) 
 			level = getattr(school_obj, school_level, 10)
 			if level < 4:
-				print('removing bc school', nb_list[i])
 				nb_list.remove(nb_list[i])
 				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
 			i += 1
@@ -256,21 +241,16 @@ def filter_school(nb_list, sorted_neighborhoods, school_quality, school_level):
 
 
 def filter_price(nb_list, sorted_neighborhoods, price_cap, ownership_type):
-	print('IN FILTERED PRICE')
-	print('CAP', price_cap + 200)
-	print(ownership_type)
 	nb_list_length = len(nb_list)
 	i = 0
 	while i < nb_list_length - 1 and len(sorted_neighborhoods) > nb_list_length:
 		uv_obj = UnitValue.objects.get(neighborhood=nb_list[i])
 		if ownership_type == 'resident_type_renter':		
 			if UnitValue.objects.get(neighborhood=nb_list[i]).gross_rent_median > price_cap + 200:
-				print('removing bc price', nb_list[i])
 				nb_list.remove(nb_list[i])
 				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
 		elif ownership_type == 'resident_type_owner':
 			if UnitValue.objects.get(neighborhood=nb_list[i]).value_of_unit_median > price_cap + 200:
-				print('removing bc price', nb_list[i])
 				nb_list.remove(nb_list[i])
 				nb_list.append(sorted_neighborhoods.pop(nb_list_length)[0])
 		i += 1
